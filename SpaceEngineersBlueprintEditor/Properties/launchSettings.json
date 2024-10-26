@@ -1,0 +1,10 @@
+{
+  "profiles": {
+    "SpaceEngineersBlueprintEditor (Package)": {
+      "commandName": "MsixPackage"
+    },
+    "SpaceEngineersBlueprintEditor (Unpackaged)": {
+      "commandName": "Project"
+    }
+  }
+}
