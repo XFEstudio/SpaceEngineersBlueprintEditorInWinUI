@@ -1,0 +1,60 @@
+<?xml version="1.0" encoding="utf-8"?>
+<Page
+    x:Class="SpaceEngineersBlueprintEditor.Views.AppShellPage"
+    xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+    xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+    xmlns:local="using:SpaceEngineersBlueprintEditor.Views"
+    xmlns:viewmodel="using:SpaceEngineersBlueprintEditor.ViewModels"
+    xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+    xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+    mc:Ignorable="d"
+    d:DataContext="{d:DesignInstance viewmodel:AppShellPageViewModel}">
+
+    <Grid>
+        <Grid x:Name="appTitleBar" Canvas.ZIndex="1" Height="{Binding ElementName=navigationView, Path=CompactPaneLength}" IsHitTestVisible="True" VerticalAlignment="Top">
+            <Image Source="/Assets/Icons/EditorIcon.ico" HorizontalAlignment="Left" Width="16" Height="16"/>
+            <TextBlock x:Name="appTitleBarText" VerticalAlignment="Center" TextWrapping="NoWrap" Margin="28,0,0,0"/>
+        </Grid>
+        <NavigationView x:Name="navigationView" IsBackButtonVisible="Visible" Canvas.ZIndex="0" IsBackEnabled="{Binding CanGoBack}" Header="{Binding Selected.Content}" IsSettingsVisible="False" DisplayModeChanged="NavigationView_DisplayModeChanged">
+            <NavigationView.MenuItems>
+                <NavigationViewItem x:Uid="ShellItem_EditorPage" Tag="SpaceEngineersBlueprintEditor.Views.BlueprintEditorPage">
+                    <NavigationViewItem.Icon>
+                        <FontIcon Glyph="&#xEC7A;"/>
+                    </NavigationViewItem.Icon>
+                </NavigationViewItem>
+                <NavigationViewItem x:Uid="ShellMenu_ViewBlurprints">
+                    <NavigationViewItem.Icon>
+                        <FontIcon Glyph="&#xF571;"/>
+                    </NavigationViewItem.Icon>
+                    <NavigationViewItem.MenuItems>
+                        <NavigationViewItem x:Uid="ShellItem_ViewLocalBlueprints" Tag="SpaceEngineersBlueprintEditor.Views.BlueprintsViewPage">
+                            <NavigationViewItem.Icon>
+                                <FontIcon Glyph="&#xE8DA;"/>
+                            </NavigationViewItem.Icon>
+                        </NavigationViewItem>
+                        <NavigationViewItem x:Uid="ShellItem_ViewCloudBlueprints" Tag="SpaceEngineersBlueprintEditor.Views.BlueprintsViewPage">
+                            <NavigationViewItem.Icon>
+                                <FontIcon Glyph="&#xE753;"/>
+                            </NavigationViewItem.Icon>
+                        </NavigationViewItem>
+                        <NavigationViewItem x:Uid="ShellItem_ViewWorkshopBlueprints" Tag="SpaceEngineersBlueprintEditor.Views.BlueprintsViewPage">
+                            <NavigationViewItem.Icon>
+                                <FontIcon Glyph="&#xE753;"/>
+                            </NavigationViewItem.Icon>
+                        </NavigationViewItem>
+                    </NavigationViewItem.MenuItems>
+                </NavigationViewItem>
+            </NavigationView.MenuItems>
+            <NavigationView.FooterMenuItems>
+                <NavigationViewItem x:Uid="ShellItem_AppSetting" Tag="SpaceEngineersBlueprintEditor.Views.SettingPage">
+                    <NavigationViewItem.Icon>
+                        <FontIcon Glyph="&#xE713;"/>
+                    </NavigationViewItem.Icon>
+                </NavigationViewItem>
+            </NavigationView.FooterMenuItems>
+            <Grid Margin="56,24,56,0">
+                <Frame x:Name="navigationFrame"/>
+            </Grid>
+        </NavigationView>
+    </Grid>
+</Page>
