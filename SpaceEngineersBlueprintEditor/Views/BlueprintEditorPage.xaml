@@ -8,7 +8,8 @@
     xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
     mc:Ignorable="d">
 
-    <Grid>
-
+    <Grid ColumnDefinitions="*, *">
+        <Grid CanDrag="True" Background="AliceBlue" Width="200" Height="200"/>
+        <Grid Grid.Column="1" AllowDrop="True" DragOver="Grid_DragOver"  Drop="Grid_Drop" Background="PaleVioletRed" Width="200" Height="200"/>
     </Grid>
 </Page>

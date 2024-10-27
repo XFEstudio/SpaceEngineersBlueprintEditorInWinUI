@@ -138,4 +138,10 @@
   <data name="ShellItem_ViewCloudBlueprints.Content" xml:space="preserve">
     <value>云端蓝图</value>
   </data>
+  <data name="AppDisplayName" xml:space="preserve">
+    <value>太空工程师蓝图修改器</value>
+  </data>
+  <data name="DragFileToEditorText" xml:space="preserve">
+    <value>拖动蓝图文件至此处</value>
+  </data>
 </root>

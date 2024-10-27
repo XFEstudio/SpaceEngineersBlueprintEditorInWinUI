@@ -138,4 +138,10 @@
   <data name="ShellItem_ViewCloudBlueprints.Content" xml:space="preserve">
     <value>Cloud Blueprints</value>
   </data>
+  <data name="AppDisplayName" xml:space="preserve">
+    <value>SpaceEngineersBlueprintEditor</value>
+  </data>
+  <data name="DragFileToEditorText" xml:space="preserve">
+    <value>Drag Blueprint Here</value>
+  </data>
 </root>

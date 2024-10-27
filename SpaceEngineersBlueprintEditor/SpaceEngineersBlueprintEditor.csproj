@@ -17,9 +17,14 @@
     <!--<WindowsAppSDKSelfContained>true</WindowsAppSDKSelfContained>-->
   </PropertyGroup>
   <ItemGroup>
-    <Content Remove="Assets\Icons\EditorIcon.ico" />
-  </ItemGroup>
-  <ItemGroup>
+    <None Remove="Assets\Icons\EditorIcon.ico" />
+    <None Remove="Assets\Icons\EditorIconPrime.ico" />
+    <None Remove="Assets\Images\BlueprintDrag.png" />
+    <None Remove="Assets\Images\EditorIcon.png" />
+    <None Remove="Assets\Images\EditorIcon24x24.png" />
+    <None Remove="Assets\Images\EditorIcon300x300.png" />
+    <None Remove="Assets\Images\EditorIcon50x50.png" />
+    <None Remove="Assets\Images\EditorIcon88x88.png" />
     <None Remove="Assets\蓝图编辑器图标.png" />
     <None Remove="Styles\Thickness.xaml" />
     <None Remove="Views\AppShellPage.xaml" />
