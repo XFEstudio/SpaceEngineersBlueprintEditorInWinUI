@@ -4,11 +4,48 @@
     xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
     xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
     xmlns:local="using:SpaceEngineersBlueprintEditor.Views"
+    xmlns:viewmodel="using:SpaceEngineersBlueprintEditor.ViewModels"
+    xmlns:toolkit="using:CommunityToolkit.WinUI.Controls"
     xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
     xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
     mc:Ignorable="d">
 
     <Grid>
-
+        <ScrollViewer>
+            <StackPanel Spacing="4">
+                <toolkit:SettingsCard Header="">
+                    <ComboBox>
+                        <ComboBoxItem Content="Light" Tag="Light"/>
+                        <ComboBoxItem Content="Dark" Tag="Dark"/>
+                        <ComboBoxItem Content="Default" Tag="Defalut"/>
+                    </ComboBox>
+                </toolkit:SettingsCard>
+                <toolkit:SettingsExpander x:Uid="AppInfo_Expander">
+                    <toolkit:SettingsExpander.HeaderIcon>
+                        <ImageIcon Source="/Assets/Images/EditorIcon.png"/>
+                    </toolkit:SettingsExpander.HeaderIcon>
+                    <TextBlock Grid.Column="2" Grid.RowSpan="2" Text="{x:Bind ViewModel.CurrentVersion, Mode=OneWay}" Opacity="0.5"/>
+                    <toolkit:SettingsExpander.Items>
+                        <toolkit:SettingsCard x:Uid="AppInfo_Author">
+                            <TextBlock Text="XFEstudio" Foreground="{ThemeResource TextFillColorSecondary}"/>
+                        </toolkit:SettingsCard>
+                        <toolkit:SettingsCard x:Uid="AppInfo_GithubProject" IsClickEnabled="True" Command="{x:Bind ViewModel.LinkToGithubRepoCommand}">
+                            <toolkit:SettingsCard.ActionIcon>
+                                <FontIcon Glyph="&#xE8A7;"/>
+                            </toolkit:SettingsCard.ActionIcon>
+                        </toolkit:SettingsCard>
+                        <toolkit:SettingsCard x:Uid="AppInfo_Contact" HorizontalContentAlignment="Left" ContentAlignment="Vertical">
+                            <StackPanel Margin="-12,0,0,0" Orientation="Vertical">
+                                <HyperlinkButton x:Uid="AppInfo_Contact_QQ" NavigateUri="https://qm.qq.com/q/JAHAohawuW"/>
+                                <HyperlinkButton x:Uid="AppInfo_Contact_Twitter" NavigateUri="https://x.com/smithtom228705"/>
+                                <HyperlinkButton x:Uid="AppInfo_Contact_Github" NavigateUri="https://github.com/XFEstudio"/>
+                                <HyperlinkButton x:Uid="AppInfo_Contact_Bilibili" NavigateUri="https://space.bilibili.com/200494622"/>
+                                <HyperlinkButton x:Uid="AppInfo_Contact_Youtube" NavigateUri="https://www.youtube.com/@playerxfe7204"/>
+                            </StackPanel>
+                        </toolkit:SettingsCard>
+                    </toolkit:SettingsExpander.Items>
+                </toolkit:SettingsExpander>
+            </StackPanel>
+        </ScrollViewer>
     </Grid>
 </Page>

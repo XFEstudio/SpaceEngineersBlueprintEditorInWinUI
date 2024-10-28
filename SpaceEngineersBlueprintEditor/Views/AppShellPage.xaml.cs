@@ -16,7 +16,6 @@ public sealed partial class AppShellPage : Page
         DataContext = ViewModel = new AppShellPageViewModel();
         this.InitializeComponent();
         App.MainWindow?.SetTitleBar(appTitleBar);
-        appTitleBarText.Text = "AppTitle".GetLocalized();
         ViewModel.NavigationViewService.Initialize(navigationView, navigationFrame);
         ViewModel.NavigationViewService.NavigateTo<BlueprintEditorPage>();
     }

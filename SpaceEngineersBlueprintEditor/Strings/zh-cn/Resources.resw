@@ -117,9 +117,6 @@
   <resheader name="writer">
     <value>System.Resources.ResXResourceWriter, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
   </resheader>
-  <data name="AppTitle" xml:space="preserve">
-    <value>太空工程师蓝图修改器</value>
-  </data>
   <data name="ShellItem_EditorPage.Content" xml:space="preserve">
     <value>编辑蓝图</value>
   </data>
@@ -143,5 +140,35 @@
   </data>
   <data name="DragFileToEditorText" xml:space="preserve">
     <value>拖动蓝图文件至此处</value>
+  </data>
+  <data name="AppInfo_Expander.Header" xml:space="preserve">
+    <value>太空工程师蓝图修改器</value>
+  </data>
+  <data name="AppInfo_Author.Header" xml:space="preserve">
+    <value>作者</value>
+  </data>
+  <data name="AppInfo_Expander.Description" xml:space="preserve">
+    <value>版权所有 © 2024 XFEstudio. All rights reserved.</value>
+  </data>
+  <data name="AppInfo_GithubProject.Header" xml:space="preserve">
+    <value>Github仓库</value>
+  </data>
+  <data name="AppInfo_Contact.Header" xml:space="preserve">
+    <value>联系我们</value>
+  </data>
+  <data name="AppInfo_Contact_QQ.Content" xml:space="preserve">
+    <value>太空工程师交流群</value>
+  </data>
+  <data name="AppInfo_Contact_Youtube.Content" xml:space="preserve">
+    <value>油管</value>
+  </data>
+  <data name="AppInfo_Contact_Twitter.Content" xml:space="preserve">
+    <value>推特（X）</value>
+  </data>
+  <data name="AppInfo_Contact_Github.Content" xml:space="preserve">
+    <value>Github</value>
+  </data>
+  <data name="AppInfo_Contact_Bilibili.Content" xml:space="preserve">
+    <value>哔哩哔哩</value>
   </data>
 </root>
