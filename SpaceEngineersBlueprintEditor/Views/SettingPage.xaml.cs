@@ -4,7 +4,7 @@ using SpaceEngineersBlueprintEditor.ViewModels;
 namespace SpaceEngineersBlueprintEditor.Views;
 
 /// <summary>
-/// App's setting page
+/// ±‡º≠∆˜µƒ…Ë÷√“≥√Ê
 /// </summary>
 public sealed partial class SettingPage : Page
 {
@@ -15,5 +15,8 @@ public sealed partial class SettingPage : Page
         PageManager.AddOrUpdateCurrentPage(Current = this);
         ViewModel = new SettingPageViewModel();
         this.InitializeComponent();
+        ViewModel.SettingService.AddComboBox(appThemeComboBox, ProfileHelper.GetEnumProfileSaveFunc<ElementTheme>(), ProfileHelper.GetEnumProfileLoadFuncForComboBox());
+        ViewModel.SettingService.Initialize();
+        ViewModel.SettingService.RegisterEvents();
     }
 }

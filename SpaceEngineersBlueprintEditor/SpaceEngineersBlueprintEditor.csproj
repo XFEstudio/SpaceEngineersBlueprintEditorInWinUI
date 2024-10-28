@@ -72,6 +72,8 @@
   <ItemGroup>
     <Using Include="Microsoft.UI.Xaml" />
     <Using Include="Microsoft.UI.Xaml.Controls" />
+    <Using Include="SpaceEngineersBlueprintEditor.Profiles.CacheProfiles" />
+    <Using Include="SpaceEngineersBlueprintEditor.Profiles.CrossVersionProfiles" />
     <Using Include="SpaceEngineersBlueprintEditor.Utilities.Helpers" />
   </ItemGroup>
   <ItemGroup>
@@ -84,6 +86,10 @@
     <Page Update="Views\BlueprintsViewPage.xaml">
       <Generator>MSBuild:Compile</Generator>
     </Page>
+  </ItemGroup>
+  <ItemGroup>
+    <Folder Include="Profiles\CurrentVersionProfiles\" />
+    <Folder Include="Profiles\SynProfiles\" />
   </ItemGroup>
 
   <!--

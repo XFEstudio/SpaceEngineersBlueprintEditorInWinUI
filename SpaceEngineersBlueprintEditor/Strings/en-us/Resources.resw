@@ -117,58 +117,100 @@
   <resheader name="writer">
     <value>System.Resources.ResXResourceWriter, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
   </resheader>
-  <data name="ShellItem_EditorPage.Content" xml:space="preserve">
+  <data name="AppShell_ShellItem_EditorPage.Content" xml:space="preserve">
     <value>Edit Blueprint</value>
+    <comment>编辑蓝图</comment>
   </data>
-  <data name="ShellMenu_ViewBlurprints.Content" xml:space="preserve">
+  <data name="AppShell_ShellMenu_ViewBlurprints.Content" xml:space="preserve">
     <value>View Blueprints</value>
+    <comment>查看蓝图列表</comment>
   </data>
-  <data name="ShellItem_ViewLocalBlueprints.Content" xml:space="preserve">
+  <data name="AppShell_ShellItem_ViewLocalBlueprints.Content" xml:space="preserve">
     <value>Local Blueprints</value>
+    <comment>本地蓝图</comment>
   </data>
-  <data name="ShellItem_AppSetting.Content" xml:space="preserve">
+  <data name="AppShell_ShellItem_AppSetting.Content" xml:space="preserve">
     <value>Setting</value>
+    <comment>设置</comment>
   </data>
-  <data name="ShellItem_ViewWorkshopBlueprints.Content" xml:space="preserve">
+  <data name="AppShell_ShellItem_ViewWorkshopBlueprints.Content" xml:space="preserve">
     <value>Workshop Blueprints</value>
+    <comment>工坊蓝图</comment>
   </data>
-  <data name="ShellItem_ViewCloudBlueprints.Content" xml:space="preserve">
+  <data name="AppShell_ShellItem_ViewCloudBlueprints.Content" xml:space="preserve">
     <value>Cloud Blueprints</value>
+    <comment>云端蓝图</comment>
   </data>
   <data name="AppDisplayName" xml:space="preserve">
     <value>SpaceEngineersBlueprintEditor</value>
+    <comment>太空工程师蓝图修改器</comment>
   </data>
   <data name="DragFileToEditorText" xml:space="preserve">
     <value>Drag Blueprint Here</value>
+    <comment>拖动蓝图文件至此处</comment>
   </data>
-  <data name="AppInfo_Author.Header" xml:space="preserve">
+  <data name="SettingPage_AppInfo_Author.Header" xml:space="preserve">
     <value>Author</value>
+    <comment>作者</comment>
   </data>
-  <data name="AppInfo_Contact.Header" xml:space="preserve">
+  <data name="SettingPage_AppInfo_Contact.Header" xml:space="preserve">
     <value>Contact Us</value>
+    <comment>联系我们</comment>
   </data>
-  <data name="AppInfo_Expander.Description" xml:space="preserve">
+  <data name="SettingPage_AppInfo_Expander.Description" xml:space="preserve">
     <value>CopyRight © 2024 XFEstudio. All rights reserved.</value>
+    <comment>版权所有 © 2024 XFEstudio. All rights reserved.</comment>
   </data>
-  <data name="AppInfo_Expander.Header" xml:space="preserve">
+  <data name="SettingPage_AppInfo_Expander.Header" xml:space="preserve">
     <value>SpaceEngineers Blueprint Editor</value>
+    <comment>太空工程师蓝图修改器</comment>
   </data>
-  <data name="AppInfo_GithubProject.Header" xml:space="preserve">
+  <data name="SettingPage_AppInfo_GithubProject.Header" xml:space="preserve">
     <value>Github Repo</value>
+    <comment>Github仓库</comment>
   </data>
-  <data name="AppInfo_Contact_Bilibili.Content" xml:space="preserve">
+  <data name="SettingPage_AppInfo_Contact_Bilibili.Content" xml:space="preserve">
     <value>Bilibili</value>
+    <comment>哔哩哔哩</comment>
   </data>
-  <data name="AppInfo_Contact_Github.Content" xml:space="preserve">
+  <data name="SettingPage_AppInfo_Contact_Github.Content" xml:space="preserve">
     <value>Github</value>
+    <comment>Github</comment>
   </data>
-  <data name="AppInfo_Contact_QQ.Content" xml:space="preserve">
+  <data name="SettingPage_AppInfo_Contact_QQ.Content" xml:space="preserve">
     <value>SpaceEnginners Group</value>
+    <comment>太空工程师交流群</comment>
   </data>
-  <data name="AppInfo_Contact_Twitter.Content" xml:space="preserve">
+  <data name="SettingPage_AppInfo_Contact_Twitter.Content" xml:space="preserve">
     <value>Twitter(X)</value>
+    <comment>推特（X）</comment>
   </data>
-  <data name="AppInfo_Contact_Youtube.Content" xml:space="preserve">
+  <data name="SettingPage_AppInfo_Contact_Youtube.Content" xml:space="preserve">
     <value>Youtube</value>
+    <comment>油管</comment>
+  </data>
+  <data name="AppShell_AppTitle.Text" xml:space="preserve">
+    <value>SpaceEngineers Blueprint Editor</value>
+    <comment>太空工程师蓝图修改器</comment>
+  </data>
+  <data name="SettingPage_AppTheme.Header" xml:space="preserve">
+    <value>App theme</value>
+    <comment>色彩模式</comment>
+  </data>
+  <data name="SettingPage_AppTheme.Description" xml:space="preserve">
+    <value>The app theme to display</value>
+    <comment>编辑器显示的颜色主题</comment>
+  </data>
+  <data name="SettingPage_AppTheme_Light.Content" xml:space="preserve">
+    <value>Light</value>
+    <comment>浅色</comment>
+  </data>
+  <data name="SettingPage_AppTheme_Default.Content" xml:space="preserve">
+    <value>Use system setting</value>
+    <comment>跟随系统</comment>
+  </data>
+  <data name="SettingPage_AppTheme_Dark.Content" xml:space="preserve">
+    <value>Dark</value>
+    <comment>深色</comment>
   </data>
 </root>

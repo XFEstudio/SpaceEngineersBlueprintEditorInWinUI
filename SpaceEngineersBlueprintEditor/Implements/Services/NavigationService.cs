@@ -1,7 +1,7 @@
 ﻿using SpaceEngineersBlueprintEditor.Interface.Services;
 using SpaceEngineersBlueprintEditor.Utilities;
 
-namespace SpaceEngineersBlueprintEditor.Services;
+namespace SpaceEngineersBlueprintEditor.Implements.Services;
 
 internal class NavigationService : INavigationService
 {

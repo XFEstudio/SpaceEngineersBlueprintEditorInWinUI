@@ -7,7 +7,7 @@ using Windows.Storage;
 namespace SpaceEngineersBlueprintEditor.Views;
 
 /// <summary>
-/// Editor page provide functions edit ship blueprints
+/// À¶Í¼±à¼­Ò³Ãæ
 /// </summary>
 public sealed partial class BlueprintEditorPage : Page
 {

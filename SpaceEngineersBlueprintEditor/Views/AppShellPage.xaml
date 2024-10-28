@@ -12,31 +12,31 @@
     <Grid>
         <Grid x:Name="appTitleBar" Canvas.ZIndex="1" Height="{Binding ElementName=navigationView, Path=CompactPaneLength}" IsHitTestVisible="True" VerticalAlignment="Top">
             <Image Source="/Assets/Icons/EditorIcon.ico" HorizontalAlignment="Left" Width="16" Height="16"/>
-            <TextBlock x:Name="appTitleBarText" x:Uid="AppTitle" VerticalAlignment="Center" TextWrapping="NoWrap" Margin="28,0,0,0"/>
+            <TextBlock x:Uid="AppShell_AppTitle" VerticalAlignment="Center" TextWrapping="NoWrap" Margin="28,0,0,0"/>
         </Grid>
         <NavigationView x:Name="navigationView" IsBackButtonVisible="Visible" Canvas.ZIndex="0" IsBackEnabled="{x:Bind ViewModel.CanGoBack, Mode=OneWay}" Header="{x:Bind ((ContentControl)ViewModel.Selected).Content, Mode=OneWay}" IsSettingsVisible="False" DisplayModeChanged="NavigationView_DisplayModeChanged">
             <NavigationView.MenuItems>
-                <NavigationViewItem x:Uid="ShellItem_EditorPage" Tag="SpaceEngineersBlueprintEditor.Views.BlueprintEditorPage">
+                <NavigationViewItem x:Uid="AppShell_ShellItem_EditorPage" Tag="SpaceEngineersBlueprintEditor.Views.BlueprintEditorPage">
                     <NavigationViewItem.Icon>
                         <FontIcon Glyph="&#xEC7A;"/>
                     </NavigationViewItem.Icon>
                 </NavigationViewItem>
-                <NavigationViewItem x:Uid="ShellMenu_ViewBlurprints">
+                <NavigationViewItem x:Uid="AppShell_ShellMenu_ViewBlurprints">
                     <NavigationViewItem.Icon>
                         <FontIcon Glyph="&#xF571;"/>
                     </NavigationViewItem.Icon>
                     <NavigationViewItem.MenuItems>
-                        <NavigationViewItem x:Uid="ShellItem_ViewLocalBlueprints" Tag="SpaceEngineersBlueprintEditor.Views.BlueprintsViewPage">
+                        <NavigationViewItem x:Uid="AppShell_ShellItem_ViewLocalBlueprints" Tag="SpaceEngineersBlueprintEditor.Views.BlueprintsViewPage">
                             <NavigationViewItem.Icon>
                                 <FontIcon Glyph="&#xE8DA;"/>
                             </NavigationViewItem.Icon>
                         </NavigationViewItem>
-                        <NavigationViewItem x:Uid="ShellItem_ViewCloudBlueprints" Tag="SpaceEngineersBlueprintEditor.Views.BlueprintsViewPage">
+                        <NavigationViewItem x:Uid="AppShell_ShellItem_ViewCloudBlueprints" Tag="SpaceEngineersBlueprintEditor.Views.BlueprintsViewPage">
                             <NavigationViewItem.Icon>
                                 <FontIcon Glyph="&#xE753;"/>
                             </NavigationViewItem.Icon>
                         </NavigationViewItem>
-                        <NavigationViewItem x:Uid="ShellItem_ViewWorkshopBlueprints" Tag="SpaceEngineersBlueprintEditor.Views.BlueprintsViewPage">
+                        <NavigationViewItem x:Uid="AppShell_ShellItem_ViewWorkshopBlueprints" Tag="SpaceEngineersBlueprintEditor.Views.BlueprintsViewPage">
                             <NavigationViewItem.Icon>
                                 <FontIcon Glyph="&#xE753;"/>
                             </NavigationViewItem.Icon>
@@ -45,7 +45,7 @@
                 </NavigationViewItem>
             </NavigationView.MenuItems>
             <NavigationView.FooterMenuItems>
-                <NavigationViewItem x:Uid="ShellItem_AppSetting" Tag="SpaceEngineersBlueprintEditor.Views.SettingPage">
+                <NavigationViewItem x:Uid="AppShell_ShellItem_AppSetting" Tag="SpaceEngineersBlueprintEditor.Views.SettingPage">
                     <NavigationViewItem.Icon>
                         <FontIcon Glyph="&#xE713;"/>
                     </NavigationViewItem.Icon>

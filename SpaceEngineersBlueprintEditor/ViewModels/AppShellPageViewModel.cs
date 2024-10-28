@@ -1,6 +1,6 @@
 ﻿using CommunityToolkit.Mvvm.ComponentModel;
+using SpaceEngineersBlueprintEditor.Implements.Services;
 using SpaceEngineersBlueprintEditor.Interface.Services;
-using SpaceEngineersBlueprintEditor.Services;
 
 namespace SpaceEngineersBlueprintEditor.ViewModels;
 

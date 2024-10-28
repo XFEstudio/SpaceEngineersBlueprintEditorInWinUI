@@ -3,7 +3,7 @@ using SpaceEngineersBlueprintEditor.Utilities;
 namespace SpaceEngineersBlueprintEditor.Views;
 
 /// <summary>
-/// View and select blueprints to edit
+/// 查看和选择要编辑的蓝图的页面
 /// </summary>
 public sealed partial class BlueprintsViewPage : Page
 {

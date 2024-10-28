@@ -4,7 +4,7 @@ using SpaceEngineersBlueprintEditor.ViewModels;
 namespace SpaceEngineersBlueprintEditor.Views;
 
 /// <summary>
-/// App Main Shell Page
+/// 编辑器的Shell布局页面
 /// </summary>
 public sealed partial class AppShellPage : Page
 {

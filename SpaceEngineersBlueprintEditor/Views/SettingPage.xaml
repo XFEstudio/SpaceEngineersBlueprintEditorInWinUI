@@ -13,34 +13,37 @@
     <Grid>
         <ScrollViewer>
             <StackPanel Spacing="4">
-                <toolkit:SettingsCard Header="">
-                    <ComboBox>
-                        <ComboBoxItem Content="Light" Tag="Light"/>
-                        <ComboBoxItem Content="Dark" Tag="Dark"/>
-                        <ComboBoxItem Content="Default" Tag="Defalut"/>
+                <toolkit:SettingsCard x:Uid="SettingPage_AppTheme">
+                    <toolkit:SettingsCard.HeaderIcon>
+                        <FontIcon Glyph="&#xE790;"/>
+                    </toolkit:SettingsCard.HeaderIcon>
+                    <ComboBox x:Name="appThemeComboBox" Tag="SpaceEngineersBlueprintEditor.Profiles.CrossVersionProfiles.SystemProfile.Theme">
+                        <ComboBoxItem x:Uid="SettingPage_AppTheme_Light" Tag="Light"/>
+                        <ComboBoxItem x:Uid="SettingPage_AppTheme_Dark" Tag="Dark"/>
+                        <ComboBoxItem x:Uid="SettingPage_AppTheme_Default" Tag="Default"/>
                     </ComboBox>
                 </toolkit:SettingsCard>
-                <toolkit:SettingsExpander x:Uid="AppInfo_Expander">
+                <toolkit:SettingsExpander x:Uid="SettingPage_AppInfo_Expander">
                     <toolkit:SettingsExpander.HeaderIcon>
                         <ImageIcon Source="/Assets/Images/EditorIcon.png"/>
                     </toolkit:SettingsExpander.HeaderIcon>
                     <TextBlock Grid.Column="2" Grid.RowSpan="2" Text="{x:Bind ViewModel.CurrentVersion, Mode=OneWay}" Opacity="0.5"/>
                     <toolkit:SettingsExpander.Items>
-                        <toolkit:SettingsCard x:Uid="AppInfo_Author">
+                        <toolkit:SettingsCard x:Uid="SettingPage_AppInfo_Author">
                             <TextBlock Text="XFEstudio" Foreground="{ThemeResource TextFillColorSecondary}"/>
                         </toolkit:SettingsCard>
-                        <toolkit:SettingsCard x:Uid="AppInfo_GithubProject" IsClickEnabled="True" Command="{x:Bind ViewModel.LinkToGithubRepoCommand}">
+                        <toolkit:SettingsCard x:Uid="SettingPage_AppInfo_GithubProject" IsClickEnabled="True" Command="{x:Bind ViewModel.LinkToGithubRepoCommand}">
                             <toolkit:SettingsCard.ActionIcon>
                                 <FontIcon Glyph="&#xE8A7;"/>
                             </toolkit:SettingsCard.ActionIcon>
                         </toolkit:SettingsCard>
-                        <toolkit:SettingsCard x:Uid="AppInfo_Contact" HorizontalContentAlignment="Left" ContentAlignment="Vertical">
+                        <toolkit:SettingsCard x:Uid="SettingPage_AppInfo_Contact" HorizontalContentAlignment="Left" ContentAlignment="Vertical">
                             <StackPanel Margin="-12,0,0,0" Orientation="Vertical">
-                                <HyperlinkButton x:Uid="AppInfo_Contact_QQ" NavigateUri="https://qm.qq.com/q/JAHAohawuW"/>
-                                <HyperlinkButton x:Uid="AppInfo_Contact_Twitter" NavigateUri="https://x.com/smithtom228705"/>
-                                <HyperlinkButton x:Uid="AppInfo_Contact_Github" NavigateUri="https://github.com/XFEstudio"/>
-                                <HyperlinkButton x:Uid="AppInfo_Contact_Bilibili" NavigateUri="https://space.bilibili.com/200494622"/>
-                                <HyperlinkButton x:Uid="AppInfo_Contact_Youtube" NavigateUri="https://www.youtube.com/@playerxfe7204"/>
+                                <HyperlinkButton x:Uid="SettingPage_AppInfo_Contact_QQ" NavigateUri="https://qm.qq.com/q/JAHAohawuW"/>
+                                <HyperlinkButton x:Uid="SettingPage_AppInfo_Contact_Twitter" NavigateUri="https://x.com/smithtom228705"/>
+                                <HyperlinkButton x:Uid="SettingPage_AppInfo_Contact_Github" NavigateUri="https://github.com/XFEstudio"/>
+                                <HyperlinkButton x:Uid="SettingPage_AppInfo_Contact_Bilibili" NavigateUri="https://space.bilibili.com/200494622"/>
+                                <HyperlinkButton x:Uid="SettingPage_AppInfo_Contact_Youtube" NavigateUri="https://www.youtube.com/@playerxfe7204"/>
                             </StackPanel>
                         </toolkit:SettingsCard>
                     </toolkit:SettingsExpander.Items>
