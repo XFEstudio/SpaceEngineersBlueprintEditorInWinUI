@@ -9,11 +9,10 @@ namespace SpaceEngineersBlueprintEditor.Views;
 public sealed partial class AppShellPage : Page
 {
     public static AppShellPage? Current { get; set; }
-    public AppShellPageViewModel ViewModel { get; set; }
+    public AppShellPageViewModel ViewModel { get; set; } = new();
     public AppShellPage()
     {
         PageManager.AddOrUpdateCurrentPage(Current = this);
-        DataContext = ViewModel = new AppShellPageViewModel();
         this.InitializeComponent();
         App.MainWindow?.SetTitleBar(appTitleBar);
         ViewModel.NavigationViewService.Initialize(navigationView, navigationFrame);
@@ -30,4 +29,6 @@ public sealed partial class AppShellPage : Page
             Bottom = appTitleBar.Margin.Bottom
         };
     }
+
+    private void Page_Loaded(object sender, RoutedEventArgs e) => AppThemeHelper.ChangeTheme(SystemProfile.Theme);
 }

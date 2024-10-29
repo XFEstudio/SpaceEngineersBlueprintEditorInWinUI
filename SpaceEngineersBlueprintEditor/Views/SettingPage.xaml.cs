@@ -8,12 +8,11 @@ namespace SpaceEngineersBlueprintEditor.Views;
 /// </summary>
 public sealed partial class SettingPage : Page
 {
-    public SettingPageViewModel ViewModel { get; set; }
+    public SettingPageViewModel ViewModel { get; set; } = new();
     public SettingPage? Current { get; set; }
     public SettingPage()
     {
         PageManager.AddOrUpdateCurrentPage(Current = this);
-        ViewModel = new SettingPageViewModel();
         this.InitializeComponent();
         ViewModel.SettingService.AddComboBox(appThemeComboBox, ProfileHelper.GetEnumProfileSaveFunc<ElementTheme>(), ProfileHelper.GetEnumProfileLoadFuncForComboBox());
         ViewModel.SettingService.Initialize();

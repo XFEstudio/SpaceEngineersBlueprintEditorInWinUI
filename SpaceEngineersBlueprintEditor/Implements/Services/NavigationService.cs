@@ -28,12 +28,13 @@ internal class NavigationService : INavigationService
 
     public void GoForward() => Frame?.GoForward();
 
-    public void NavigateTo(Type type)
+    public void NavigateTo(Type type, object? parameter = null)
     {
-        if (Frame is not null && (navigationStack.Count == 0 || navigationStack.Last().GetType() != type))
+        if (Frame is not null && (navigationStack.Count == 0 || navigationStack.Last().GetType() != type || parameter is not null && navigationStack.Last().GetParameter() != parameter))
         {
             if (PageManager.CurrentPages.TryGetValue(type.FullName!, out var page))
             {
+                page.SetParameter(parameter);
                 navigationStack.Add(page);
                 Frame.Content = page;
             }
@@ -42,6 +43,7 @@ internal class NavigationService : INavigationService
                 var instance = Activator.CreateInstance(type);
                 if (instance is Page pageInstance)
                 {
+                    pageInstance.SetParameter(parameter);
                     navigationStack.Add(pageInstance);
                     Frame.Content = pageInstance;
                 }
@@ -50,11 +52,11 @@ internal class NavigationService : INavigationService
         }
     }
 
-    public void NavigateTo<T>() where T : Page => NavigateTo(typeof(T));
+    public void NavigateTo<T>(object? parameter = null) where T : Page => NavigateTo(typeof(T), parameter);
 
-    public void NavigateTo(string pageName)
+    public void NavigateTo(string pageName, object? parameter = null)
     {
         if (PageManager.PageDefinitions.TryGetValue(pageName, out var pageType))
-            NavigateTo(pageType);
+            NavigateTo(pageType, parameter);
     }
 }

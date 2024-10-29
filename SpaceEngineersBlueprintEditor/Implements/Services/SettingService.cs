@@ -35,7 +35,7 @@ internal class SettingService : ISettingService
 
     public void RegisterEvents()
     {
-        foreach (var comboBox in settingControls.Keys.Where(control => control is ComboBox).Cast<ComboBox>())
+        foreach (var comboBox in settingControls.Keys.OfType<ComboBox>())
             comboBox.SelectionChanged += ComboBox_SelectionChanged;
     }
 }

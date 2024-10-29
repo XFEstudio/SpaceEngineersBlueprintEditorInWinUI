@@ -9,8 +9,5 @@ public partial class SystemProfile
     [ProfileProperty]
     private ElementTheme theme = ElementTheme.Default;
 
-    static partial void SetThemeProperty(ElementTheme value)
-    {
-        AppThemeHelper.ChangeTheme(value);
-    }
+    static partial void SetThemeProperty(ElementTheme value) => AppThemeHelper.ChangeTheme(value);
 }

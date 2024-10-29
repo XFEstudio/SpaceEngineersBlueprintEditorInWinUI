@@ -68,5 +68,5 @@ public static class ProfileHelper
         return default;
     }
     public static Func<string, object?> GetEnumProfileSaveFunc<T>() where T : struct => value => Enum.Parse<T>(value);
-    public static Func<List<object>, object?, object?> GetEnumProfileLoadFuncForComboBox() => (items, value) => items.Where(item => item is ComboBoxItem).Cast<ComboBoxItem>().Where(item => item.Tag.ToString() == value?.ToString()).FirstOrDefault();
+    public static Func<List<object>, object?, object?> GetEnumProfileLoadFuncForComboBox() => (items, value) => items.OfType<ComboBoxItem>().Where(item => item.Tag.ToString() == value?.ToString()).FirstOrDefault();
 }

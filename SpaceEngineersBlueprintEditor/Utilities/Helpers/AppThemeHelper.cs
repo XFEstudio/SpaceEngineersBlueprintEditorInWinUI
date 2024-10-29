@@ -4,7 +4,7 @@ using Windows.UI.ViewManagement;
 
 namespace SpaceEngineersBlueprintEditor.Utilities.Helpers;
 
-public class AppThemeHelper
+public static class AppThemeHelper
 {
     public static void ChangeTheme(ElementTheme theme)
     {
@@ -12,6 +12,7 @@ public class AppThemeHelper
         {
             rootElement.RequestedTheme = theme;
         }
+
         if (theme == ElementTheme.Default)
         {
             var uiSettings = new UISettings();
@@ -55,4 +56,12 @@ public class AppThemeHelper
 
         App.MainWindow.AppWindow.TitleBar.BackgroundColor = Colors.Transparent;
     }
+
+    public static ApplicationTheme ToAppTheme(this ElementTheme theme) => theme switch
+    {
+        ElementTheme.Default => App.Current.RequestedTheme,
+        ElementTheme.Light => ApplicationTheme.Light,
+        ElementTheme.Dark => ApplicationTheme.Dark,
+        _ => throw new NotImplementedException()
+    };
 }

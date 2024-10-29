@@ -2,7 +2,7 @@
 
 public interface INavigable
 {
-    void NavigateTo<T>() where T : Page;
-    void NavigateTo(Type type);
-    void NavigateTo(string pageName);
+    void NavigateTo<T>(object? parameter = null) where T : Page;
+    void NavigateTo(Type type, object? parameter = null);
+    void NavigateTo(string pageName, object? parameter = null);
 }

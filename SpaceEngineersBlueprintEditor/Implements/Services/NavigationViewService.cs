@@ -1,5 +1,6 @@
 ﻿using SpaceEngineersBlueprintEditor.Interface.Services;
 using SpaceEngineersBlueprintEditor.Utilities;
+using SpaceEngineersBlueprintEditor.Utilities.Addition;
 
 namespace SpaceEngineersBlueprintEditor.Implements.Services;
 
@@ -34,15 +35,15 @@ internal class NavigationViewService : INavigationViewService
 
     private void NavigationView_ItemInvoked(NavigationView sender, NavigationViewItemInvokedEventArgs args)
     {
-        if (args.InvokedItemContainer is ContentControl contentControl && contentControl.Tag is string tag)
-            NavigateTo(tag);
+        if (args.InvokedItemContainer.GetValue(NavigationAddition.NavigateToProperty) is string targetUrl)
+            NavigateTo(targetUrl, args.InvokedItemContainer.GetValue(NavigationAddition.NavigateParameterProperty) is string parameter ? parameter : null);
     }
 
-    public void NavigateTo<T>() where T : Page => NavigationService.NavigateTo<T>();
+    public void NavigateTo<T>(object? parameter = null) where T : Page => NavigationService.NavigateTo<T>(parameter);
 
-    public void NavigateTo(Type type) => NavigationService.NavigateTo(type);
+    public void NavigateTo(Type type, object? parameter = null) => NavigationService.NavigateTo(type, parameter);
 
-    public void NavigateTo(string pageName) => NavigationService.NavigateTo(pageName);
+    public void NavigateTo(string pageName, object? parameter = null) => NavigationService.NavigateTo(pageName, parameter);
 
     public NavigationViewItem? GetSelectedItem(Type type) => navigationView is null ? null : GetSelectedItem(navigationView.MenuItems, navigationView.FooterMenuItems, type);
     private static NavigationViewItem? GetSelectedItem(IEnumerable<object> menuItems, IEnumerable<object> footerMenuItems, Type pageType)
@@ -54,13 +55,16 @@ internal class NavigationViewService : INavigationViewService
     }
     private static NavigationViewItem? GetSelectedItem(IEnumerable<object> menuItems, Type pageType)
     {
-        foreach (var item in menuItems.OfType<NavigationViewItem>())
+        if (PageManager.CurrentPages.TryGetValue(pageType.FullName!, out var page))
         {
-            if (item.Tag is string tag && PageManager.PageDefinitions.TryGetValue(tag, out var type) && type == pageType)
-                return item;
-            var selectedChild = GetSelectedItem(item.MenuItems, pageType);
-            if (selectedChild != null)
-                return selectedChild;
+            foreach (var item in menuItems.OfType<NavigationViewItem>())
+            {
+                if (item.GetNavigateTo() is string pageName && pageName == pageType.FullName && page.GetParameter() == item.GetNavigationParameter())
+                    return item;
+                var selectedChild = GetSelectedItem(item.MenuItems, pageType);
+                if (selectedChild != null)
+                    return selectedChild;
+            }
         }
         return null;
     }
