@@ -2,7 +2,7 @@
 
 namespace SpaceEngineersBlueprintEditor.Implements.Services;
 
-public class NavigationParameterService : INavigationParameterService
+internal class NavigationParameterService : INavigationParameterService
 {
     private object? _parameter;
 

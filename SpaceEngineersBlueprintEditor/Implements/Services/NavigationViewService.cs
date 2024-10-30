@@ -1,10 +1,10 @@
 ﻿using SpaceEngineersBlueprintEditor.Interface.Services;
-using SpaceEngineersBlueprintEditor.Utilities;
 using SpaceEngineersBlueprintEditor.Utilities.Addition;
+using System.Diagnostics.CodeAnalysis;
 
 namespace SpaceEngineersBlueprintEditor.Implements.Services;
 
-internal class NavigationViewService : INavigationViewService
+internal class NavigationViewService : GlobalServiceBase, INavigationViewService
 {
     private NavigationView? navigationView;
     private readonly INavigationService navigationService = new NavigationService();
@@ -12,6 +12,7 @@ internal class NavigationViewService : INavigationViewService
 
     public object? SelectedItem => navigationView?.SelectedItem;
 
+    [MemberNotNull(nameof(navigationView))]
     public void Initialize(NavigationView view, Frame frame)
     {
         navigationService.Frame = frame;
@@ -41,30 +42,27 @@ internal class NavigationViewService : INavigationViewService
 
     public void NavigateTo<T>(object? parameter = null) where T : Page => NavigationService.NavigateTo<T>(parameter);
 
-    public void NavigateTo(Type type, object? parameter = null) => NavigationService.NavigateTo(type, parameter);
+    public void NavigateTo(Type type, object? parameter = null, bool goBack = false) => NavigationService.NavigateTo(type, parameter, goBack);
 
     public void NavigateTo(string pageName, object? parameter = null) => NavigationService.NavigateTo(pageName, parameter);
 
     public NavigationViewItem? GetSelectedItem(Type type) => navigationView is null ? null : GetSelectedItem(navigationView.MenuItems, navigationView.FooterMenuItems, type);
-    private static NavigationViewItem? GetSelectedItem(IEnumerable<object> menuItems, IEnumerable<object> footerMenuItems, Type pageType)
+    private NavigationViewItem? GetSelectedItem(IEnumerable<object> menuItems, IEnumerable<object> footerMenuItems, Type pageType)
     {
         var footerResult = GetSelectedItem(footerMenuItems, pageType);
         if (footerResult is null)
             return GetSelectedItem(menuItems, pageType);
         return footerResult;
     }
-    private static NavigationViewItem? GetSelectedItem(IEnumerable<object> menuItems, Type pageType)
+    private NavigationViewItem? GetSelectedItem(IEnumerable<object> menuItems, Type pageType)
     {
-        if (PageManager.CurrentPages.TryGetValue(pageType.FullName!, out var page))
+        foreach (var item in menuItems.OfType<NavigationViewItem>())
         {
-            foreach (var item in menuItems.OfType<NavigationViewItem>())
-            {
-                if (item.GetNavigateTo() is string pageName && pageName == pageType.FullName && page.GetParameter() == item.GetNavigationParameter())
-                    return item;
-                var selectedChild = GetSelectedItem(item.MenuItems, pageType);
-                if (selectedChild != null)
-                    return selectedChild;
-            }
+            if (item.GetNavigateTo() is string pageName && pageName == pageType.FullName && NavigationService.NavigationStack.Last().Item2 == item.GetNavigationParameter())
+                return item;
+            var selectedChild = GetSelectedItem(item.MenuItems, pageType);
+            if (selectedChild != null)
+                return selectedChild;
         }
         return null;
     }

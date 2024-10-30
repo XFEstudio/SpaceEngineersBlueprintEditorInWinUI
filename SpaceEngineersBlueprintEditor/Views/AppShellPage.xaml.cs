@@ -16,7 +16,7 @@ public sealed partial class AppShellPage : Page
         this.InitializeComponent();
         App.MainWindow?.SetTitleBar(appTitleBar);
         ViewModel.NavigationViewService.Initialize(navigationView, navigationFrame);
-        ViewModel.NavigationViewService.NavigateTo<BlueprintEditorPage>();
+        ViewModel.NavigationViewService.NavigateTo<BlueprintEditPage>();
     }
 
     private void NavigationView_DisplayModeChanged(NavigationView sender, NavigationViewDisplayModeChangedEventArgs args)

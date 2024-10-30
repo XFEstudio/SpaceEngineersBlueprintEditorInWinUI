@@ -2,7 +2,6 @@
 using CommunityToolkit.Mvvm.Input;
 using SpaceEngineersBlueprintEditor.Implements.Services;
 using SpaceEngineersBlueprintEditor.Interface.Services;
-using System;
 using Windows.System;
 
 namespace SpaceEngineersBlueprintEditor.ViewModels;
@@ -11,8 +10,6 @@ public partial class SettingPageViewModel : ViewModelBase
 {
     [ObservableProperty]
     string currentVersion = "";
-    [ObservableProperty]
-    object? appThemeSelectedItem;
 
     public ISettingService SettingService { get; } = new SettingService();
 

@@ -4,7 +4,7 @@ using SpaceEngineersBlueprintEditor.Model;
 
 namespace SpaceEngineersBlueprintEditor.Implements.Services;
 
-internal class SettingService : ISettingService
+internal class SettingService : GlobalServiceBase, ISettingService
 {
     private readonly Dictionary<object, IProfileInfoEntry> settingControls = [];
 
@@ -20,7 +20,7 @@ internal class SettingService : ISettingService
 
     private void ComboBox_SelectionChanged(object sender, SelectionChangedEventArgs e)
     {
-        if (settingControls.TryGetValue(sender, out var profileInfo)&& profileInfo is ComboBoxProfileInfoEntry comboBoxProfileInfo && e.AddedItems.Count > 0 && e.AddedItems[0] is ComboBoxItem comboBoxItem && comboBoxItem.Tag is string value)
+        if (settingControls.TryGetValue(sender, out var profileInfo) && profileInfo is ComboBoxProfileInfoEntry comboBoxProfileInfo && e.AddedItems.Count > 0 && e.AddedItems[0] is ComboBoxItem comboBoxItem && comboBoxItem.Tag is string value)
             ProfileHelper.SetProfileValue(comboBoxProfileInfo.ProfilePath, comboBoxProfileInfo.ProfileSaveFunc.Invoke(value));
     }
 

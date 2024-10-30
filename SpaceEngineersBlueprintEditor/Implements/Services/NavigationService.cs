@@ -1,53 +1,57 @@
-﻿using SpaceEngineersBlueprintEditor.Interface.Services;
+﻿using Microsoft.UI.Xaml.Hosting;
+using SpaceEngineersBlueprintEditor.Interface.Services;
 using SpaceEngineersBlueprintEditor.Utilities;
+using System.Numerics;
 
 namespace SpaceEngineersBlueprintEditor.Implements.Services;
 
-internal class NavigationService : INavigationService
+internal class NavigationService : GlobalServiceBase, INavigationService
 {
     private Frame? frame;
-    private readonly List<Page> navigationStack = [];
+    private readonly List<(Page, object?)> navigationStack = [];
     public bool CanGoBack => navigationStack.Count > 1;
     public bool CanGoForward => Frame is not null && Frame.CanGoForward;
     public Frame? Frame { get => frame; set => frame = value; }
 
-    public List<Page> NavigationStack => navigationStack;
+    public List<(Page, object?)> NavigationStack => navigationStack;
 
     public event EventHandler<Type>? Navigated;
 
-    public void GoBack()
-    {
-        if (navigationStack.Count > 1 && Frame is not null)
-        {
-            navigationStack.RemoveAt(navigationStack.Count - 1);
-            var lastPage = navigationStack.Last();
-            Frame.Content = lastPage;
-            Navigated?.Invoke(Frame, lastPage.GetType());
-        }
-    }
+    public void GoBack() => NavigateTo(navigationStack[^2].Item1.GetType(), navigationStack[^2].Item2, true);
 
     public void GoForward() => Frame?.GoForward();
 
-    public void NavigateTo(Type type, object? parameter = null)
+    public void NavigateTo(Type type, object? parameter = null, bool goBack = false)
     {
-        if (Frame is not null && (navigationStack.Count == 0 || navigationStack.Last().GetType() != type || parameter is not null && navigationStack.Last().GetParameter() != parameter))
+        if (Frame is not null && (navigationStack.Count == 0 || navigationStack.Last().Item1.GetType() != type || parameter is not null && navigationStack.Last().Item2 != parameter))
         {
-            if (PageManager.CurrentPages.TryGetValue(type.FullName!, out var page))
-            {
-                page.SetParameter(parameter);
-                navigationStack.Add(page);
-                Frame.Content = page;
-            }
-            else
+            if (!PageManager.CurrentPages.TryGetValue(type.FullName!, out var currentPage))
             {
                 var instance = Activator.CreateInstance(type);
                 if (instance is Page pageInstance)
                 {
-                    pageInstance.SetParameter(parameter);
-                    navigationStack.Add(pageInstance);
-                    Frame.Content = pageInstance;
+                    currentPage = pageInstance;
                 }
             }
+            if (goBack)
+            {
+                navigationStack.RemoveAt(navigationStack.Count - 1);
+            }
+            else
+            {
+                currentPage?.SetParameter(parameter);
+                navigationStack.Add((currentPage!, parameter));
+            }
+            var compositor = App.MainWindow.Compositor;
+            var pageCompositor = ElementCompositionPreview.GetElementVisual(currentPage);
+            pageCompositor.Offset = new Vector3(0, 100, 0);
+            var slideUpAnimation = compositor.CreateVector3KeyFrameAnimation();
+            slideUpAnimation.Target = "Offset";
+            slideUpAnimation.InsertKeyFrame(0f, new Vector3(0, 100, 0));
+            slideUpAnimation.InsertKeyFrame(1f, new Vector3(0, 0, 0), compositor.CreateCubicBezierEasingFunction(new Vector2(0.1f, 0.0f), new Vector2(0.0f, 1f)));
+            slideUpAnimation.Duration = TimeSpan.FromSeconds(0.3);
+            pageCompositor.StartAnimation("Offset", slideUpAnimation);
+            Frame.Content = currentPage;
             Navigated?.Invoke(Frame, type);
         }
     }

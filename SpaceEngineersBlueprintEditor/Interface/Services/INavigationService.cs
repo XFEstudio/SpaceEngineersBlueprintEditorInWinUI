@@ -6,6 +6,6 @@ public interface INavigationService : INavigable
     bool CanGoBack { get; }
     bool CanGoForward { get; }
     Frame? Frame { get; set; }
-    List<Page> NavigationStack { get; }
-    public void GoBack();
+    List<(Page, object?)> NavigationStack { get; }
+    void GoBack();
 }

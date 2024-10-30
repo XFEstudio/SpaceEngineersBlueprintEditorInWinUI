@@ -5,7 +5,7 @@ namespace SpaceEngineersBlueprintEditor;
 /// <summary>
 /// Ö÷´°¿Ú
 /// </summary>
-public sealed partial class MainWindow : Window
+public sealed partial class MainWindow : WinUIEx.WindowEx
 {
     public static UISettings UISettings { get; set; } = new UISettings();
     public MainWindow()

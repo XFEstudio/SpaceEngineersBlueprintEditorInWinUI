@@ -13,7 +13,7 @@ public partial class App : Application
     {
         this.InitializeComponent();
         PageManager.RegisterPage(typeof(AppShellPage));
-        PageManager.RegisterPage(typeof(BlueprintEditorPage));
+        PageManager.RegisterPage(typeof(BlueprintEditPage));
         PageManager.RegisterPage(typeof(BlueprintsViewPage));
         PageManager.RegisterPage(typeof(SettingPage));
     }
