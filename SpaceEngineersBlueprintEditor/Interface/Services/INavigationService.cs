@@ -1,6 +1,6 @@
 ﻿namespace SpaceEngineersBlueprintEditor.Interface.Services;
 
-public interface INavigationService : INavigable
+public interface INavigationService : INavigable, IGlobalService
 {
     event EventHandler<Type> Navigated;
     bool CanGoBack { get; }

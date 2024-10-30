@@ -58,8 +58,13 @@ internal class NavigationViewService : GlobalServiceBase, INavigationViewService
     {
         foreach (var item in menuItems.OfType<NavigationViewItem>())
         {
-            if (item.GetNavigateTo() is string pageName && pageName == pageType.FullName && NavigationService.NavigationStack.Last().Item2 == item.GetNavigationParameter())
-                return item;
+            if (item.GetNavigateTo() is string pageName && pageName == pageType.FullName)
+            {
+                var parameter = NavigationService.NavigationStack.Last().Item2;
+                var itemParameter = item.GetNavigationParameter();
+                if (parameter is string && Equals(parameter, itemParameter) || parameter == itemParameter)
+                    return item;
+            }
             var selectedChild = GetSelectedItem(item.MenuItems, pageType);
             if (selectedChild != null)
                 return selectedChild;

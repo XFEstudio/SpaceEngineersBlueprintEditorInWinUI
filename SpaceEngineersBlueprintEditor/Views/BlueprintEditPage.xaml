@@ -28,7 +28,7 @@
                         <ColumnDefinition Width="*"/>
                         <ColumnDefinition Width="*"/>
                     </Grid.ColumnDefinitions>
-                    <Button x:Name="viewBlueprintsList" VerticalAlignment="Top" HorizontalAlignment="Right">
+                    <Button x:Name="viewBlueprintsList" VerticalAlignment="Top" HorizontalAlignment="Right" Command="{x:Bind ViewModel.ViewBlueprintsListCommand}">
                         <StackPanel Orientation="Horizontal" Spacing="5">
                             <FontIcon Glyph="&#xE890;"/>
                             <TextBlock Text="查看蓝图列表"/>

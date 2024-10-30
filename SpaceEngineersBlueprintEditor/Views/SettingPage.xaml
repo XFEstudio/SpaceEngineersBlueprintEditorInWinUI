@@ -27,7 +27,7 @@
                     <toolkit:SettingsExpander.HeaderIcon>
                         <ImageIcon Source="/Assets/Images/EditorIcon.png"/>
                     </toolkit:SettingsExpander.HeaderIcon>
-                    <TextBlock Grid.Column="2" Grid.RowSpan="2" Text="{x:Bind ViewModel.CurrentVersion, Mode=OneWay}" Opacity="0.5"/>
+                    <TextBlock Grid.Column="2" Grid.RowSpan="2" Text="{x:Bind ViewModel.CurrentVersion, Mode=OneWay}" Foreground="{ThemeResource TextFillColorSecondaryBrush}"/>
                     <toolkit:SettingsExpander.Items>
                         <toolkit:SettingsCard x:Uid="SettingPage_AppInfo_Author">
                             <TextBlock Text="XFEstudio" Foreground="{ThemeResource TextFillColorSecondary}"/>

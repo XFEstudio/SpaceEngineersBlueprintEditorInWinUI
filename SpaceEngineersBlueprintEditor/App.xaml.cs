@@ -16,6 +16,7 @@ public partial class App : Application
         PageManager.RegisterPage(typeof(BlueprintEditPage));
         PageManager.RegisterPage(typeof(BlueprintsViewPage));
         PageManager.RegisterPage(typeof(SettingPage));
+        Task.Run(BlueprintsManager.LoadBlueprintsAsync);
     }
 
     /// <summary>

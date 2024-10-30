@@ -1,11 +1,14 @@
 ﻿using CommunityToolkit.Mvvm.Input;
 using SpaceEngineersBlueprintEditor.Implements.Services;
 using SpaceEngineersBlueprintEditor.Interface.Services;
+using SpaceEngineersBlueprintEditor.Utilities;
+using SpaceEngineersBlueprintEditor.Views;
 
 namespace SpaceEngineersBlueprintEditor.ViewModels;
 
-public class BlueprintEditPageViewModel : ViewModelBase
+public partial class BlueprintEditPageViewModel : ViewModelBase
 {
+    private INavigationService? navigationService = GlobalServiceManager.GetService<INavigationService>();
     public IFileDropService FileDropService { get; set; } = new BlueprintDropService();
     public INavigationParameterService NavigationParameterService { get; set; } = new NavigationParameterService();
 
@@ -22,12 +25,9 @@ public class BlueprintEditPageViewModel : ViewModelBase
 
     private void FileDropService_Drop(object? sender, (string, DragEventArgs) e)
     {
-        
+
     }
 
     [RelayCommand]
-    void ViewBlueprintsList()
-    {
-
-    }
+    void ViewBlueprintsList() => navigationService?.NavigateTo<BlueprintsViewPage>("Local");
 }
