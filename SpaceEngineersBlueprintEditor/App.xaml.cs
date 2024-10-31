@@ -1,4 +1,5 @@
-﻿using SpaceEngineersBlueprintEditor.Utilities;
+﻿using SpaceEngineersBlueprintEditor.Interface.Services;
+using SpaceEngineersBlueprintEditor.Utilities;
 using SpaceEngineersBlueprintEditor.Views;
 
 namespace SpaceEngineersBlueprintEditor;
@@ -13,10 +14,21 @@ public partial class App : Application
     {
         this.InitializeComponent();
         PageManager.RegisterPage(typeof(AppShellPage));
+        PageManager.RegisterPage(typeof(MainPage));
         PageManager.RegisterPage(typeof(BlueprintEditPage));
         PageManager.RegisterPage(typeof(BlueprintsViewPage));
         PageManager.RegisterPage(typeof(SettingPage));
         Task.Run(BlueprintsManager.LoadBlueprintsAsync);
+        UnhandledException += App_UnhandledException;
+    }
+
+    private void App_UnhandledException(object sender, Microsoft.UI.Xaml.UnhandledExceptionEventArgs e)
+    {
+        if (GlobalServiceManager.GetService<IMessageService>() is IMessageService messageService)
+        {
+            messageService.ShowMessage(e.Message, "错误：", InfoBarSeverity.Error);
+            e.Handled = true;
+        }
     }
 
     /// <summary>

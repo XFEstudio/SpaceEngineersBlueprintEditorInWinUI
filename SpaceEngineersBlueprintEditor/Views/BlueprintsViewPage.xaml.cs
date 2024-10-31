@@ -24,4 +24,14 @@ public sealed partial class BlueprintsViewPage : Page
         PageManager.AddOrUpdateCurrentPage(Current = this);
         this.InitializeComponent();
     }
+
+    private void GridView_ItemClick(object sender, ItemClickEventArgs e)
+    {
+        
+    }
+
+    private void GridView_RightTapped(object sender, Microsoft.UI.Xaml.Input.RightTappedRoutedEventArgs e)
+    {
+        
+    }
 }

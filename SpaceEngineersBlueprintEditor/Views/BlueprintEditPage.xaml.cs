@@ -19,17 +19,9 @@ public sealed partial class BlueprintEditPage : Page
 
     public static BlueprintEditPage? Current { get; set; }
     public BlueprintEditPageViewModel ViewModel { get; set; } = new();
-    private Compositor compositor = App.MainWindow.Compositor;
     public BlueprintEditPage()
     {
         PageManager.AddOrUpdateCurrentPage(Current = this);
         this.InitializeComponent();
-        ViewModel.FileDropService.Initialize(blueprintDragGrid, compositor);
-        var expressionAnimation = compositor.CreateExpressionAnimation();
-        expressionAnimation.Expression = "(dragElement.Scale.Y - 1) * 200";
-        expressionAnimation.Target = "Translation.Y";
-        expressionAnimation.SetExpressionReferenceParameter("dragElement", blueprintDragGrid);
-        viewBlueprintsList.StartAnimation(expressionAnimation);
-        openLocalFile.StartAnimation(expressionAnimation);
     }
 }

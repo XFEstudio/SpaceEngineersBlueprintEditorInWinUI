@@ -8,9 +8,24 @@
     xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
     xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
     mc:Ignorable="d">
+    <Page.Resources>
+        <CommandBarFlyout Placement="Auto" x:Name="commandBarFlyout">
+            <AppBarButton Label="Open In Folder" Icon="OpenLocal" ToolTipService.ToolTip="Open In Folder"/>
+            <AppBarButton Label="Copy" Icon="Copy" ToolTipService.ToolTip="Copy">
+                <AppBarButton.Flyout>
+                    <Flyout>
+                        <StackPanel>
+                            <TextBlock/>
+                        </StackPanel>
+                    </Flyout>
+                </AppBarButton.Flyout>
+            </AppBarButton>
+            <AppBarButton Label="Delete" Icon="Delete" ToolTipService.ToolTip="Delete"/>
+        </CommandBarFlyout>
+    </Page.Resources>
 
     <Grid>
-        <GridView ItemsSource="{x:Bind ViewModel.BlueprintInfoViewDataList}" SelectionMode="None" IsItemClickEnabled="True">
+        <GridView ItemsSource="{x:Bind ViewModel.BlueprintInfoViewDataList}" SelectionMode="None" IsItemClickEnabled="True" IsRightTapEnabled="True" RightTapped="GridView_RightTapped" ItemClick="GridView_ItemClick">
             <GridView.ItemTemplate>
                 <DataTemplate x:DataType="model:BlueprintInfoViewData">
                     <Grid Width="280" ToolTipService.ToolTip="{x:Bind Name}">
@@ -32,8 +47,16 @@
                 </DataTemplate>
             </GridView.ItemTemplate>
         </GridView>
-        <CommandBar Margin="0,0,0,20" VerticalAlignment="Bottom" HorizontalAlignment="Center" Background="{ThemeResource AcrylicInAppFillColorDefaultBrush}">
-            <AppBarButton Icon="Refresh" Label="Refresh"/>
-        </CommandBar>
+        <Grid Margin="0,0,0,20" Padding="5" CornerRadius="8" VerticalAlignment="Bottom" HorizontalAlignment="Center" Background="{ThemeResource AcrylicInAppFillColorDefaultBrush}">
+            <StackPanel Orientation="Horizontal" Spacing="10">
+                <AutoSuggestBox Width="250" QueryIcon="Find" Text="{x:Bind ViewModel.SearchText,Mode=TwoWay}" PlaceholderText="Search blueprints..."/>
+                <Button Grid.Column="1" Command="{x:Bind ViewModel.RefreshBlueprintsCommand}">
+                    <StackPanel Orientation="Horizontal" Spacing="5">
+                        <FontIcon Glyph="&#xE72C;"/>
+                        <TextBlock Text="Refresh list"/>
+                    </StackPanel>
+                </Button>
+            </StackPanel>
+        </Grid>
     </Grid>
 </Page>

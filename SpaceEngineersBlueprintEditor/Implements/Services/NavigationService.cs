@@ -10,7 +10,7 @@ internal class NavigationService : GlobalServiceBase, INavigationService
     private Frame? frame;
     private readonly List<(Page, object?)> navigationStack = [];
     public bool CanGoBack => navigationStack.Count > 1;
-    public bool CanGoForward => Frame is not null && Frame.CanGoForward;
+    public bool CanGoForward => frame is not null && frame.CanGoForward;
     public Frame? Frame { get => frame; set => frame = value; }
 
     public List<(Page, object?)> NavigationStack => navigationStack;
@@ -19,11 +19,11 @@ internal class NavigationService : GlobalServiceBase, INavigationService
 
     public void GoBack() => NavigateTo(navigationStack[^2].Item1.GetType(), navigationStack[^2].Item2, true);
 
-    public void GoForward() => Frame?.GoForward();
+    public void GoForward() => frame?.GoForward();
 
     public void NavigateTo(Type type, object? parameter = null, bool goBack = false)
     {
-        if (Frame is not null && (navigationStack.Count == 0 || navigationStack.Last().Item1.GetType() != type || parameter is not null && navigationStack.Last().Item2 != parameter))
+        if (frame is not null && (navigationStack.Count == 0 || navigationStack.Last().Item1.GetType() != type || parameter is not null && navigationStack.Last().Item2 != parameter))
         {
             if (!PageManager.CurrentPages.TryGetValue(type.FullName!, out var currentPage))
             {
@@ -51,8 +51,8 @@ internal class NavigationService : GlobalServiceBase, INavigationService
             slideUpAnimation.InsertKeyFrame(1f, new Vector3(0, 0, 0), compositor.CreateCubicBezierEasingFunction(new Vector2(0.1f, 0.0f), new Vector2(0.0f, 1f)));
             slideUpAnimation.Duration = TimeSpan.FromSeconds(0.3);
             pageCompositor.StartAnimation("Offset", slideUpAnimation);
-            Frame.Content = currentPage;
-            Navigated?.Invoke(Frame, type);
+            frame.Content = currentPage;
+            Navigated?.Invoke(frame, type);
         }
     }
 

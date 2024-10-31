@@ -33,6 +33,7 @@
     <None Remove="Views\AppShellPage.xaml" />
     <None Remove="Views\BlueprintEditPage.xaml" />
     <None Remove="Views\BlueprintsViewPage.xaml" />
+    <None Remove="Views\MainPage.xaml" />
     <None Remove="Views\SettingPage.xaml" />
   </ItemGroup>
   <ItemGroup>
@@ -93,6 +94,11 @@
   <ItemGroup>
     <Folder Include="Profiles\CurrentVersionProfiles\" />
     <Folder Include="Profiles\SynProfiles\" />
+  </ItemGroup>
+  <ItemGroup>
+    <Page Update="Views\MainPage.xaml">
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
   </ItemGroup>
 
   <!--

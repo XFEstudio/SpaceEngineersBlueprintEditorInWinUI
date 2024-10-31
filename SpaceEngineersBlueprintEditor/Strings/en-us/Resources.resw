@@ -133,6 +133,10 @@
     <value>Setting</value>
     <comment>设置</comment>
   </data>
+  <data name="AppShell_ShellItem_MainPage.Content" xml:space="preserve">
+    <value>Home</value>
+    <comment>主页</comment>
+  </data>
   <data name="AppShell_ShellItem_ViewWorkshopBlueprints.Content" xml:space="preserve">
     <value>Workshop Blueprints</value>
     <comment>工坊蓝图</comment>

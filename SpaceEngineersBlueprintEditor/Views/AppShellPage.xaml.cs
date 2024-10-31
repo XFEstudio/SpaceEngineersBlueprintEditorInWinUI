@@ -16,7 +16,8 @@ public sealed partial class AppShellPage : Page
         this.InitializeComponent();
         App.MainWindow?.SetTitleBar(appTitleBar);
         ViewModel.NavigationViewService.Initialize(navigationView, navigationFrame);
-        ViewModel.NavigationViewService.NavigateTo<BlueprintEditPage>();
+        ViewModel.MessageService.Initialize(messageStackPanel, DispatcherQueue);
+        ViewModel.NavigationViewService.NavigateTo<MainPage>();
     }
 
     private void NavigationView_DisplayModeChanged(NavigationView sender, NavigationViewDisplayModeChangedEventArgs args)
@@ -31,4 +32,38 @@ public sealed partial class AppShellPage : Page
     }
 
     private void Page_Loaded(object sender, RoutedEventArgs e) => AppThemeHelper.ChangeTheme(SystemProfile.Theme);
+
+    private void NavigationView_PaneOpening(NavigationView sender, object args)
+    {
+        rightPanelGrid.TranslationTransition = new();
+        rightPanelGrid.Translation = new((float)(sender.OpenPaneLength / 2 - sender.CompactPaneLength * (sender.DisplayMode == NavigationViewDisplayMode.Minimal ? 1f : 0.5f)) + rightPanelGrid.Translation.X, 0, 0);
+    }
+
+    private void NavigationView_PaneOpened(NavigationView sender, object args)
+    {
+        rightPanelGrid.TranslationTransition = null;
+        rightPanelGrid.Translation = new();
+        rightPanelGrid.Margin = new()
+        {
+            Left = sender.OpenPaneLength,
+            Top = 50
+        };
+    }
+
+    private void NavigationView_PaneClosing(NavigationView sender, NavigationViewPaneClosingEventArgs args)
+    {
+        rightPanelGrid.TranslationTransition = new();
+        rightPanelGrid.Translation = new((float)(sender.CompactPaneLength * (sender.DisplayMode == NavigationViewDisplayMode.Minimal ? 1f : 0.5f) - sender.OpenPaneLength / 2) + rightPanelGrid.Translation.X, 0, 0);
+    }
+
+    private void NavigationView_PaneClosed(NavigationView sender, object args)
+    {
+        rightPanelGrid.TranslationTransition = null;
+        rightPanelGrid.Translation = new();
+        rightPanelGrid.Margin = new()
+        {
+            Left = sender.CompactPaneLength * (sender.DisplayMode == NavigationViewDisplayMode.Minimal ? 2 : 1),
+            Top = 50
+        };
+    }
 }

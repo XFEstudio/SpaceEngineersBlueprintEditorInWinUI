@@ -7,7 +7,7 @@ namespace SpaceEngineersBlueprintEditor.Implements.Services;
 internal class NavigationViewService : GlobalServiceBase, INavigationViewService
 {
     private NavigationView? navigationView;
-    private readonly INavigationService navigationService = new NavigationService();
+    private readonly NavigationService navigationService = new();
     public INavigationService NavigationService => navigationService;
 
     public object? SelectedItem => navigationView?.SelectedItem;
@@ -40,11 +40,11 @@ internal class NavigationViewService : GlobalServiceBase, INavigationViewService
             NavigateTo(targetUrl, args.InvokedItemContainer.GetValue(NavigationAddition.NavigateParameterProperty) is string parameter ? parameter : null);
     }
 
-    public void NavigateTo<T>(object? parameter = null) where T : Page => NavigationService.NavigateTo<T>(parameter);
+    public void NavigateTo<T>(object? parameter = null) where T : Page => navigationService.NavigateTo<T>(parameter);
 
-    public void NavigateTo(Type type, object? parameter = null, bool goBack = false) => NavigationService.NavigateTo(type, parameter, goBack);
+    public void NavigateTo(Type type, object? parameter = null, bool goBack = false) => navigationService.NavigateTo(type, parameter, goBack);
 
-    public void NavigateTo(string pageName, object? parameter = null) => NavigationService.NavigateTo(pageName, parameter);
+    public void NavigateTo(string pageName, object? parameter = null) => navigationService.NavigateTo(pageName, parameter);
 
     public NavigationViewItem? GetSelectedItem(Type type) => navigationView is null ? null : GetSelectedItem(navigationView.MenuItems, navigationView.FooterMenuItems, type);
     private NavigationViewItem? GetSelectedItem(IEnumerable<object> menuItems, IEnumerable<object> footerMenuItems, Type pageType)
@@ -60,7 +60,7 @@ internal class NavigationViewService : GlobalServiceBase, INavigationViewService
         {
             if (item.GetNavigateTo() is string pageName && pageName == pageType.FullName)
             {
-                var parameter = NavigationService.NavigationStack.Last().Item2;
+                var parameter = navigationService.NavigationStack.Last().Item2;
                 var itemParameter = item.GetNavigationParameter();
                 if (parameter is string && Equals(parameter, itemParameter) || parameter == itemParameter)
                     return item;
