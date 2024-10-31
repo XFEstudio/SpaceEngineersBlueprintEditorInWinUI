@@ -10,7 +10,7 @@ namespace SpaceEngineersBlueprintEditor.ViewModels;
 
 public partial class MainPageViewModel : ViewModelBase
 {
-    private INavigationService? navigationService = GlobalServiceManager.GetService<INavigationService>();
+    private IAutoNavigationService? navigationService = GlobalServiceManager.GetService<IAutoNavigationService>();
     public IFileDropService FileDropService { get; set; } = new BlueprintDropService();
 
     public MainPageViewModel()
@@ -27,7 +27,7 @@ public partial class MainPageViewModel : ViewModelBase
     void ViewBlueprintsList() => navigationService?.NavigateTo<BlueprintsViewPage>("Local");
 
     [RelayCommand]
-    async Task OpenBlueprintInFolder()
+    static async Task OpenBlueprintInFolder()
     {
         var openPicker = new FileOpenPicker();
         WinRT.Interop.InitializeWithWindow.Initialize(openPicker, WinRT.Interop.WindowNative.GetWindowHandle(App.MainWindow));

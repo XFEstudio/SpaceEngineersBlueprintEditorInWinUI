@@ -6,15 +6,14 @@ using SpaceEngineersBlueprintEditor.ViewModels;
 namespace SpaceEngineersBlueprintEditor.Views;
 
 /// <summary>
-/// ¿∂Õº±‡º≠“≥√Ê
+/// ¿∂ÕºœÍ«È“≥√Ê
 /// </summary>
-public sealed partial class BlueprintEditPage : Page
+public sealed partial class BlueprintDetailPage : Page
 {
+    public static BlueprintDetailPage? Current { get; set; }
     public BlueprintInfoViewData? Parameter { get; set; }
-
-    public static BlueprintEditPage? Current { get; set; }
-    public BlueprintEditPageViewModel ViewModel { get; set; } = new();
-    public BlueprintEditPage()
+    public BlueprintDetailPageViewModel ViewModel { get; set; } = new();
+    public BlueprintDetailPage()
     {
         PageManager.AddOrUpdateCurrentPage(Current = this);
         this.InitializeComponent();

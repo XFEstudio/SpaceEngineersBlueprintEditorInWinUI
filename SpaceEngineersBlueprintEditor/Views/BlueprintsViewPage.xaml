@@ -15,7 +15,8 @@
                 <AppBarButton.Flyout>
                     <Flyout>
                         <StackPanel>
-                            <TextBlock/>
+                            <TextBox Text="" PlaceholderText="Enter the new blueprint name" SelectedText=""/>
+                            <Button Content="Copy"/>
                         </StackPanel>
                     </Flyout>
                 </AppBarButton.Flyout>
@@ -25,12 +26,12 @@
     </Page.Resources>
 
     <Grid>
-        <GridView ItemsSource="{x:Bind ViewModel.BlueprintInfoViewDataList}" SelectionMode="None" IsItemClickEnabled="True" IsRightTapEnabled="True" RightTapped="GridView_RightTapped" ItemClick="GridView_ItemClick">
+        <GridView x:Name="blueprintGridView" ItemsSource="{x:Bind ViewModel.BlueprintInfoViewDataList}" SelectionMode="None" IsItemClickEnabled="True" IsRightTapEnabled="True" RightTapped="GridView_RightTapped" ItemClick="GridView_ItemClick">
             <GridView.ItemTemplate>
                 <DataTemplate x:DataType="model:BlueprintInfoViewData">
                     <Grid Width="280" ToolTipService.ToolTip="{x:Bind Name}">
                         <Rectangle Opacity="0.5" Fill="{ThemeResource AcrylicInAppFillColorDefaultBrush}"/>
-                        <Image Grid.RowSpan="2" Source="{x:Bind BlueprintImage,FallbackValue='/Assets/Images/BlueprintDrag.png'}" Stretch="Uniform" VerticalAlignment="Top"/>
+                        <Image x:Name="connectedElement" Grid.RowSpan="2" Source="{x:Bind BlueprintImage,FallbackValue='/Assets/Images/BlueprintDrag.png'}" Stretch="Uniform" VerticalAlignment="Top"/>
                         <StackPanel Visibility="{x:Bind NoBlueprint}" Opacity="0.5" Background="{ThemeResource AcrylicInAppFillColorDefaultBrush}">
                             <Image Source="/Assets/Images/forbidden.svg" Width="80" Height="80"/>
                             <TextBlock Text="No Blueprint" Style="{ThemeResource TitleTextBlockStyle}" HorizontalAlignment="Center"/>

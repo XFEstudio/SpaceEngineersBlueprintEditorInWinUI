@@ -1,8 +1,8 @@
 ﻿namespace SpaceEngineersBlueprintEditor.Interface.Services;
 
-public interface INavigationParameterService
+public interface INavigationParameterService<T>
 {
-    object? Parameter { get; }
-    event EventHandler<object?> ParameterChange;
-    void OnParameterChange(object? parameter);
+    T? Parameter { get; }
+    event EventHandler<T> ParameterChange;
+    void OnParameterChange(T parameter);
 }

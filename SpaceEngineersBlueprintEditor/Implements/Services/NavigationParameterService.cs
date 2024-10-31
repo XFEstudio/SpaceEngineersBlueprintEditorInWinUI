@@ -2,15 +2,15 @@
 
 namespace SpaceEngineersBlueprintEditor.Implements.Services;
 
-internal class NavigationParameterService : INavigationParameterService
+internal class NavigationParameterService<T> : INavigationParameterService<T>
 {
-    private object? _parameter;
+    private T? _parameter = default;
 
-    public object? Parameter { get => _parameter; }
+    public T? Parameter { get => _parameter; }
 
-    public event EventHandler<object?>? ParameterChange;
+    public event EventHandler<T>? ParameterChange;
 
-    public void OnParameterChange(object? parameter)
+    public void OnParameterChange(T parameter)
     {
         _parameter = parameter;
         ParameterChange?.Invoke(this, parameter);

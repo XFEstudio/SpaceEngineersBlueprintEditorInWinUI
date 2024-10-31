@@ -1,4 +1,6 @@
-﻿using SpaceEngineersBlueprintEditor.Interface.Services;
+﻿using Microsoft.UI.Xaml.Media.Animation;
+using Microsoft.UI.Xaml.Navigation;
+using SpaceEngineersBlueprintEditor.Interface.Services;
 using SpaceEngineersBlueprintEditor.Utilities.Addition;
 using System.Diagnostics.CodeAnalysis;
 
@@ -7,8 +9,8 @@ namespace SpaceEngineersBlueprintEditor.Implements.Services;
 internal class NavigationViewService : GlobalServiceBase, INavigationViewService
 {
     private NavigationView? navigationView;
-    private readonly NavigationService navigationService = new();
-    public INavigationService NavigationService => navigationService;
+    private readonly AutoNavigationService navigationService = new();
+    public IAutoNavigationService NavigationService => navigationService;
 
     public object? SelectedItem => navigationView?.SelectedItem;
 
@@ -22,10 +24,10 @@ internal class NavigationViewService : GlobalServiceBase, INavigationViewService
         navigationService.Navigated += NavigationService_Navigated;
     }
 
-    private void NavigationService_Navigated(object? sender, Type e)
+    private void NavigationService_Navigated(object? sender, NavigationEventArgs e)
     {
-        if (navigationView is not null)
-            navigationView.SelectedItem = GetSelectedItem(e);
+        if (navigationView is not null && GetSelectedItem(e.SourcePageType, e.Parameter) is NavigationViewItem navigationViewItem)
+            navigationView.SelectedItem = navigationViewItem;
     }
 
     private void NavigationView_BackRequested(NavigationView sender, NavigationViewBackRequestedEventArgs args)
@@ -40,35 +42,34 @@ internal class NavigationViewService : GlobalServiceBase, INavigationViewService
             NavigateTo(targetUrl, args.InvokedItemContainer.GetValue(NavigationAddition.NavigateParameterProperty) is string parameter ? parameter : null);
     }
 
-    public void NavigateTo<T>(object? parameter = null) where T : Page => navigationService.NavigateTo<T>(parameter);
-
-    public void NavigateTo(Type type, object? parameter = null, bool goBack = false) => navigationService.NavigateTo(type, parameter, goBack);
-
-    public void NavigateTo(string pageName, object? parameter = null) => navigationService.NavigateTo(pageName, parameter);
-
-    public NavigationViewItem? GetSelectedItem(Type type) => navigationView is null ? null : GetSelectedItem(navigationView.MenuItems, navigationView.FooterMenuItems, type);
-    private NavigationViewItem? GetSelectedItem(IEnumerable<object> menuItems, IEnumerable<object> footerMenuItems, Type pageType)
+    public NavigationViewItem? GetSelectedItem(Type type, object? parameter = null) => navigationView is null ? null : GetSelectedItem(navigationView.MenuItems, navigationView.FooterMenuItems, type, parameter);
+    private NavigationViewItem? GetSelectedItem(IEnumerable<object> menuItems, IEnumerable<object> footerMenuItems, Type pageType, object? parameter)
     {
-        var footerResult = GetSelectedItem(footerMenuItems, pageType);
+        var footerResult = GetSelectedItem(footerMenuItems, pageType, parameter);
         if (footerResult is null)
-            return GetSelectedItem(menuItems, pageType);
+            return GetSelectedItem(menuItems, pageType, parameter);
         return footerResult;
     }
-    private NavigationViewItem? GetSelectedItem(IEnumerable<object> menuItems, Type pageType)
+    private static NavigationViewItem? GetSelectedItem(IEnumerable<object> menuItems, Type pageType, object? parameter)
     {
         foreach (var item in menuItems.OfType<NavigationViewItem>())
         {
             if (item.GetNavigateTo() is string pageName && pageName == pageType.FullName)
             {
-                var parameter = navigationService.NavigationStack.Last().Item2;
                 var itemParameter = item.GetNavigationParameter();
                 if (parameter is string && Equals(parameter, itemParameter) || parameter == itemParameter)
                     return item;
             }
-            var selectedChild = GetSelectedItem(item.MenuItems, pageType);
+            var selectedChild = GetSelectedItem(item.MenuItems, pageType, parameter);
             if (selectedChild != null)
                 return selectedChild;
         }
         return null;
     }
+
+    public void NavigateTo(string pageType, object? parameter = null, NavigationTransitionInfo? navigationTransitionInfo = null) => navigationService.NavigateTo(pageType, parameter, navigationTransitionInfo);
+
+    public void NavigateTo(Type type, object? parameter = null, NavigationTransitionInfo? navigationTransitionInfo = null) => navigationService.NavigateTo(type, parameter, navigationTransitionInfo);
+
+    public void NavigateTo<T>(object? parameter = null, NavigationTransitionInfo? navigationTransitionInfo = null) where T : Page => navigationService.NavigateTo<T>(parameter, navigationTransitionInfo);
 }

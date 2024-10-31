@@ -4,11 +4,10 @@ using SpaceEngineersBlueprintEditor.Model;
 
 namespace SpaceEngineersBlueprintEditor.ViewModels;
 
-public partial class BlueprintEditPageViewModel : ViewModelBase
+public partial class BlueprintDetailPageViewModel : ViewModelBase
 {
     public INavigationParameterService<BlueprintInfoViewData> NavigationParameterService { get; set; } = new NavigationParameterService<BlueprintInfoViewData>();
-
-    public BlueprintEditPageViewModel()
+    public BlueprintDetailPageViewModel()
     {
         NavigationParameterService.ParameterChange += NavigationParameterService_ParameterChange;
     }

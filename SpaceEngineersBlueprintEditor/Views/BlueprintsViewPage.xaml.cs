@@ -1,3 +1,4 @@
+using Microsoft.UI.Xaml.Navigation;
 using SpaceEngineersBlueprintEditor.Utilities;
 using SpaceEngineersBlueprintEditor.ViewModels;
 
@@ -8,13 +9,7 @@ namespace SpaceEngineersBlueprintEditor.Views;
 /// </summary>
 public sealed partial class BlueprintsViewPage : Page
 {
-    private object? parameter;
-
-    public object? Parameter
-    {
-        get { return parameter; }
-        set { parameter = value; ViewModel.NavigationParameterService.OnParameterChange(value); }
-    }
+    public string? Parameter { get; set; }
 
     public BlueprintsViewPageViewModel ViewModel { get; set; } = new();
 
@@ -23,15 +18,29 @@ public sealed partial class BlueprintsViewPage : Page
     {
         PageManager.AddOrUpdateCurrentPage(Current = this);
         this.InitializeComponent();
+        NavigationCacheMode = NavigationCacheMode.Enabled;
+    }
+
+    protected override void OnNavigatedTo(NavigationEventArgs e)
+    {
+        base.OnNavigatedFrom(e);
+        if (e.Parameter is string parameter)
+        {
+            Parameter = parameter;
+            ViewModel.NavigationParameterService.OnParameterChange(Parameter);
+        }
     }
 
     private void GridView_ItemClick(object sender, ItemClickEventArgs e)
     {
-        
+        if (blueprintGridView.ContainerFromItem(e.ClickedItem) is GridViewItem container)
+        {
+            blueprintGridView.PrepareConnectedAnimation("ForwardConnectedAnimation", e.ClickedItem, "connectedElement");
+        }
     }
 
     private void GridView_RightTapped(object sender, Microsoft.UI.Xaml.Input.RightTappedRoutedEventArgs e)
     {
-        
+
     }
 }

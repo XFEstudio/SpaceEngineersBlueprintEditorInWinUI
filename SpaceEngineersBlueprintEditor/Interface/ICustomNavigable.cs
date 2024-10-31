@@ -1,6 +1,6 @@
 ﻿namespace SpaceEngineersBlueprintEditor.Interface;
 
-public interface INavigable
+public interface ICustomNavigable
 {
     void NavigateTo<T>(object? parameter = null) where T : Page;
     void NavigateTo(Type type, object? parameter = null, bool goBack = false);

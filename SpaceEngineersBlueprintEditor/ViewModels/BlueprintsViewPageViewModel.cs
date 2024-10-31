@@ -11,10 +11,10 @@ namespace SpaceEngineersBlueprintEditor.ViewModels;
 public partial class BlueprintsViewPageViewModel : ViewModelBase
 {
     private string currentParameter = "";
-    private IMessageService? messageService = GlobalServiceManager.GetService<IMessageService>();
+    private readonly IMessageService? messageService = GlobalServiceManager.GetService<IMessageService>();
     [ObservableProperty]
     private string searchText = "";
-    public INavigationParameterService NavigationParameterService { get; set; } = new NavigationParameterService();
+    public INavigationParameterService<string> NavigationParameterService { get; set; } = new NavigationParameterService<string>();
     public ObservableCollection<BlueprintInfoViewData> BlueprintInfoViewDataList { get; set; } = [];
 
     public BlueprintsViewPageViewModel()
@@ -46,14 +46,12 @@ public partial class BlueprintsViewPageViewModel : ViewModelBase
             BlueprintInfoViewDataList.Add(info.ToBlueprintInfoViewData());
     }
 
-    private void NavigationParameterService_ParameterChange(object? sender, object? e)
+    private async void NavigationParameterService_ParameterChange(object? sender, string e)
     {
-        if (e is string parameter)
-        {
-            currentParameter = parameter;
-            BlueprintInfoViewDataList.Clear();
-            LoadCurrentBlueprints();
-        }
+        currentParameter = e;
+        await BlueprintsManager.LoadBlueprintsAsync();
+        BlueprintInfoViewDataList.Clear();
+        LoadCurrentBlueprints();
     }
 
 

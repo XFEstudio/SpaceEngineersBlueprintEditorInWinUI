@@ -1,4 +1,5 @@
 ﻿using CommunityToolkit.Mvvm.ComponentModel;
+using Microsoft.UI.Xaml.Navigation;
 using SpaceEngineersBlueprintEditor.Implements.Services;
 using SpaceEngineersBlueprintEditor.Interface.Services;
 
@@ -15,10 +16,8 @@ public partial class AppShellPageViewModel : ViewModelBase
 
     public AppShellPageViewModel() => NavigationViewService.NavigationService.Navigated += NavigationService_Navigated;
 
-    private void NavigationService_Navigated(object? sender, Type e)
+    private void NavigationService_Navigated(object? sender, NavigationEventArgs e)
     {
         CanGoBack = NavigationViewService.NavigationService.CanGoBack;
-        if (NavigationViewService.GetSelectedItem(e) is NavigationViewItem item)
-            Selected = item;
     }
 }

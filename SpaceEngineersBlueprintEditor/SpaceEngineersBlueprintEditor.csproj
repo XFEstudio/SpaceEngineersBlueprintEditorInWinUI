@@ -31,6 +31,7 @@
     <None Remove="Assets\蓝图编辑器图标.png" />
     <None Remove="Styles\Thickness.xaml" />
     <None Remove="Views\AppShellPage.xaml" />
+    <None Remove="Views\BlueprintDetailPage.xaml" />
     <None Remove="Views\BlueprintEditPage.xaml" />
     <None Remove="Views\BlueprintsViewPage.xaml" />
     <None Remove="Views\MainPage.xaml" />
@@ -94,6 +95,11 @@
   <ItemGroup>
     <Folder Include="Profiles\CurrentVersionProfiles\" />
     <Folder Include="Profiles\SynProfiles\" />
+  </ItemGroup>
+  <ItemGroup>
+    <Page Update="Views\BlueprintDetailPage.xaml">
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
   </ItemGroup>
   <ItemGroup>
     <Page Update="Views\MainPage.xaml">

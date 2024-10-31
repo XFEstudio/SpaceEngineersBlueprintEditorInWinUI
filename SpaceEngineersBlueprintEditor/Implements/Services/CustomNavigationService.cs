@@ -5,7 +5,7 @@ using System.Numerics;
 
 namespace SpaceEngineersBlueprintEditor.Implements.Services;
 
-internal class NavigationService : GlobalServiceBase, INavigationService
+internal class NavigationService : GlobalServiceBase, ICustomNavigationService
 {
     private Frame? frame;
     private readonly List<(Page, object?)> navigationStack = [];
