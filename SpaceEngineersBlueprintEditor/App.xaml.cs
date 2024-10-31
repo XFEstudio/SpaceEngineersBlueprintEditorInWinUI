@@ -1,4 +1,5 @@
 ﻿using SpaceEngineersBlueprintEditor.Interface.Services;
+using SpaceEngineersBlueprintEditor.SpaceEngineersCore;
 using SpaceEngineersBlueprintEditor.Utilities;
 using SpaceEngineersBlueprintEditor.Views;
 
@@ -20,6 +21,18 @@ public partial class App : Application
         PageManager.RegisterPage(typeof(BlueprintDetailPage));
         PageManager.RegisterPage(typeof(SettingPage));
         Task.Run(BlueprintsManager.LoadBlueprintsAsync);
+        Task.Run(() =>
+        {
+            try
+            {
+                Initializer.Initialize();
+                GlobalServiceManager.GetService<IMessageService>()?.ShowMessage("游戏集定义加载完成", "完成", InfoBarSeverity.Success);
+            }
+            catch (Exception ex)
+            {
+                GlobalServiceManager.GetService<IMessageService>()?.ShowMessage($"加载定义时发生错误：{ex.Message}", "未能加载定义", InfoBarSeverity.Error);
+            }
+        });
         UnhandledException += App_UnhandledException;
     }
 

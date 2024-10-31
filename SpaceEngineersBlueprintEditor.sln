@@ -4,10 +4,17 @@ Microsoft Visual Studio Solution File, Format Version 12.00
 VisualStudioVersion = 17.12.35323.107
 MinimumVisualStudioVersion = 10.0.40219.1
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "SpaceEngineersBlueprintEditor", "SpaceEngineersBlueprintEditor\SpaceEngineersBlueprintEditor.csproj", "{049E595C-0B3F-4586-A897-F480C611A95E}"
+	ProjectSection(ProjectDependencies) = postProject
+		{23F2F2BB-4AE7-4DEE-AF7D-CFF1470D5F3E} = {23F2F2BB-4AE7-4DEE-AF7D-CFF1470D5F3E}
+	EndProjectSection
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "SpaceEngineersBlueprintEditor.SpaceEngineersCore", "SpaceEngineersBlueprintEditor.SpaceEngineersCore\SpaceEngineersBlueprintEditor.SpaceEngineersCore.csproj", "{23F2F2BB-4AE7-4DEE-AF7D-CFF1470D5F3E}"
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "SpaceEngineersBlueprintEditor.Test", "SpaceEngineersBlueprintEditor.Test\SpaceEngineersBlueprintEditor.Test.csproj", "{74296AA0-AEBE-4139-9B23-4ACAF07F7101}"
+	ProjectSection(ProjectDependencies) = postProject
+		{049E595C-0B3F-4586-A897-F480C611A95E} = {049E595C-0B3F-4586-A897-F480C611A95E}
+		{23F2F2BB-4AE7-4DEE-AF7D-CFF1470D5F3E} = {23F2F2BB-4AE7-4DEE-AF7D-CFF1470D5F3E}
+	EndProjectSection
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution

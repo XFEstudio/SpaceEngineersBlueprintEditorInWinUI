@@ -1,2 +1,14 @@
-﻿// See https://aka.ms/new-console-template for more information
-Console.WriteLine("Hello, World!");
+﻿using Sandbox.Definitions;
+using SpaceEngineersBlueprintEditor.SpaceEngineersCore;
+
+namespace SpaceEngineersBlueprintEditor.Test;
+
+internal class Program
+{
+    [SMTest]
+    public static void TestMethod()
+    {
+        Initializer.Initialize();
+        var result = MyDefinitionManager.Static.GetAllDefinitions();
+    }
+}
