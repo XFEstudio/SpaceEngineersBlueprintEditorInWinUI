@@ -14,7 +14,10 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "SpaceEngineersBlueprintEdit
 	ProjectSection(ProjectDependencies) = postProject
 		{049E595C-0B3F-4586-A897-F480C611A95E} = {049E595C-0B3F-4586-A897-F480C611A95E}
 		{23F2F2BB-4AE7-4DEE-AF7D-CFF1470D5F3E} = {23F2F2BB-4AE7-4DEE-AF7D-CFF1470D5F3E}
+		{FDAC0E77-51B3-4B0D-876C-55488B8AF503} = {FDAC0E77-51B3-4B0D-876C-55488B8AF503}
 	EndProjectSection
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "SpaceEngineersBlueprintEditor.BlueprintConverter", "SpaceEngineersBlueprintEditor.BlueprintConverter\SpaceEngineersBlueprintEditor.BlueprintConverter.csproj", "{FDAC0E77-51B3-4B0D-876C-55488B8AF503}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -84,6 +87,22 @@ Global
 		{74296AA0-AEBE-4139-9B23-4ACAF07F7101}.Release|x64.Build.0 = Release|Any CPU
 		{74296AA0-AEBE-4139-9B23-4ACAF07F7101}.Release|x86.ActiveCfg = Release|Any CPU
 		{74296AA0-AEBE-4139-9B23-4ACAF07F7101}.Release|x86.Build.0 = Release|Any CPU
+		{FDAC0E77-51B3-4B0D-876C-55488B8AF503}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{FDAC0E77-51B3-4B0D-876C-55488B8AF503}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{FDAC0E77-51B3-4B0D-876C-55488B8AF503}.Debug|ARM64.ActiveCfg = Debug|Any CPU
+		{FDAC0E77-51B3-4B0D-876C-55488B8AF503}.Debug|ARM64.Build.0 = Debug|Any CPU
+		{FDAC0E77-51B3-4B0D-876C-55488B8AF503}.Debug|x64.ActiveCfg = Debug|Any CPU
+		{FDAC0E77-51B3-4B0D-876C-55488B8AF503}.Debug|x64.Build.0 = Debug|Any CPU
+		{FDAC0E77-51B3-4B0D-876C-55488B8AF503}.Debug|x86.ActiveCfg = Debug|Any CPU
+		{FDAC0E77-51B3-4B0D-876C-55488B8AF503}.Debug|x86.Build.0 = Debug|Any CPU
+		{FDAC0E77-51B3-4B0D-876C-55488B8AF503}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{FDAC0E77-51B3-4B0D-876C-55488B8AF503}.Release|Any CPU.Build.0 = Release|Any CPU
+		{FDAC0E77-51B3-4B0D-876C-55488B8AF503}.Release|ARM64.ActiveCfg = Release|Any CPU
+		{FDAC0E77-51B3-4B0D-876C-55488B8AF503}.Release|ARM64.Build.0 = Release|Any CPU
+		{FDAC0E77-51B3-4B0D-876C-55488B8AF503}.Release|x64.ActiveCfg = Release|Any CPU
+		{FDAC0E77-51B3-4B0D-876C-55488B8AF503}.Release|x64.Build.0 = Release|Any CPU
+		{FDAC0E77-51B3-4B0D-876C-55488B8AF503}.Release|x86.ActiveCfg = Release|Any CPU
+		{FDAC0E77-51B3-4B0D-876C-55488B8AF503}.Release|x86.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
