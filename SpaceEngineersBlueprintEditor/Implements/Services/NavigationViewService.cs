@@ -10,9 +10,12 @@ internal class NavigationViewService : GlobalServiceBase, INavigationViewService
 {
     private NavigationView? navigationView;
     private readonly AutoNavigationService navigationService = new();
+    private string? header;
     public IAutoNavigationService NavigationService => navigationService;
 
     public object? SelectedItem => navigationView?.SelectedItem;
+
+    public string? Header { get => header; set => header = value; }
 
     [MemberNotNull(nameof(navigationView))]
     public void Initialize(NavigationView view, Frame frame)
@@ -43,13 +46,15 @@ internal class NavigationViewService : GlobalServiceBase, INavigationViewService
     }
 
     public NavigationViewItem? GetSelectedItem(Type type, object? parameter = null) => navigationView is null ? null : GetSelectedItem(navigationView.MenuItems, navigationView.FooterMenuItems, type, parameter);
-    private NavigationViewItem? GetSelectedItem(IEnumerable<object> menuItems, IEnumerable<object> footerMenuItems, Type pageType, object? parameter)
+
+    private static NavigationViewItem? GetSelectedItem(IEnumerable<object> menuItems, IEnumerable<object> footerMenuItems, Type pageType, object? parameter)
     {
         var footerResult = GetSelectedItem(footerMenuItems, pageType, parameter);
         if (footerResult is null)
             return GetSelectedItem(menuItems, pageType, parameter);
         return footerResult;
     }
+
     private static NavigationViewItem? GetSelectedItem(IEnumerable<object> menuItems, Type pageType, object? parameter)
     {
         foreach (var item in menuItems.OfType<NavigationViewItem>())

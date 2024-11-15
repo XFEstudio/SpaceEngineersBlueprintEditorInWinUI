@@ -18,7 +18,7 @@
             </Grid.TranslationTransition>
             <StackPanel x:Name="messageStackPanel" Margin="0,5,0,0" VerticalAlignment="Top" HorizontalAlignment="Center"/>
         </Grid>
-        <NavigationView x:Name="navigationView" IsBackButtonVisible="Visible" Canvas.ZIndex="0" IsBackEnabled="{x:Bind ViewModel.CanGoBack, Mode=OneWay}" Header="{x:Bind ((ContentControl)ViewModel.Selected).Content, Mode=OneWay}" IsSettingsVisible="False" DisplayModeChanged="NavigationView_DisplayModeChanged" PaneOpening="NavigationView_PaneOpening" PaneOpened="NavigationView_PaneOpened" PaneClosing="NavigationView_PaneClosing" PaneClosed="NavigationView_PaneClosed">
+        <NavigationView x:Name="navigationView" IsBackButtonVisible="Visible" Canvas.ZIndex="0" IsBackEnabled="{x:Bind ViewModel.CanGoBack, Mode=OneWay}" Header="{x:Bind ((ContentControl)navigationView.SelectedItem).Content, Mode=OneWay}" IsSettingsVisible="False" DisplayModeChanged="NavigationView_DisplayModeChanged" PaneOpening="NavigationView_PaneOpening" PaneOpened="NavigationView_PaneOpened" PaneClosing="NavigationView_PaneClosing" PaneClosed="NavigationView_PaneClosed">
             <NavigationView.MenuItems>
                 <NavigationViewItem x:Uid="AppShell_ShellItem_MainPage" add:NavigationAddition.NavigateTo="SpaceEngineersBlueprintEditor.Views.MainPage">
                     <NavigationViewItem.Icon>

@@ -9,6 +9,11 @@
     mc:Ignorable="d">
 
     <Grid>
-        
+        <ScrollView>
+            <StackPanel>
+                <TextBlock Style="{ThemeResource SubtitleTextBlockStyle}"/>
+                <Image x:Name="detailPreviewImage" Source="{x:Bind Parameter.BlueprintImage}" Width="350" Stretch="Uniform" HorizontalAlignment="Left" VerticalAlignment="Top"/>
+            </StackPanel>
+        </ScrollView>
     </Grid>
 </Page>

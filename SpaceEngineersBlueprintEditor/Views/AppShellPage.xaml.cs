@@ -31,7 +31,11 @@ public sealed partial class AppShellPage : Page
         };
     }
 
-    private void Page_Loaded(object sender, RoutedEventArgs e) => AppThemeHelper.ChangeTheme(SystemProfile.Theme);
+    private void Page_Loaded(object sender, RoutedEventArgs e)
+    {
+        ViewModel.MessageService.ShowMessage("游戏定义集加载中...", "正在加载");
+        AppThemeHelper.ChangeTheme(SystemProfile.Theme);
+    }
 
     private void NavigationView_PaneOpening(NavigationView sender, object args)
     {

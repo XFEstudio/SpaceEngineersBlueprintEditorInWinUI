@@ -15,7 +15,7 @@
                 <AppBarButton.Flyout>
                     <Flyout>
                         <StackPanel>
-                            <TextBox Text="" PlaceholderText="Enter the new blueprint name" SelectedText=""/>
+                            <TextBox Text="" PlaceholderText="Enter the new blueprint name"/>
                             <Button Content="Copy"/>
                         </StackPanel>
                     </Flyout>
@@ -26,10 +26,10 @@
     </Page.Resources>
 
     <Grid>
-        <GridView x:Name="blueprintGridView" ItemsSource="{x:Bind ViewModel.BlueprintInfoViewDataList}" SelectionMode="None" IsItemClickEnabled="True" IsRightTapEnabled="True" RightTapped="GridView_RightTapped" ItemClick="GridView_ItemClick">
+        <GridView x:Name="blueprintGridView" ItemsSource="{x:Bind ViewModel.BlueprintInfoViewDataList}" SelectionMode="None" IsItemClickEnabled="True" IsRightTapEnabled="True" ItemClick="GridView_ItemClick" Loaded="BlueprintGridView_Loaded">
             <GridView.ItemTemplate>
                 <DataTemplate x:DataType="model:BlueprintInfoViewData">
-                    <Grid Width="280" ToolTipService.ToolTip="{x:Bind Name}">
+                    <Grid Width="280" ToolTipService.ToolTip="{x:Bind Name}" RightTapped="GridView_RightTapped">
                         <Rectangle Opacity="0.5" Fill="{ThemeResource AcrylicInAppFillColorDefaultBrush}"/>
                         <Image x:Name="connectedElement" Grid.RowSpan="2" Source="{x:Bind BlueprintImage,FallbackValue='/Assets/Images/BlueprintDrag.png'}" Stretch="Uniform" VerticalAlignment="Top"/>
                         <StackPanel Visibility="{x:Bind NoBlueprint}" Opacity="0.5" Background="{ThemeResource AcrylicInAppFillColorDefaultBrush}">

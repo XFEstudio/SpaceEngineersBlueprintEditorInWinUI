@@ -1,6 +1,9 @@
+using Microsoft.UI.Xaml.Media.Animation;
 using Microsoft.UI.Xaml.Navigation;
+using SpaceEngineersBlueprintEditor.Model;
 using SpaceEngineersBlueprintEditor.Utilities;
 using SpaceEngineersBlueprintEditor.ViewModels;
+using Windows.Foundation.Metadata;
 
 namespace SpaceEngineersBlueprintEditor.Views;
 
@@ -10,10 +13,10 @@ namespace SpaceEngineersBlueprintEditor.Views;
 public sealed partial class BlueprintsViewPage : Page
 {
     public string? Parameter { get; set; }
-
+    public BlueprintInfoViewData? CurrentBlueprintInfoViewData { get; set; }
     public BlueprintsViewPageViewModel ViewModel { get; set; } = new();
+    public static BlueprintsViewPage? Current { get; set; }
 
-    public BlueprintsViewPage? Current { get; set; }
     public BlueprintsViewPage()
     {
         PageManager.AddOrUpdateCurrentPage(Current = this);
@@ -23,8 +26,8 @@ public sealed partial class BlueprintsViewPage : Page
 
     protected override void OnNavigatedTo(NavigationEventArgs e)
     {
-        base.OnNavigatedFrom(e);
-        if (e.Parameter is string parameter)
+        base.OnNavigatedTo(e);
+        if (e.Parameter is string parameter && parameter != Parameter)
         {
             Parameter = parameter;
             ViewModel.NavigationParameterService.OnParameterChange(Parameter);
@@ -33,14 +36,36 @@ public sealed partial class BlueprintsViewPage : Page
 
     private void GridView_ItemClick(object sender, ItemClickEventArgs e)
     {
-        if (blueprintGridView.ContainerFromItem(e.ClickedItem) is GridViewItem container)
+        if (e.ClickedItem is BlueprintInfoViewData blueprintInfoViewData)
         {
+            CurrentBlueprintInfoViewData = blueprintInfoViewData;
             blueprintGridView.PrepareConnectedAnimation("ForwardConnectedAnimation", e.ClickedItem, "connectedElement");
+            Frame.Navigate(typeof(BlueprintDetailPage), e.ClickedItem, new SuppressNavigationTransitionInfo());
         }
     }
 
     private void GridView_RightTapped(object sender, Microsoft.UI.Xaml.Input.RightTappedRoutedEventArgs e)
     {
+        if (sender is Grid grid && grid.DataContext is BlueprintInfoViewData blueprintInfoViewData)
+        {
+            CurrentBlueprintInfoViewData = blueprintInfoViewData;
+            commandBarFlyout.ShowAt(grid);
+        }
+    }
 
+    private async void BlueprintGridView_Loaded(object sender, RoutedEventArgs e)
+    {
+        if (CurrentBlueprintInfoViewData is not null)
+        {
+            blueprintGridView.ScrollIntoView(CurrentBlueprintInfoViewData, ScrollIntoViewAlignment.Default);
+            blueprintGridView.UpdateLayout();
+            var animation = ConnectedAnimationService.GetForCurrentView().GetAnimation("BackConnectedAnimation");
+            if (animation is not null && ApiInformation.IsApiContractPresent("Windows.Foundation.UniversalApiContract", 7))
+            {
+                animation.Configuration = new DirectConnectedAnimationConfiguration();
+                await blueprintGridView.TryStartConnectedAnimationAsync(animation, CurrentBlueprintInfoViewData, "connectedElement");
+            }
+            blueprintGridView.Focus(FocusState.Programmatic);
+        }
     }
 }

@@ -22,7 +22,7 @@ public sealed partial class BlueprintEditPage : Page
 
     protected override void OnNavigatedTo(NavigationEventArgs e)
     {
-        base.OnNavigatedFrom(e);
+        base.OnNavigatedTo(e);
         if (e.Parameter is BlueprintInfoViewData parameter)
         {
             Parameter = parameter;

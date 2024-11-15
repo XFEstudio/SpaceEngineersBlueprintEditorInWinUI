@@ -1,3 +1,4 @@
+using Microsoft.UI.Xaml.Media.Animation;
 using Microsoft.UI.Xaml.Navigation;
 using SpaceEngineersBlueprintEditor.Model;
 using SpaceEngineersBlueprintEditor.Utilities;
@@ -21,11 +22,19 @@ public sealed partial class BlueprintDetailPage : Page
 
     protected override void OnNavigatedTo(NavigationEventArgs e)
     {
-        base.OnNavigatedFrom(e);
+        base.OnNavigatedTo(e);
         if (e.Parameter is BlueprintInfoViewData parameter)
         {
+            ConnectedAnimationService.GetForCurrentView().GetAnimation("ForwardConnectedAnimation")?.TryStart(detailPreviewImage, []);
             Parameter = parameter;
             ViewModel.NavigationParameterService.OnParameterChange(Parameter);
         }
+    }
+
+    protected override void OnNavigatingFrom(NavigatingCancelEventArgs e)
+    {
+        base.OnNavigatingFrom(e);
+        if (e.SourcePageType == typeof(BlueprintsViewPage))
+            ConnectedAnimationService.GetForCurrentView().PrepareToAnimate("BackConnectedAnimation", detailPreviewImage);
     }
 }
