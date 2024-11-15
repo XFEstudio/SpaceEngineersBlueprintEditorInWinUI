@@ -1,6 +1,6 @@
 ﻿namespace SpaceEngineersBlueprintEditor.Interface.Services;
 
-public interface INavigationViewService : IAutoNavigable
+public interface INavigationViewService : IAutoNavigable, IGlobalService
 {
     IAutoNavigationService NavigationService { get; }
     void Initialize(NavigationView navigationView, Frame frame);

@@ -10,12 +10,10 @@ internal class NavigationViewService : GlobalServiceBase, INavigationViewService
 {
     private NavigationView? navigationView;
     private readonly AutoNavigationService navigationService = new();
-    private string? header;
+
     public IAutoNavigationService NavigationService => navigationService;
-
     public object? SelectedItem => navigationView?.SelectedItem;
-
-    public string? Header { get => header; set => header = value; }
+    public string? Header { get => navigationView?.Header.ToString(); set { if (navigationView is not null) navigationView.Header = value; } }
 
     [MemberNotNull(nameof(navigationView))]
     public void Initialize(NavigationView view, Frame frame)
@@ -30,7 +28,10 @@ internal class NavigationViewService : GlobalServiceBase, INavigationViewService
     private void NavigationService_Navigated(object? sender, NavigationEventArgs e)
     {
         if (navigationView is not null && GetSelectedItem(e.SourcePageType, e.Parameter) is NavigationViewItem navigationViewItem)
+        {
             navigationView.SelectedItem = navigationViewItem;
+            Header = navigationViewItem.Content.ToString() ?? string.Empty;
+        }
     }
 
     private void NavigationView_BackRequested(NavigationView sender, NavigationViewBackRequestedEventArgs args)
