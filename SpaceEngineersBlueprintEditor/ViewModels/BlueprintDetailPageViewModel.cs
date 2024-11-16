@@ -7,7 +7,8 @@ namespace SpaceEngineersBlueprintEditor.ViewModels;
 
 public partial class BlueprintDetailPageViewModel : ViewModelBase
 {
-    private INavigationViewService? navigationViewService = GlobalServiceManager.GetService<INavigationViewService>();
+    private readonly INavigationViewService? navigationViewService = GlobalServiceManager.GetService<INavigationViewService>();
+    public IBackgroundImageService? BackgroundImageService { get; set; } = GlobalServiceManager.GetService<IBackgroundImageService>();
     public INavigationParameterService<BlueprintInfoViewData> NavigationParameterService { get; set; } = new NavigationParameterService<BlueprintInfoViewData>();
     public BlueprintDetailPageViewModel()
     {

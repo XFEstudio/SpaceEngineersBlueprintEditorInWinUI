@@ -1,3 +1,5 @@
+using Microsoft.UI;
+using Microsoft.UI.Xaml.Media;
 using Microsoft.UI.Xaml.Media.Animation;
 using Microsoft.UI.Xaml.Navigation;
 using SpaceEngineersBlueprintEditor.Model;
@@ -28,6 +30,7 @@ public sealed partial class BlueprintDetailPage : Page
             ConnectedAnimationService.GetForCurrentView().GetAnimation("ForwardConnectedAnimation")?.TryStart(detailPreviewImage, []);
             Parameter = parameter;
             ViewModel.NavigationParameterService.OnParameterChange(Parameter);
+            ViewModel.BackgroundImageService?.SetBackgroundImage(parameter.BlueprintImage);
         }
     }
 
@@ -36,5 +39,6 @@ public sealed partial class BlueprintDetailPage : Page
         base.OnNavigatingFrom(e);
         if (e.SourcePageType == typeof(BlueprintsViewPage))
             ConnectedAnimationService.GetForCurrentView().PrepareToAnimate("BackConnectedAnimation", detailPreviewImage);
+        ViewModel.BackgroundImageService?.ResetBackground();
     }
 }

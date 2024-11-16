@@ -12,6 +12,7 @@ public partial class AppShellPageViewModel : ViewModelBase
     [ObservableProperty]
     bool canGoBack;
     public INavigationViewService NavigationViewService { get; set; } = new NavigationViewService();
+    public IBackgroundImageService BackgroundImageService { get; set; } = new BackgroundImageService();
     public IMessageService MessageService { get; set; } = new MessageService();
 
     public AppShellPageViewModel() => NavigationViewService.NavigationService.Navigated += NavigationService_Navigated;

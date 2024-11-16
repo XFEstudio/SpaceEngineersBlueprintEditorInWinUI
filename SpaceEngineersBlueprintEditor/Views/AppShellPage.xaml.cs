@@ -17,6 +17,7 @@ public sealed partial class AppShellPage : Page
         App.MainWindow?.SetTitleBar(appTitleBar);
         ViewModel.NavigationViewService.Initialize(navigationView, navigationFrame);
         ViewModel.MessageService.Initialize(messageStackPanel, DispatcherQueue);
+        ViewModel.BackgroundImageService.Initialize(this, mainGrid);
         ViewModel.NavigationViewService.NavigateTo<MainPage>();
     }
 

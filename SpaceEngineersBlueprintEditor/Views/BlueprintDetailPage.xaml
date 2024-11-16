@@ -9,10 +9,20 @@
     mc:Ignorable="d">
 
     <Grid>
-        <ScrollView>
-            <StackPanel>
-                <TextBlock Style="{ThemeResource SubtitleTextBlockStyle}"/>
-                <Image x:Name="detailPreviewImage" Source="{x:Bind Parameter.BlueprintImage}" Width="350" Stretch="Uniform" HorizontalAlignment="Left" VerticalAlignment="Top"/>
+        <Grid>
+            
+        </Grid>
+        <ScrollView Canvas.ZIndex="0">
+            <StackPanel Orientation="Vertical">
+                <Grid HorizontalAlignment="Left" VerticalAlignment="Top" ColumnDefinitions="350, *" ColumnSpacing="20" RowDefinitions="*, *, *, *, *, *" RowSpacing="20">
+                    <Image x:Name="detailPreviewImage" Grid.RowSpan="6" Source="{x:Bind Parameter.BlueprintImage}" Width="350" Stretch="Uniform"/>
+                    <TextBlock Grid.Column="1" Grid.Row="0" Text="蓝图基本信息："/>
+                    <!--<TextBlock Grid.Column="1" Grid.Row="1" Text="{x:Bind 蓝图作者：}"/>
+                    <TextBlock Grid.Column="1" Grid.Row="4" Text="{x:Bind 蓝图大小}"/>
+                    <TextBlock Grid.Column="1" Grid.Row="5" Text="{x:Bind 蓝图位置：}"/>
+                    <TextBlock Grid.Column="1" Grid.Row="2" Text="{x:Bind 是否可破坏：}"/>
+                    <TextBlock Grid.Column="1" Grid.Row="3" Text="{x:Bind 是否可在游戏内编辑：}"/>-->
+                </Grid>
             </StackPanel>
         </ScrollView>
     </Grid>

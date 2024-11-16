@@ -40,7 +40,7 @@ public partial class App : Application
     {
         if (GlobalServiceManager.GetService<IMessageService>() is IMessageService messageService)
         {
-            messageService.ShowMessage(e.Message, "错误：", InfoBarSeverity.Error);
+            messageService.ShowMessage(e.Message, "错误", InfoBarSeverity.Error);
             e.Handled = true;
         }
     }

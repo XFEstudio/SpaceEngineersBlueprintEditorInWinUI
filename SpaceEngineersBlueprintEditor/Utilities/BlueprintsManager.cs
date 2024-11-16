@@ -1,5 +1,4 @@
-﻿using SpaceEngineersBlueprintEditor.Interface.Services;
-using SpaceEngineersBlueprintEditor.Model;
+﻿using SpaceEngineersBlueprintEditor.Model;
 using XFEExtension.NetCore.FileExtension;
 
 namespace SpaceEngineersBlueprintEditor.Utilities;

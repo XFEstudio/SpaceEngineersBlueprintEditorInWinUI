@@ -39,16 +39,18 @@ public sealed partial class BlueprintsViewPage : Page
         if (e.ClickedItem is BlueprintInfoViewData blueprintInfoViewData)
         {
             CurrentBlueprintInfoViewData = blueprintInfoViewData;
+            ViewModel.NavigationParameterService.OnParameterChange(blueprintInfoViewData);
             blueprintGridView.PrepareConnectedAnimation("ForwardConnectedAnimation", e.ClickedItem, "connectedElement");
             Frame.Navigate(typeof(BlueprintDetailPage), e.ClickedItem, new SuppressNavigationTransitionInfo());
         }
     }
 
-    private void GridView_RightTapped(object sender, Microsoft.UI.Xaml.Input.RightTappedRoutedEventArgs e)
+    private void Grid_RightTapped(object sender, Microsoft.UI.Xaml.Input.RightTappedRoutedEventArgs e)
     {
         if (sender is Grid grid && grid.DataContext is BlueprintInfoViewData blueprintInfoViewData)
         {
             CurrentBlueprintInfoViewData = blueprintInfoViewData;
+            ViewModel.NavigationParameterService.OnParameterChange(blueprintInfoViewData);
             commandBarFlyout.ShowAt(grid);
         }
     }
