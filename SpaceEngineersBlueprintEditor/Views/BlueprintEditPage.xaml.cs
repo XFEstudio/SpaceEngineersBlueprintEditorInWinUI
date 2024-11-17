@@ -1,7 +1,7 @@
 using Microsoft.UI.Xaml.Navigation;
-using SpaceEngineersBlueprintEditor.Model;
 using SpaceEngineersBlueprintEditor.Utilities;
 using SpaceEngineersBlueprintEditor.ViewModels;
+using VRage.Game;
 
 namespace SpaceEngineersBlueprintEditor.Views;
 
@@ -10,8 +10,7 @@ namespace SpaceEngineersBlueprintEditor.Views;
 /// </summary>
 public sealed partial class BlueprintEditPage : Page
 {
-    public BlueprintInfoViewData? Parameter { get; set; }
-
+    public MyObjectBuilder_Definitions? Parameter { get; set; }
     public static BlueprintEditPage? Current { get; set; }
     public BlueprintEditPageViewModel ViewModel { get; set; } = new();
     public BlueprintEditPage()
@@ -23,7 +22,7 @@ public sealed partial class BlueprintEditPage : Page
     protected override void OnNavigatedTo(NavigationEventArgs e)
     {
         base.OnNavigatedTo(e);
-        if (e.Parameter is BlueprintInfoViewData parameter)
+        if (e.Parameter is MyObjectBuilder_Definitions parameter)
         {
             Parameter = parameter;
             ViewModel.NavigationParameterService.OnParameterChange(Parameter);

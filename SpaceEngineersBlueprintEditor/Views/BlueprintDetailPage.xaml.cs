@@ -1,5 +1,3 @@
-using Microsoft.UI;
-using Microsoft.UI.Xaml.Media;
 using Microsoft.UI.Xaml.Media.Animation;
 using Microsoft.UI.Xaml.Navigation;
 using SpaceEngineersBlueprintEditor.Model;
@@ -19,6 +17,7 @@ public sealed partial class BlueprintDetailPage : Page
     public BlueprintDetailPage()
     {
         PageManager.AddOrUpdateCurrentPage(Current = this);
+        NavigationCacheMode = NavigationCacheMode.Enabled;
         this.InitializeComponent();
     }
 
@@ -28,6 +27,7 @@ public sealed partial class BlueprintDetailPage : Page
         if (e.Parameter is BlueprintInfoViewData parameter)
         {
             ConnectedAnimationService.GetForCurrentView().GetAnimation("ForwardConnectedAnimation")?.TryStart(detailPreviewImage, []);
+            detailPreviewImage.Source = parameter.BlueprintImage;
             Parameter = parameter;
             ViewModel.NavigationParameterService.OnParameterChange(Parameter);
             ViewModel.BackgroundImageService?.SetBackgroundImage(parameter.BlueprintImage);

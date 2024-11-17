@@ -17,8 +17,5 @@ public partial class AppShellPageViewModel : ViewModelBase
 
     public AppShellPageViewModel() => NavigationViewService.NavigationService.Navigated += NavigationService_Navigated;
 
-    private void NavigationService_Navigated(object? sender, NavigationEventArgs e)
-    {
-        CanGoBack = NavigationViewService.NavigationService.CanGoBack;
-    }
+    private void NavigationService_Navigated(object? sender, NavigationEventArgs e) => CanGoBack = NavigationViewService.NavigationService.CanGoBack;
 }

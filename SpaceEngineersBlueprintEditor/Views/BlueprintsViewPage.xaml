@@ -9,7 +9,7 @@
     xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
     mc:Ignorable="d">
     <Page.Resources>
-        <CommandBarFlyout Placement="Right" x:Name="commandBarFlyout" ShowMode="Auto">
+        <CommandBarFlyout Placement="Right" x:FieldModifier="internal" x:Name="commandBarFlyout" ShowMode="Auto">
             <AppBarButton Label="Open" Icon="OpenLocal" ToolTipService.ToolTip="Open In Folder" Command="{x:Bind ViewModel.OpenFolderCommand}"/>
             <AppBarButton Label="Copy" Icon="Copy" ToolTipService.ToolTip="Copy" Command="{x:Bind ViewModel.CopyToCommand}"/>
             <AppBarButton Label="Delete" Icon="Delete" ToolTipService.ToolTip="Delete">
@@ -53,7 +53,7 @@
         </GridView>
         <Grid Margin="0,0,0,20" Padding="5" CornerRadius="8" VerticalAlignment="Bottom" HorizontalAlignment="Center" Background="{ThemeResource AcrylicInAppFillColorDefaultBrush}">
             <StackPanel Orientation="Horizontal" Spacing="10">
-                <AutoSuggestBox Width="250" QueryIcon="Find" Text="{x:Bind ViewModel.SearchText,Mode=TwoWay}" PlaceholderText="Search blueprints..."/>
+                <AutoSuggestBox Width="250" QueryIcon="Find" Text="{x:Bind ViewModel.SearchText,Mode=TwoWay}" PlaceholderText="Search blueprints..." />
                 <Button Grid.Column="1" Command="{x:Bind ViewModel.RefreshBlueprintsCommand}">
                     <StackPanel Orientation="Horizontal" Spacing="5">
                         <FontIcon Glyph="&#xE72C;"/>

@@ -63,7 +63,7 @@ internal class NavigationViewService : GlobalServiceBase, INavigationViewService
             if (item.GetNavigateTo() is string pageName && pageName == pageType.FullName)
             {
                 var itemParameter = item.GetNavigationParameter();
-                if (parameter is string && Equals(parameter, itemParameter) || parameter == itemParameter)
+                if (parameter is string && Equals(parameter, itemParameter) || parameter == itemParameter || itemParameter is null)
                     return item;
             }
             var selectedChild = GetSelectedItem(item.MenuItems, pageType, parameter);

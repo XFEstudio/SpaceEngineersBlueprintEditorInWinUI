@@ -85,7 +85,10 @@ public partial class BlueprintsViewPageViewModel : ViewModelBase
     void OpenFolder()
     {
         if (currentBlueprintInfoViewData is not null && Path.GetDirectoryName(currentBlueprintInfoViewData.FilePath) is string path)
+        {
             Process.Start("explorer.exe", path);
+            BlueprintsViewPage.Current?.commandBarFlyout.Hide();
+        }
     }
 
     [RelayCommand]
@@ -96,6 +99,7 @@ public partial class BlueprintsViewPageViewModel : ViewModelBase
             var targetPath = $@"{Path.GetDirectoryName(path)}\{CopyFolderText}";
             FileHelper.CopyDirectory(path, targetPath);
             messageService?.ShowMessage($"已复制至：{targetPath}", "完成", InfoBarSeverity.Success);
+            BlueprintsViewPage.Current?.commandBarFlyout.Hide();
             await RefreshBlueprints();
         }
     }
@@ -107,6 +111,7 @@ public partial class BlueprintsViewPageViewModel : ViewModelBase
         {
             Directory.Delete(path, true);
             messageService?.ShowMessage($"已删除：{path}", "完成", InfoBarSeverity.Success);
+            BlueprintsViewPage.Current?.commandBarFlyout.Hide();
             await RefreshBlueprints();
         }
     }
