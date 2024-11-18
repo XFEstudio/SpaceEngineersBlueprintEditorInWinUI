@@ -14,4 +14,6 @@ public partial class SpaceEngineersPath
     private static readonly string cloudBlueprints = $@"{BlueprintsRoot}\cloud";
     [AutoPath]
     private static readonly string workshopBlueprints = $@"{BlueprintsRoot}\workshop\temp\Steam";
+    [AutoPath]
+    private static readonly string spaceEngineerContentPath = @"D:\SteamLibrary\steamapps\common\SpaceEngineers\Content";
 }

@@ -33,7 +33,7 @@ public class Initializer
     {
         return FormatterServices.GetUninitializedObject(type);
     }
-    public static void Initialize()
+    public static void Initialize(string gameContentPath, string userDataPath)
     {
         XmlConfigurator.Configure();
         MyFileSystem.ExePath = Path.GetDirectoryName(Assembly.GetAssembly(typeof(FastResourceLock))!.Location);
@@ -41,7 +41,7 @@ public class Initializer
         SpaceEngineersGame.SetupBasicGameInfo();
         _ = new MyCommonProgramStartup([]);
         MyFileSystem.Reset();
-        MyFileSystem.Init("D:\\SteamLibrary\\steamapps\\common\\SpaceEngineers\\Content", "C:\\Users\\XFEstudio\\AppData\\Roaming\\SpaceEngineers");
+        MyFileSystem.Init(gameContentPath, userDataPath);
         MyVRage.Init(new CorePlatform());
         MyVRage.Platform.Init();
         MySandboxGame.Config = new MyConfig("SpaceEngineers.cfg");
@@ -68,6 +68,11 @@ public class Initializer
         myPlanets.LoadData();
         MyDefinitionManager.Static.PreloadDefinitions();
         MyDefinitionManager.Static.LoadData([]);
+        MyTexts.Clear();
+        var culture = Thread.CurrentThread.CurrentUICulture.IetfLanguageTag.Split(['-'], StringSplitOptions.RemoveEmptyEntries);
+        var language = culture.Length > 0 ? culture[0] : null;
+        var country = culture.Length > 1 ? culture[1] : null;
+        MyTexts.LoadTexts(@$"{gameContentPath}\Data\Localization", language, country);
         IsDefinitionsLoadComplete = true;
     }
 

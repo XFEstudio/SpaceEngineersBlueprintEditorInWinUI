@@ -58,17 +58,17 @@
                         <FontIcon Glyph="&#xECAA;"/>
                     </NavigationViewItem.Icon>
                     <NavigationViewItem.MenuItems>
-                        <NavigationViewItem x:Uid="AppShell_ShellMenu_ViewDefinitions_CubeDefinitions" add:NavigationAddition.NavigateTo="SpaceEngineersBlueprintEditor.Views.GameDefinitionsViewPage" add:NavigationAddition.NavigateParameter="Cube">
+                        <NavigationViewItem x:Uid="AppShell_ShellMenu_ViewDefinitions_CubeDefinitions" add:NavigationAddition.NavigateTo="SpaceEngineersBlueprintEditor.Views.GameDefinitionsViewPage" add:NavigationAddition.NavigateParameter="Cubes">
                             <NavigationViewItem.Icon>
                                 <FontIcon Glyph="&#xF158;"/>
                             </NavigationViewItem.Icon>
                         </NavigationViewItem>
-                        <NavigationViewItem x:Uid="AppShell_ShellMenu_ViewDefinitions_ComponentDefinitions" add:NavigationAddition.NavigateTo="SpaceEngineersBlueprintEditor.Views.GameDefinitionsViewPage" add:NavigationAddition.NavigateParameter="Component">
+                        <NavigationViewItem x:Uid="AppShell_ShellMenu_ViewDefinitions_ComponentDefinitions" add:NavigationAddition.NavigateTo="SpaceEngineersBlueprintEditor.Views.GameDefinitionsViewPage" add:NavigationAddition.NavigateParameter="Components">
                             <NavigationViewItem.Icon>
                                 <FontIcon Glyph="&#xF157;"/>
                             </NavigationViewItem.Icon>
                         </NavigationViewItem>
-                        <NavigationViewItem x:Uid="AppShell_ShellMenu_ViewDefinitions_ItemDefinitions" add:NavigationAddition.NavigateTo="SpaceEngineersBlueprintEditor.Views.GameDefinitionsViewPage" add:NavigationAddition.NavigateParameter="Item">
+                        <NavigationViewItem x:Uid="AppShell_ShellMenu_ViewDefinitions_ItemDefinitions" add:NavigationAddition.NavigateTo="SpaceEngineersBlueprintEditor.Views.GameDefinitionsViewPage" add:NavigationAddition.NavigateParameter="Items">
                             <NavigationViewItem.Icon>
                                 <FontIcon Glyph="&#xECA5;"/>
                             </NavigationViewItem.Icon>

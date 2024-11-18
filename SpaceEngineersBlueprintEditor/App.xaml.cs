@@ -26,7 +26,7 @@ public partial class App : Application
         {
             try
             {
-                Initializer.Initialize();
+                Initializer.Initialize(SpaceEngineersPath.SpaceEngineerContentPath, SpaceEngineersPath.UserGameDataRoot);
                 GlobalServiceManager.GetService<IMessageService>()?.ShowMessage("游戏集定义加载完成", "完成", InfoBarSeverity.Success);
             }
             catch (Exception ex)
