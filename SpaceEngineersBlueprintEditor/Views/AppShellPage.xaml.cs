@@ -32,10 +32,12 @@ public sealed partial class AppShellPage : Page
         };
     }
 
-    private void Page_Loaded(object sender, RoutedEventArgs e)
+    private async void Page_Loaded(object sender, RoutedEventArgs e)
     {
         ViewModel.MessageService.ShowMessage("游戏定义集加载中...", "正在加载");
         AppThemeHelper.ChangeTheme(SystemProfile.Theme);
+        SpaceEngineersHelper.LoadComplete += (sender, e) => ViewModel.MessageService.ShowMessage("定义集图片加载完成", "完成", InfoBarSeverity.Success);
+        await SpaceEngineersHelper.LoadDefinitionViewDataListAsync();
     }
 
     private void NavigationView_PaneOpening(NavigationView sender, object args)
