@@ -20,7 +20,17 @@
       <Generator>MSBuild:Compile</Generator>
     </Content>
   </ItemGroup>
-
+  
+  <ItemGroup>
+    <None Include="Assets\**\*">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </None>
+  </ItemGroup>
+  
+  <ItemGroup>
+    <None Remove="Views\GameDefinitionsViewPage.xaml" />
+  </ItemGroup>
+  
   <ItemGroup>
     <Manifest Include="$(ApplicationManifest)" />
   </ItemGroup>
@@ -168,6 +178,11 @@
     <Reference Include="VRage.XmlSerializers">
       <HintPath>..\DLLReference\VRage.XmlSerializers.dll</HintPath>
     </Reference>
+  </ItemGroup>
+  <ItemGroup>
+    <Page Update="Views\GameDefinitionsViewPage.xaml">
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
   </ItemGroup>
   <ItemGroup>
     <Page Update="Views\BlueprintDetailPage.xaml">

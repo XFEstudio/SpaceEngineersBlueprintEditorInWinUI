@@ -217,4 +217,20 @@
     <value>Dark</value>
     <comment>深色</comment>
   </data>
+  <data name="AppShell_ShellMenu_ViewDefinitions.Content" xml:space="preserve">
+    <value>Game Definitions</value>
+    <comment>游戏定义集</comment>
+  </data>
+  <data name="AppShell_ShellMenu_ViewDefinitions_CubeDefinitions.Content" xml:space="preserve">
+    <value>Cube Definitions</value>
+    <comment>方块定义集</comment>
+  </data>
+  <data name="AppShell_ShellMenu_ViewDefinitions_ItemDefinitions.Content" xml:space="preserve">
+    <value>Item Definitions</value>
+    <comment>物品定义集</comment>
+  </data>
+  <data name="AppShell_ShellMenu_ViewDefinitions_ComponentDefinitions.Content" xml:space="preserve">
+    <value>Component Definitions</value>
+    <comment>组件定义集</comment>
+  </data>
 </root>

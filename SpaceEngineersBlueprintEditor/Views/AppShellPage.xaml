@@ -53,6 +53,28 @@
                         </NavigationViewItem>
                     </NavigationViewItem.MenuItems>
                 </NavigationViewItem>
+                <NavigationViewItem x:Uid="AppShell_ShellMenu_ViewDefinitions">
+                    <NavigationViewItem.Icon>
+                        <FontIcon Glyph="&#xECAA;"/>
+                    </NavigationViewItem.Icon>
+                    <NavigationViewItem.MenuItems>
+                        <NavigationViewItem x:Uid="AppShell_ShellMenu_ViewDefinitions_CubeDefinitions" add:NavigationAddition.NavigateTo="SpaceEngineersBlueprintEditor.Views.GameDefinitionsViewPage" add:NavigationAddition.NavigateParameter="Cube">
+                            <NavigationViewItem.Icon>
+                                <FontIcon Glyph="&#xF158;"/>
+                            </NavigationViewItem.Icon>
+                        </NavigationViewItem>
+                        <NavigationViewItem x:Uid="AppShell_ShellMenu_ViewDefinitions_ComponentDefinitions" add:NavigationAddition.NavigateTo="SpaceEngineersBlueprintEditor.Views.GameDefinitionsViewPage" add:NavigationAddition.NavigateParameter="Component">
+                            <NavigationViewItem.Icon>
+                                <FontIcon Glyph="&#xF157;"/>
+                            </NavigationViewItem.Icon>
+                        </NavigationViewItem>
+                        <NavigationViewItem x:Uid="AppShell_ShellMenu_ViewDefinitions_ItemDefinitions" add:NavigationAddition.NavigateTo="SpaceEngineersBlueprintEditor.Views.GameDefinitionsViewPage" add:NavigationAddition.NavigateParameter="Item">
+                            <NavigationViewItem.Icon>
+                                <FontIcon Glyph="&#xECA5;"/>
+                            </NavigationViewItem.Icon>
+                        </NavigationViewItem>
+                    </NavigationViewItem.MenuItems>
+                </NavigationViewItem>
             </NavigationView.MenuItems>
             <NavigationView.FooterMenuItems>
                 <NavigationViewItem x:Uid="AppShell_ShellItem_AppSetting" add:NavigationAddition.NavigateTo="SpaceEngineersBlueprintEditor.Views.SettingPage">
