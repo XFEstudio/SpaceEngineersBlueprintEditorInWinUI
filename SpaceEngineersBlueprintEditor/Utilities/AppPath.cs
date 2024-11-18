@@ -14,6 +14,8 @@ public partial class AppPath
     [AutoPath]
     private static readonly string appCache = @$"{Environment.GetFolderPath(Environment.SpecialFolder.LocalApplicationData)}\Temp\SpaceEngineersBlueprintsEditor";
     [AutoPath]
+    private static readonly string definitionImages = @$"{AppCache}\DefinitionImages";
+    [AutoPath]
     private static readonly string localProfile = @$"{AppLocalData}\Profiles";
     [AutoPath]
     private static readonly string localVersionProfile = $@"{AppLocalVersionData}\Profiles";

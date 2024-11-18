@@ -21,8 +21,8 @@
                 </StackPanel>
             </Grid>
         </Grid>
-        <Grid ColumnDefinitions="4*, *" RowSpacing="20" Background="{ThemeResource SolidBackgroundFillColorBaseBrush}" BorderBrush="{ThemeResource CardStrokeColorDefaultBrush}" Margin="0,0,0,36">
-            <ItemsView Canvas.ZIndex="0" Padding="4" ItemsSource="{x:Bind ViewModel.Definitions}">
+        <Grid ColumnDefinitions="4*, *" RowSpacing="20" Background="{ThemeResource SolidBackgroundFillColorBaseBrush}" BorderBrush="{ThemeResource CardStrokeColorDefaultBrush}" Margin="0,0,0,36" CornerRadius="8">
+            <ItemsView x:Name="definitionsItemView" SelectionChanged="DefinitionsItemView_SelectionChanged" Canvas.ZIndex="0" Padding="4" ItemsSource="{x:Bind ViewModel.Definitions}">
                 <ItemsView.Layout>
                     <UniformGridLayout Orientation="Horizontal" />
                 </ItemsView.Layout>
@@ -30,15 +30,25 @@
                     <DataTemplate x:DataType="model:DefinitionViewData">
                         <ItemContainer Width="100" Height="100" Margin="4" Background="{ThemeResource CardBackgroundFillColorDefaultBrush}" BorderBrush="{ThemeResource CardStrokeColorDefaultBrush}">
                             <Grid RowDefinitions="60, Auto" Padding="5">
-                                <Image Source="{x:Bind ImageSource, Mode=OneWay}" Width="60" Height="60" Stretch="Uniform" HorizontalAlignment="Center" VerticalAlignment="Center"/>
+                                <Image Source="{x:Bind ImageSource}" Width="60" Height="60" Stretch="Uniform" HorizontalAlignment="Center" VerticalAlignment="Center"/>
                                 <TextBlock Grid.Row="1" TextWrapping="NoWrap" TextTrimming="CharacterEllipsis" HorizontalAlignment="Center" VerticalAlignment="Bottom" Text="{x:Bind DefinitionBase.DisplayNameText}"/>
+                                <Grid HorizontalAlignment="Right" CornerRadius="4" VerticalAlignment="Top" Padding="1" Visibility="{x:Bind HasAdditionalInfo}" Background="{ThemeResource AccentFillColorDefaultBrush}">
+                                    <TextBlock Text="{x:Bind AdditionalInfo}" FontSize="12" Foreground="{ThemeResource TextOnAccentFillColorPrimaryBrush}"/>
+                                </Grid>
+                                <FontIcon HorizontalAlignment="Right" VerticalAlignment="Top" Glyph="{x:Bind CubeSize}" Visibility="{x:Bind HasCubeSize}"/>
                             </Grid>
                         </ItemContainer>
                     </DataTemplate>
                 </ItemsView.ItemTemplate>
             </ItemsView>
             <Grid Grid.Column="1" Background="{ThemeResource CardBackgroundFillColorDefaultBrush}" BorderBrush="{ThemeResource CardStrokeColorDefaultBrush}">
-                
+                <ScrollView>
+                    <StackPanel Padding="16" Spacing="20">
+                        <TextBlock Text="{x:Bind ViewModel.SelectedDefinitionViewData.DefinitionBase.DisplayNameText, Mode=OneWay}" HorizontalAlignment="Left" Style="{ThemeResource SubtitleTextBlockStyle}"/>
+                        <Image Source="{x:Bind ViewModel.SelectedDefinitionViewData.ImageSource, Mode=OneWay}" HorizontalAlignment="Left" Width="128" Height="128"/>
+                        <TextBlock Text="{x:Bind ViewModel.SelectedDefinitionViewData.DefinitionBase.DescriptionText, Mode=OneWay}" HorizontalAlignment="Left" Style="{ThemeResource CaptionTextBlockStyle}"/>
+                    </StackPanel>
+                </ScrollView>
             </Grid>
             <Grid Margin="0,0,0,20" Width="250" Padding="5" CornerRadius="8" VerticalAlignment="Bottom" HorizontalAlignment="Center" Background="{ThemeResource AcrylicInAppFillColorDefaultBrush}">
                 <AutoSuggestBox PlaceholderText="Search definitions..." QueryIcon="Find" Text="{x:Bind ViewModel.SearchText, Mode=TwoWay}"/>

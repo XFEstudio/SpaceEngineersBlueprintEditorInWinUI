@@ -35,7 +35,7 @@ public partial class BlueprintsViewPageViewModel : ViewModelBase
         LoadBlueprints(SearchBlueprints(currentParameter, value).ToList());
     }
 
-    private static IEnumerable<BlueprintInfo> SearchBlueprints(string searchMode, string blueprintName) => GetCurrentBlueprints(searchMode).Where(blueprint => blueprint.Name.Contains(blueprintName));
+    private static IEnumerable<BlueprintInfo> SearchBlueprints(string searchMode, string blueprintName) => GetCurrentBlueprints(searchMode).Where(blueprint => blueprint.Name.Contains(blueprintName, StringComparison.OrdinalIgnoreCase));
 
     private static List<BlueprintInfo> GetCurrentBlueprints(string currentLocation) => currentLocation switch
     {

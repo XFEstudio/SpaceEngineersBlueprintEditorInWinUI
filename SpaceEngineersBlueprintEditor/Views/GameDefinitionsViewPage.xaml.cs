@@ -27,4 +27,6 @@ public sealed partial class GameDefinitionsViewPage : Page
             ViewModel.NavigationParameterService.OnParameterChange(Parameter);
         }
     }
+
+    private void DefinitionsItemView_SelectionChanged(ItemsView sender, ItemsViewSelectionChangedEventArgs args) => ViewModel.SelectedDefinitionViewData = (Model.DefinitionViewData?)sender.SelectedItem;
 }

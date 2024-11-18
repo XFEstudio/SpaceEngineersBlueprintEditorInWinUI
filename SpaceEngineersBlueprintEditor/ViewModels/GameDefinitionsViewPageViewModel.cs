@@ -1,11 +1,12 @@
 ﻿using CommunityToolkit.Mvvm.ComponentModel;
 using Microsoft.UI.Xaml.Media.Imaging;
+using Sandbox.Definitions;
 using SpaceEngineersBlueprintEditor.Implements.Services;
 using SpaceEngineersBlueprintEditor.Interface.Services;
 using SpaceEngineersBlueprintEditor.Model;
+using SpaceEngineersBlueprintEditor.SpaceEngineersCore;
 using SpaceEngineersBlueprintEditor.Utilities;
 using System.Collections.ObjectModel;
-using System.Diagnostics;
 using VRage.Game;
 
 namespace SpaceEngineersBlueprintEditor.ViewModels;
@@ -16,16 +17,19 @@ public partial class GameDefinitionsViewPageViewModel : ViewModelBase
     private string searchText = "";
     [ObservableProperty]
     private bool isProgressRingVisible = true;
+    [ObservableProperty]
+    private DefinitionViewData? selectedDefinitionViewData;
     private string currentParameter = "";
-    private List<DefinitionViewData> _definitions = [];
+    private readonly List<DefinitionViewData> _definitions = [];
     public ObservableCollection<DefinitionViewData> Definitions { get; } = [];
     public INavigationParameterService<string> NavigationParameterService { get; } = new NavigationParameterService<string>();
 
     public GameDefinitionsViewPageViewModel() => NavigationParameterService.ParameterChange += NavigationParameterService_ParameterChange;
 
-    private void NavigationParameterService_ParameterChange(object? sender, string e)
+    private async void NavigationParameterService_ParameterChange(object? sender, string e)
     {
         currentParameter = e;
+        while (!Initializer.IsDefinitionsLoadComplete) { await Task.Delay(100); }
         LoadDefinitions(GetCurrentDefinitions(currentParameter));
         IsProgressRingVisible = false;
     }
@@ -35,25 +39,18 @@ public partial class GameDefinitionsViewPageViewModel : ViewModelBase
         foreach (var definition in myDefinitions)
             if (definition is not null)
             {
-                SpaceEngineersHelper.DefinitionImageList.TryGetValue(definition, out var bitmapImage);
-                var definitionViewData = new DefinitionViewData(bitmapImage, definition);
+                var definitionViewData = new DefinitionViewData
+                {
+                    DefinitionBase = definition,
+                    ImageSource = definition.Icons is not null && definition.Icons.Length > 0 ? new BitmapImage(new(@$"{AppPath.DefinitionImages}\{FileHelper.ChangeExtension(definition.Icons[0], "png")}")) : null,
+                    CubeSize = definition is MyCubeBlockDefinition myCubeBlockDefinition ? myCubeBlockDefinition.CubeSize == MyCubeSize.Small ? "\uE744" : "\uE978" : null
+                };
                 _definitions.Add(definitionViewData);
                 Definitions.Add(definitionViewData);
             }
     }
 
-    //private async Task LoadDefinitions(IEnumerable<MyDefinitionBase> myDefinitions)
-    //{
-    //    foreach (var definition in myDefinitions)
-    //        if (definition is not null)
-    //        {
-    //            var definitionViewData = new DefinitionViewData(await FileHelper.ToBitmap($@"{SpaceEngineersPath.SpaceEngineerContentPath}\{definition.Icons[0]}"), definition);
-    //            _definitions.Add(definitionViewData);
-    //            Definitions.Add(definitionViewData);
-    //        }
-    //}
-
-    private IEnumerable<DefinitionViewData> SearchDefinitions(string definitionsName) => _definitions.Where(definition => definition.DefinitionBase.DisplayNameText is not null && definition.DefinitionBase.DisplayNameText.Contains(definitionsName));
+    private IEnumerable<DefinitionViewData> SearchDefinitions(string definitionsName) => _definitions.Where(definition => definition.DefinitionBase.DisplayNameText is not null && definition.DefinitionBase.DisplayNameText.Contains(definitionsName, StringComparison.OrdinalIgnoreCase));
 
     private static IEnumerable<MyDefinitionBase> GetCurrentDefinitions(string currentLocation) => currentLocation switch
     {
