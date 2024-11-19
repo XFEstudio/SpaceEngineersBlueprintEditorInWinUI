@@ -16,6 +16,7 @@ public sealed partial class GameDefinitionsViewPage : Page
     {
         PageManager.AddOrUpdateCurrentPage(Current = this);
         this.InitializeComponent();
+        ViewModel.DefinitionPropertiesDisplayService.Initialize(this, definitionsItemView);
     }
 
     protected override void OnNavigatedTo(NavigationEventArgs e)
@@ -27,6 +28,4 @@ public sealed partial class GameDefinitionsViewPage : Page
             ViewModel.NavigationParameterService.OnParameterChange(Parameter);
         }
     }
-
-    private void DefinitionsItemView_SelectionChanged(ItemsView sender, ItemsViewSelectionChangedEventArgs args) => ViewModel.SelectedDefinitionViewData = (Model.DefinitionViewData?)sender.SelectedItem;
 }
