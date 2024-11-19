@@ -2,6 +2,7 @@
 using SpaceEngineersBlueprintEditor.SpaceEngineersCore;
 using SpaceEngineersBlueprintEditor.Utilities;
 using SpaceEngineersBlueprintEditor.Views;
+using XFEExtension.NetCore.StringExtension;
 
 namespace SpaceEngineersBlueprintEditor;
 
@@ -26,6 +27,8 @@ public partial class App : Application
         {
             try
             {
+                if (SystemProfile.GameRootPath.IsNullOrEmpty())
+                    SystemProfile.GameRootPath = SpaceEngineersHelper.GetGameRootPath();
                 Initializer.Initialize(SpaceEngineersPath.SpaceEngineerContentPath, SpaceEngineersPath.UserGameDataRoot);
                 GlobalServiceManager.GetService<IMessageService>()?.ShowMessage("游戏集定义加载完成", "完成", InfoBarSeverity.Success);
             }

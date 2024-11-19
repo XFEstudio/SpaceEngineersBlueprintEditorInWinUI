@@ -15,6 +15,7 @@ public sealed partial class SettingPage : Page
         PageManager.AddOrUpdateCurrentPage(Current = this);
         this.InitializeComponent();
         ViewModel.SettingService.AddComboBox(appThemeComboBox, ProfileHelper.GetEnumProfileSaveFunc<ElementTheme>(), ProfileHelper.GetEnumProfileLoadFuncForComboBox());
+        ViewModel.SettingService.AddComboBox(navigationStyleComboBox, ProfileHelper.GetEnumProfileSaveFunc<NavigationViewPaneDisplayMode>(), ProfileHelper.GetEnumProfileLoadFuncForComboBox());
         ViewModel.SettingService.Initialize();
         ViewModel.SettingService.RegisterEvents();
     }

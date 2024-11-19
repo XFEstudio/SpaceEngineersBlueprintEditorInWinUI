@@ -2,6 +2,7 @@
 
 public interface INavigationViewService : IAutoNavigable, IGlobalService
 {
+    NavigationView? NavigationView { get; }
     IAutoNavigationService NavigationService { get; }
     void Initialize(NavigationView navigationView, Frame frame);
     object? SelectedItem { get; }

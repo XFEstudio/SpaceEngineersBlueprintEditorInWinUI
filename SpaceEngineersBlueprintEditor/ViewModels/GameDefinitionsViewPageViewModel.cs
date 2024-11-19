@@ -95,6 +95,7 @@ public partial class GameDefinitionsViewPageViewModel : ViewModelBase
         "Cubes" => SpaceEngineersHelper.CubeBlockDefinitions.OrderBy(definition => definition.CubeSize),
         "Components" => SpaceEngineersHelper.ComponentDefinitions,
         "Items" => SpaceEngineersHelper.ItemDefinitions,
+        "Scenarios" => SpaceEngineersHelper.ScenarioDefinition,
         _ => throw new NotImplementedException()
     };
 

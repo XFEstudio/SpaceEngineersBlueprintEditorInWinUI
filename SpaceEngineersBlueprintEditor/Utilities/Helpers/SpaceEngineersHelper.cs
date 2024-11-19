@@ -1,5 +1,6 @@
 ﻿using Microsoft.UI.Dispatching;
 using Microsoft.UI.Xaml.Media.Imaging;
+using Microsoft.Win32;
 using Sandbox.Definitions;
 using SpaceEngineersBlueprintEditor.Model;
 using SpaceEngineersBlueprintEditor.SpaceEngineersCore;
@@ -20,7 +21,7 @@ public static class SpaceEngineersHelper
     public static IEnumerable<MyCubeBlockDefinition> CubeBlockDefinitions => AllDefinitions.Where(definition => definition is MyCubeBlockDefinition).Cast<MyCubeBlockDefinition>();
     public static IEnumerable<MyComponentDefinition> ComponentDefinitions => AllDefinitions.Where(definition => definition is MyComponentDefinition).Cast<MyComponentDefinition>();
     public static IEnumerable<MyPhysicalItemDefinition> ItemDefinitions => AllDefinitions.Where(definition => definition is MyPhysicalItemDefinition).Cast<MyPhysicalItemDefinition>();
-    public static IEnumerable<MyDlcDefinition> DLCDefinitions => AllDefinitions.Where(definition => definition is MyDlcDefinition).Cast<MyDlcDefinition>();
+    public static IEnumerable<MyScenarioDefinition> ScenarioDefinition => AllDefinitions.Where(definition => definition is MyScenarioDefinition).Cast<MyScenarioDefinition>();
     public static async Task LoadDefinitionViewDataListAsync()
     {
         while (!Initializer.IsDefinitionsLoadComplete) { await Task.Delay(100); }
@@ -35,5 +36,39 @@ public static class SpaceEngineersHelper
             }
         IsLoadComplete = true;
         LoadComplete?.Invoke(null, EventArgs.Empty);
+    }
+
+    public static string? GetGameRootPath()
+    {
+        var path = GetGameRootPath(@"C:\", @"D:\", @"E:\", @"F:\", @"G:\", @"H:\", @"I:\", @"J:\", @"K:\", @"L:\", @"M:\", @"N:\", @"O:\", @"P:\", @"Q:\", @"R:\", @"S:\", @"T:\", @"U:\", @"V:\", @"W:\", @"X:\", @"Y:\", @"Z:\");
+        if (path is not null)
+            return path;
+        if ((Environment.Is64BitProcess ? Registry.LocalMachine.OpenSubKey(@"SOFTWARE\Wow6432Node\Microsoft\Windows\CurrentVersion\Uninstall\Steam App 244850", false) : Registry.LocalMachine.OpenSubKey(@"SOFTWARE\Microsoft\Windows\CurrentVersion\Uninstall\Steam App 244850", false)) is RegistryKey registryKey && registryKey.GetValue("InstallLocation")?.ToString() is string stringValue && !string.IsNullOrEmpty(stringValue))
+        {
+            return stringValue;
+        }
+        path = GetSteamFilePath();
+        if (!string.IsNullOrEmpty(path))
+            return Path.Combine(path, @"SteamApps\common\SpaceEngineers");
+        return null;
+    }
+
+    public static string? GetGameRootPath(params string[] roots)
+    {
+        foreach (var root in roots)
+        {
+            var targetPath = $@"{root}SteamLibrary\steamapps\common\SpaceEngineers\Bin64\SpaceEngineers.exe";
+            if (File.Exists(targetPath))
+                return $@"{root}SteamLibrary\steamapps\common\SpaceEngineers";
+        }
+        return null;
+    }
+
+    public static string? GetSteamFilePath()
+    {
+        if ((Environment.Is64BitProcess ? Registry.LocalMachine.OpenSubKey(@"SOFTWARE\Wow6432Node\Valve\Steam", false) : Registry.LocalMachine.OpenSubKey(@"SOFTWARE\Valve\Steam", false)) is RegistryKey registryKey)
+            return registryKey.GetValue("InstallPath")?.ToString();
+        else
+            return null;
     }
 }

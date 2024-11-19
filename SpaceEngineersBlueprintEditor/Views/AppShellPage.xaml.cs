@@ -23,19 +23,62 @@ public sealed partial class AppShellPage : Page
 
     private void NavigationView_DisplayModeChanged(NavigationView sender, NavigationViewDisplayModeChangedEventArgs args)
     {
-        appTitleBar.Margin = new Thickness()
+        switch (sender.PaneDisplayMode)
         {
-            Left = sender.CompactPaneLength * (sender.DisplayMode == NavigationViewDisplayMode.Minimal ? 2 : 1),
-            Top = appTitleBar.Margin.Top,
-            Right = appTitleBar.Margin.Right,
-            Bottom = appTitleBar.Margin.Bottom
-        };
+            case NavigationViewPaneDisplayMode.Auto:
+                navigationView.Margin = new();
+                appTitleBar.Margin = new()
+                {
+                    Left = sender.CompactPaneLength * (sender.DisplayMode == NavigationViewDisplayMode.Minimal ? 2 : 1),
+                    Top = appTitleBar.Margin.Top,
+                    Right = appTitleBar.Margin.Right,
+                    Bottom = appTitleBar.Margin.Bottom
+                };
+                break;
+            case NavigationViewPaneDisplayMode.Left:
+                navigationView.Margin = new();
+                appTitleBar.Margin = new()
+                {
+                    Left = sender.CompactPaneLength * (sender.DisplayMode == NavigationViewDisplayMode.Minimal ? 2 : 1),
+                    Top = appTitleBar.Margin.Top,
+                    Right = appTitleBar.Margin.Right,
+                    Bottom = appTitleBar.Margin.Bottom
+                };
+                break;
+            case NavigationViewPaneDisplayMode.Top:
+                navigationView.Margin = new(0, 48, 0, 0);
+                appTitleBar.Margin = new(16, 0, 0, 0);
+                break;
+            case NavigationViewPaneDisplayMode.LeftCompact:
+                navigationView.Margin = new();
+                appTitleBar.Margin = new()
+                {
+                    Left = sender.CompactPaneLength * (sender.DisplayMode == NavigationViewDisplayMode.Minimal ? 2 : 1),
+                    Top = appTitleBar.Margin.Top,
+                    Right = appTitleBar.Margin.Right,
+                    Bottom = appTitleBar.Margin.Bottom
+                };
+                break;
+            case NavigationViewPaneDisplayMode.LeftMinimal:
+                navigationView.Margin = new();
+                appTitleBar.Margin = new()
+                {
+                    Left = sender.CompactPaneLength * (sender.DisplayMode == NavigationViewDisplayMode.Minimal ? 2 : 1),
+                    Top = appTitleBar.Margin.Top,
+                    Right = appTitleBar.Margin.Right,
+                    Bottom = appTitleBar.Margin.Bottom
+                };
+                break;
+            default:
+                break;
+        }
     }
 
     private async void Page_Loaded(object sender, RoutedEventArgs e)
     {
         ViewModel.MessageService.ShowMessage("游戏定义集加载中...", "正在加载");
         AppThemeHelper.ChangeTheme(SystemProfile.Theme);
+        navigationView.PaneDisplayMode = SystemProfile.NavigationStyle;
         SpaceEngineersHelper.LoadComplete += (sender, e) => ViewModel.MessageService.ShowMessage("定义集图片加载完成", "完成", InfoBarSeverity.Success);
         await SpaceEngineersHelper.LoadDefinitionViewDataListAsync();
     }

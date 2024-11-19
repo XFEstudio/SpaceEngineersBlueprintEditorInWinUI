@@ -15,6 +15,8 @@ internal class NavigationViewService : GlobalServiceBase, INavigationViewService
     public object? SelectedItem => navigationView?.SelectedItem;
     public string? Header { get => navigationView?.Header.ToString(); set { if (navigationView is not null) navigationView.Header = value; } }
 
+    public NavigationView? NavigationView => navigationView;
+
     [MemberNotNull(nameof(navigationView))]
     public void Initialize(NavigationView view, Frame frame)
     {

@@ -73,6 +73,11 @@
                                 <FontIcon Glyph="&#xECA5;"/>
                             </NavigationViewItem.Icon>
                         </NavigationViewItem>
+                        <NavigationViewItem x:Uid="AppShell_ShellMenu_ViewDefinitions_ScenariosDefinitions" add:NavigationAddition.NavigateTo="SpaceEngineersBlueprintEditor.Views.GameDefinitionsViewPage" add:NavigationAddition.NavigateParameter="Scenarios">
+                            <NavigationViewItem.Icon>
+                                <FontIcon Glyph="&#xE74E;"/>
+                            </NavigationViewItem.Icon>
+                        </NavigationViewItem>
                     </NavigationViewItem.MenuItems>
                 </NavigationViewItem>
             </NavigationView.MenuItems>

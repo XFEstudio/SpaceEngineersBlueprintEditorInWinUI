@@ -217,6 +217,38 @@
     <value>Dark</value>
     <comment>深色</comment>
   </data>
+  <data name="SettingPage_AppearanceTitle.Text" xml:space="preserve">
+    <value>Appearance &amp; behavior</value>
+    <comment>外观 &amp; 行为</comment>
+  </data>
+  <data name="SettingPage_NavigationStyle.Header" xml:space="preserve">
+    <value>Navigation style</value>
+    <comment>导航栏样式</comment>
+  </data>
+  <data name="SettingPage_NavigationStyle_Auto.Content" xml:space="preserve">
+    <value>Auto</value>
+    <comment>自动</comment>
+  </data>
+  <data name="SettingPage_NavigationStyle_Left.Content" xml:space="preserve">
+    <value>Left</value>
+    <comment>左侧</comment>
+  </data>
+  <data name="SettingPage_NavigationStyle_Top.Content" xml:space="preserve">
+    <value>Top</value>
+    <comment>置顶</comment>
+  </data>
+  <data name="SettingPage_NavigationStyle_LeftCompact.Content" xml:space="preserve">
+    <value>Left Compact</value>
+    <comment>左侧小组件</comment>
+  </data>
+  <data name="SettingPage_NavigationStyle_LeftMinimal.Content" xml:space="preserve">
+    <value>Left Minimal</value>
+    <comment>左侧收起</comment>
+  </data>
+  <data name="SettingPage_AboutTitle.Text" xml:space="preserve">
+    <value>About</value>
+    <comment>关于</comment>
+  </data>
   <data name="AppShell_ShellMenu_ViewDefinitions.Content" xml:space="preserve">
     <value>Game Definitions</value>
     <comment>游戏定义集</comment>
@@ -232,5 +264,9 @@
   <data name="AppShell_ShellMenu_ViewDefinitions_ComponentDefinitions.Content" xml:space="preserve">
     <value>Component Definitions</value>
     <comment>组件定义集</comment>
+  </data>
+  <data name="AppShell_ShellMenu_ViewDefinitions_ScenariosDefinitions.Content" xml:space="preserve">
+    <value>Scenarios Definitions</value>
+    <comment>预设存档定义集</comment>
   </data>
 </root>
