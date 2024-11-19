@@ -66,7 +66,7 @@ public partial class GameDefinitionsViewPageViewModel : ViewModelBase
     private async void NavigationParameterService_ParameterChange(object? sender, string e)
     {
         currentParameter = e;
-        await Helper.Wait(() => Initializer.IsDefinitionsLoadComplete || DefinitionPropertiesDisplayService.IsPageLoaded);
+        await Helper.Wait(() => Initializer.IsDefinitionsLoadComplete && DefinitionPropertiesDisplayService.IsPageLoaded);
         LoadDefinitions(GetCurrentDefinitions(currentParameter));
         IsUIVisible = true;
         IsProgressRingVisible = false;
