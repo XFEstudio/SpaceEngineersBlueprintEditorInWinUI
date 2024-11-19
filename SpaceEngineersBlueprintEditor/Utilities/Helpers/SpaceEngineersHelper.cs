@@ -1,15 +1,8 @@
-﻿using Microsoft.UI.Dispatching;
-using Microsoft.UI.Xaml.Media.Imaging;
-using Microsoft.Win32;
+﻿using Microsoft.Win32;
 using Sandbox.Definitions;
-using SpaceEngineersBlueprintEditor.Model;
 using SpaceEngineersBlueprintEditor.SpaceEngineersCore;
-using System.Collections.Concurrent;
-using System.Diagnostics;
 using VRage.Collections;
 using VRage.Game;
-using VRage.Game.Definitions;
-using Windows.Storage.Streams;
 
 namespace SpaceEngineersBlueprintEditor.Utilities.Helpers;
 
@@ -24,7 +17,7 @@ public static class SpaceEngineersHelper
     public static IEnumerable<MyScenarioDefinition> ScenarioDefinition => AllDefinitions.Where(definition => definition is MyScenarioDefinition).Cast<MyScenarioDefinition>();
     public static async Task LoadDefinitionViewDataListAsync()
     {
-        while (!Initializer.IsDefinitionsLoadComplete) { await Task.Delay(100); }
+        await Helper.Wait(() => Initializer.IsDefinitionsLoadComplete);
         foreach (var definition in AllDefinitions)
             if (definition is not null && definition.Icons is not null && definition.Icons.Length > 0)
             {

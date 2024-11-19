@@ -67,13 +67,8 @@ public partial class BlueprintDetailPageViewModel : ViewModelBase
             IsProgressRingVisible = false;
             return;
         }
-        while (!SpaceEngineersHelper.IsLoadComplete) await Task.Delay(100);
-        await Task.Run(() =>
-        {
-            currentDefinitions = SpaceEngineerDefinitions.Load<MyObjectBuilder_Definitions>(e.FilePath);
-            if (currentDefinitions is not null && currentDefinitions.ShipBlueprints is not null && currentDefinitions.ShipBlueprints.Length > 0)
-                currentBlueprint = currentDefinitions.ShipBlueprints[0];
-        });
+        await Helper.Wait(() => SpaceEngineersHelper.IsLoadComplete);
+        await LoadBlueprintAsync();
         if (currentBlueprint is not null)
         {
             AuthorName = $"蓝图作者：{currentBlueprint.DisplayName}(Steam ID: {currentBlueprint.OwnerSteamId})";
@@ -81,16 +76,33 @@ public partial class BlueprintDetailPageViewModel : ViewModelBase
             BlueprintPath = $"蓝图路径：{currentBlueprintInfoViewData.FilePath}";
             IsBlueprintDestructible = $"是否可被破坏：{(currentBlueprint.CubeGrids.Any(grid => !grid.DestructibleBlocks) ? currentBlueprint.CubeGrids.Any(grid => grid.DestructibleBlocks) ? "部分可被破坏" : "整体不可破坏" : "可被破坏")}";
             IsBlueprintEditable = $"是否可在游戏内编辑：{(currentBlueprint.CubeGrids.Any(grid => !grid.Editable) ? currentBlueprint.CubeGrids.Any(grid => grid.Editable) ? "部分可编辑" : "整体不可编辑" : "可编辑")}";
-            if (currentBlueprint.DLCs is not null)
-            {
-                foreach (var dlc in currentBlueprint.DLCs)
-                    if (dlc is not null)
-                        DLCList.Add(dlc);
-            }
-            else
-            {
-                DLCList.Add("无DLC");
-            }
+            CalculateDLC();
+            CalculateCubeGrids();
+            CalculateComponent();
+            IsProgressRingVisible = false;
+            messageService?.ShowMessage("蓝图加载完成", "完成", InfoBarSeverity.Success);
+        }
+        else
+        {
+            IsProgressRingVisible = false;
+            messageService?.ShowMessage("未能加载蓝图", "错误", InfoBarSeverity.Error);
+        }
+    }
+
+    private async Task LoadBlueprintAsync()
+    {
+        await Task.Run(() =>
+        {
+            currentDefinitions = SpaceEngineerDefinitions.Load<MyObjectBuilder_Definitions>(e.FilePath);
+            if (currentDefinitions is not null && currentDefinitions.ShipBlueprints is not null && currentDefinitions.ShipBlueprints.Length > 0)
+                currentBlueprint = currentDefinitions.ShipBlueprints[0];
+        });
+    }
+
+    private void CalculateCubeGrids()
+    {
+        if (currentBlueprint is not null)
+        {
             if (currentBlueprint.CubeGrids is not null)
             {
                 int totalCubeCount = 0;
@@ -100,34 +112,6 @@ public partial class BlueprintDetailPageViewModel : ViewModelBase
                         totalCubeCount += grid.CubeBlocks.Count;
                         CubeGridList.Add(new($"网格名称：{grid.DisplayName}", $"方块数量：{grid.CubeBlocks.Count}"));
                     }
-                var cubeHashDictionary = new Dictionary<int, int>();
-                var componentDictionary = new Dictionary<MyComponentDefinition, int>();
-                currentBlueprint.CubeGrids.ForEach(grid => grid.CubeBlocks.ForEach(cube =>
-                {
-                    if (cubeHashDictionary.TryGetValue(cube.SubtypeId.m_hash, out int value))
-                        cubeHashDictionary[cube.SubtypeId.m_hash] = ++value;
-                    else
-                        cubeHashDictionary.TryAdd(cube.SubtypeId.m_hash, 1);
-                }));
-                cubeHashDictionary.ForEach(cubeHashEntry =>
-                {
-                    if (SpaceEngineersHelper.GetDefinition(cubeHashEntry.Key) is MyCubeBlockDefinition definition && definition is not null && definition.Components is not null && definition.Components.Length > 0)
-                    {
-                        definition.Components.ForEach(component =>
-                        {
-                            if (componentDictionary.ContainsKey(component.Definition))
-                                componentDictionary[component.Definition] += component.Count * cubeHashEntry.Value;
-                            else
-                                componentDictionary.TryAdd(component.Definition, component.Count * cubeHashEntry.Value);
-                        });
-                    }
-                });
-                componentDictionary.ForEach(componentEntry => ComponentList.Add(new()
-                {
-                    DefinitionBase = componentEntry.Key,
-                    AdditionalInfo = $"x{componentEntry.Value}",
-                    ImageSource = componentEntry.Key.Icons is not null && componentEntry.Key.Icons.Length > 0 ? new BitmapImage(new(@$"{AppPath.DefinitionImages}\{FileHelper.ChangeExtension(componentEntry.Key.Icons[0], "png")}")) : null
-                }));
                 TotalCubeNumber = $"方块总数：{totalCubeCount}";
                 TotalGridNumber = $"网格总数：{currentBlueprint.CubeGrids.Length}";
             }
@@ -139,13 +123,55 @@ public partial class BlueprintDetailPageViewModel : ViewModelBase
             {
                 CubeGridList.Add(new("未找到网格", "方块数量：无"));
             }
-            IsProgressRingVisible = false;
-            messageService?.ShowMessage("蓝图加载完成", "完成", InfoBarSeverity.Success);
+        }
+    }
+
+    private void CalculateComponent()
+    {
+        if (currentBlueprint is not null)
+        {
+            var cubeHashDictionary = new Dictionary<int, int>();
+            var componentDictionary = new Dictionary<MyComponentDefinition, int>();
+            currentBlueprint.CubeGrids.ForEach(grid => grid.CubeBlocks.ForEach(cube =>
+            {
+                if (cubeHashDictionary.TryGetValue(cube.SubtypeId.m_hash, out int value))
+                    cubeHashDictionary[cube.SubtypeId.m_hash] = ++value;
+                else
+                    cubeHashDictionary.TryAdd(cube.SubtypeId.m_hash, 1);
+            }));
+            cubeHashDictionary.ForEach(cubeHashEntry =>
+            {
+                if (SpaceEngineersHelper.GetDefinition(cubeHashEntry.Key) is MyCubeBlockDefinition definition && definition is not null && definition.Components is not null && definition.Components.Length > 0)
+                {
+                    definition.Components.ForEach(component =>
+                    {
+                        if (componentDictionary.ContainsKey(component.Definition))
+                            componentDictionary[component.Definition] += component.Count * cubeHashEntry.Value;
+                        else
+                            componentDictionary.TryAdd(component.Definition, component.Count * cubeHashEntry.Value);
+                    });
+                }
+            });
+            componentDictionary.ForEach(componentEntry => ComponentList.Add(new()
+            {
+                DefinitionBase = componentEntry.Key,
+                AdditionalInfo = $"x{componentEntry.Value}",
+                ImageSource = componentEntry.Key.Icons is not null && componentEntry.Key.Icons.Length > 0 ? new BitmapImage(new(@$"{AppPath.DefinitionImages}\{FileHelper.ChangeExtension(componentEntry.Key.Icons[0], "png")}")) : null
+            }));
+        }
+    }
+
+    private void CalculateDLC()
+    {
+        if (currentBlueprint is not null && currentBlueprint.DLCs is not null)
+        {
+            foreach (var dlc in currentBlueprint.DLCs)
+                if (dlc is not null)
+                    DLCList.Add(dlc);
         }
         else
         {
-            IsProgressRingVisible = false;
-            messageService?.ShowMessage("未能加载蓝图", "错误", InfoBarSeverity.Error);
+            DLCList.Add("无DLC");
         }
     }
 
