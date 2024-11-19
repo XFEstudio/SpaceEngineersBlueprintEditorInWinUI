@@ -91,12 +91,13 @@ public partial class BlueprintDetailPageViewModel : ViewModelBase
 
     private async Task LoadBlueprintAsync()
     {
-        await Task.Run(() =>
-        {
-            currentDefinitions = SpaceEngineerDefinitions.Load<MyObjectBuilder_Definitions>(e.FilePath);
-            if (currentDefinitions is not null && currentDefinitions.ShipBlueprints is not null && currentDefinitions.ShipBlueprints.Length > 0)
-                currentBlueprint = currentDefinitions.ShipBlueprints[0];
-        });
+        if (currentBlueprintInfoViewData is not null)
+            await Task.Run(() =>
+            {
+                currentDefinitions = SpaceEngineerDefinitions.Load<MyObjectBuilder_Definitions>(currentBlueprintInfoViewData.FilePath);
+                if (currentDefinitions is not null && currentDefinitions.ShipBlueprints is not null && currentDefinitions.ShipBlueprints.Length > 0)
+                    currentBlueprint = currentDefinitions.ShipBlueprints[0];
+            });
     }
 
     private void CalculateCubeGrids()
