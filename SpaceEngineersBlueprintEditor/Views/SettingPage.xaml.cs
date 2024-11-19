@@ -9,7 +9,7 @@ namespace SpaceEngineersBlueprintEditor.Views;
 public sealed partial class SettingPage : Page
 {
     public SettingPageViewModel ViewModel { get; set; } = new();
-    public SettingPage? Current { get; set; }
+    public static SettingPage? Current { get; set; }
     public SettingPage()
     {
         PageManager.AddOrUpdateCurrentPage(Current = this);

@@ -18,9 +18,6 @@ public partial class SystemProfile
     static partial void SetNavigationStyleProperty(NavigationViewPaneDisplayMode value)
     {
         if (GlobalServiceManager.GetService<INavigationViewService>() is INavigationViewService navigationViewService && navigationViewService.NavigationView is not null)
-        {
-
             navigationViewService.NavigationView.PaneDisplayMode = value;
-        }
     }
 }

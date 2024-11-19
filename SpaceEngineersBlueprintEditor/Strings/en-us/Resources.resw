@@ -225,6 +225,10 @@
     <value>Navigation style</value>
     <comment>导航栏样式</comment>
   </data>
+  <data name="SettingPage_NavigationStyle.Description" xml:space="preserve">
+    <value>The position of the navigation bar</value>
+    <comment>导航栏出现的位置</comment>
+  </data>
   <data name="SettingPage_NavigationStyle_Auto.Content" xml:space="preserve">
     <value>Auto</value>
     <comment>自动</comment>
@@ -248,6 +252,38 @@
   <data name="SettingPage_AboutTitle.Text" xml:space="preserve">
     <value>About</value>
     <comment>关于</comment>
+  </data>
+  <data name="SettingPage_EnvironmentTitle.Text" xml:space="preserve">
+    <value>Environment</value>
+    <comment>环境</comment>
+  </data>
+  <data name="SettingPage_Paths.Header" xml:space="preserve">
+    <value>All paths</value>
+    <comment>所有目录</comment>
+  </data>
+  <data name="SettingPage_Paths.Description" xml:space="preserve">
+    <value>Application environment folders</value>
+    <comment>应用程序的环境目录</comment>
+  </data>
+  <data name="SettingPage_GameRootPath.Header" xml:space="preserve">
+    <value>Game root path</value>
+    <comment>游戏根目录</comment>
+  </data>
+  <data name="SettingPage_CachePath.Header" xml:space="preserve">
+    <value>Cache path</value>
+    <comment>缓存目录</comment>
+  </data>
+  <data name="SettingPage_OpenPath.Content" xml:space="preserve">
+    <value>Open</value>
+    <comment>打开目录</comment>
+  </data>
+  <data name="SettingPage_ChangePath.Content" xml:space="preserve">
+    <value>Change</value>
+    <comment>更改目录</comment>
+  </data>
+  <data name="SettingPage_ClearCache.Content" xml:space="preserve">
+    <value>Clear</value>
+    <comment>清除缓存</comment>
   </data>
   <data name="AppShell_ShellMenu_ViewDefinitions.Content" xml:space="preserve">
     <value>Game Definitions</value>

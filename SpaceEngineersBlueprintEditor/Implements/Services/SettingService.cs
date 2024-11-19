@@ -18,6 +18,14 @@ internal class SettingService : GlobalServiceBase, ISettingService
             throw new NullReferenceException();
     }
 
+    public void AddTextBlock(TextBlock textBlock, Action<string?> loadFunc)
+    {
+        if (textBlock.Tag is string profilePath)
+            settingControls.Add(textBlock, new TextBlockProfileInfoEntry(profilePath, loadFunc));
+        else
+            throw new NullReferenceException();
+    }
+
     private void ComboBox_SelectionChanged(object sender, SelectionChangedEventArgs e)
     {
         if (settingControls.TryGetValue(sender, out var profileInfo) && profileInfo is ComboBoxProfileInfoEntry comboBoxProfileInfo && e.AddedItems.Count > 0 && e.AddedItems[0] is ComboBoxItem comboBoxItem && comboBoxItem.Tag is string value)
@@ -29,7 +37,9 @@ internal class SettingService : GlobalServiceBase, ISettingService
         foreach (var item in settingControls)
         {
             if (item.Key is ComboBox comboBox && item.Value is ComboBoxProfileInfoEntry comboBoxProfileInfo)
-                comboBox.SelectedItem = comboBoxProfileInfo.ProfileLoadFunc.Invoke([.. comboBox.Items], ProfileHelper.GetProfileValue(comboBoxProfileInfo.ProfilePath));
+                comboBox.SelectedItem = comboBoxProfileInfo.ProfileLoadFunc([.. comboBox.Items], ProfileHelper.GetProfileValue(comboBoxProfileInfo.ProfilePath));
+            if (item.Key is TextBlock textBlock && item.Value is TextBlockProfileInfoEntry textBlockProfileInfo)
+                textBlockProfileInfo.ProfileLoadFunc(ProfileHelper.GetProfileValue(textBlockProfileInfo.ProfilePath)?.ToString());
         }
     }
 

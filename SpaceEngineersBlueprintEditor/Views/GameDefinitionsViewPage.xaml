@@ -20,7 +20,7 @@
                 </StackPanel>
             </Grid>
         </Grid>
-        <Grid ColumnDefinitions="4*, *" RowSpacing="20">
+        <Grid ColumnDefinitions="8*, 3*" RowSpacing="20">
             <ItemsView x:Name="definitionsItemView" Canvas.ZIndex="0" Padding="4" ItemsSource="{x:Bind ViewModel.Definitions}">
                 <ItemsView.Layout>
                     <UniformGridLayout Orientation="Horizontal" />

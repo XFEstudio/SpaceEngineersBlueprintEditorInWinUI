@@ -18,7 +18,7 @@
             </Style.Setters>
         </Style>
     </Page.Resources>
-    
+
     <Grid>
         <ScrollViewer>
             <StackPanel Spacing="4">
@@ -45,6 +45,33 @@
                         <ComboBoxItem x:Uid="SettingPage_NavigationStyle_LeftMinimal" Tag="LeftMinimal"/>
                     </ComboBox>
                 </toolkit:SettingsCard>
+                <TextBlock x:Uid="SettingPage_EnvironmentTitle" Style="{StaticResource SettingsSectionHeaderTextBlockStyle}"/>
+                <toolkit:SettingsExpander x:Uid="SettingPage_Paths">
+                    <toolkit:SettingsExpander.HeaderIcon>
+                        <FontIcon Glyph="&#xEC6C;"/>
+                    </toolkit:SettingsExpander.HeaderIcon>
+                    <toolkit:SettingsExpander.Items>
+                        <toolkit:SettingsCard x:Uid="SettingPage_GameRootPath" Description="{x:Bind ViewModel.SpaceEngineersRootPath, Mode=OneWay}" IsClickEnabled="True" Command="{x:Bind ViewModel.OpenPathCommand}" CommandParameter="{x:Bind ViewModel.SpaceEngineersRootPath, Mode=OneWay}">
+                            <toolkit:SettingsCard.ActionIcon>
+                                <FontIcon Glyph="&#xE8A7;"/>
+                            </toolkit:SettingsCard.ActionIcon>
+                            <Button x:Uid="SettingPage_ChangePath" Command="{x:Bind ViewModel.ChangeGameRootPathCommand}"/>
+                        </toolkit:SettingsCard>
+                        <toolkit:SettingsCard x:Uid="SettingPage_CachePath" Description="{x:Bind ViewModel.AppCachePath, Mode=OneWay}" IsClickEnabled="True"  Command="{x:Bind ViewModel.OpenPathCommand}" CommandParameter="{x:Bind ViewModel.AppCachePath, Mode=OneWay}">
+                            <toolkit:SettingsCard.ActionIcon>
+                                <FontIcon Glyph="&#xE8A7;"/>
+                            </toolkit:SettingsCard.ActionIcon>
+                            <Grid ColumnSpacing="20">
+                                <Grid.ColumnDefinitions>
+                                    <ColumnDefinition Width="*"/>
+                                    <ColumnDefinition Width="*"/>
+                                </Grid.ColumnDefinitions>
+                                <TextBlock Style="{ThemeResource CaptionTextBlockStyle}" Text="{x:Bind ViewModel.AppCacheSize, Mode=OneWay}" VerticalAlignment="Center"/>
+                                <Button Grid.Column="1" x:Uid="SettingPage_ClearCache" Command="{x:Bind ViewModel.ClearCacheCommand}"/>
+                            </Grid>
+                        </toolkit:SettingsCard>
+                    </toolkit:SettingsExpander.Items>
+                </toolkit:SettingsExpander>
                 <TextBlock x:Uid="SettingPage_AboutTitle" Style="{StaticResource SettingsSectionHeaderTextBlockStyle}"/>
                 <toolkit:SettingsExpander x:Uid="SettingPage_AppInfo_Expander">
                     <toolkit:SettingsExpander.HeaderIcon>

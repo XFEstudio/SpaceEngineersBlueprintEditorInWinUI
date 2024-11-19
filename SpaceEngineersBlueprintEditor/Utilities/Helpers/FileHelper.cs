@@ -8,6 +8,22 @@ namespace SpaceEngineersBlueprintEditor.Utilities.Helpers;
 
 public static class FileHelper
 {
+    public static long GetDirectorySize(DirectoryInfo directoryInfo)
+    {
+        long size = 0;
+        FileInfo[] files = directoryInfo.GetFiles();
+        foreach (FileInfo file in files)
+        {
+            size += file.Length;
+        }
+        DirectoryInfo[] directories = directoryInfo.GetDirectories();
+        foreach (DirectoryInfo directory in directories)
+        {
+            size += GetDirectorySize(directory);
+        }
+        return size;
+    }
+
     public static string GetCopyFileName(string originalName, int currentNum = 1)
     {
         var currentFileName = @$"{Path.GetDirectoryName(originalName)}\{Path.GetFileNameWithoutExtension(originalName)}_{currentNum}{Path.GetExtension(originalName)}";
