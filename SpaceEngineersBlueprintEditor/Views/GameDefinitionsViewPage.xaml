@@ -20,25 +20,11 @@
                 </StackPanel>
             </Grid>
         </Grid>
-        <Grid ColumnDefinitions="8*, 3*" RowSpacing="20">
-            <ItemsView x:Name="definitionsItemView" Canvas.ZIndex="0" Padding="4" ItemsSource="{x:Bind ViewModel.Definitions}">
+        <Grid ColumnDefinitions="8*, 3*" RowSpacing="20" Visibility="{x:Bind ViewModel.IsUIVisible, Mode=OneWay}">
+            <ItemsView x:Name="definitionsItemView" Canvas.ZIndex="0" Padding="4" ItemsSource="{x:Bind ViewModel.Definitions}" ItemTemplate="{StaticResource ComponentDataTemplate}">
                 <ItemsView.Layout>
                     <UniformGridLayout Orientation="Horizontal" />
                 </ItemsView.Layout>
-                <ItemsView.ItemTemplate>
-                    <DataTemplate x:DataType="model:DefinitionViewData">
-                        <ItemContainer Width="100" Height="100" Margin="4" ToolTipService.ToolTip="{x:Bind DefinitionBase.DisplayNameText}">
-                            <Grid RowDefinitions="60, Auto" Padding="5">
-                                <Image Source="{x:Bind ImageSource}" Width="60" Height="60" Stretch="Uniform" HorizontalAlignment="Center" VerticalAlignment="Center"/>
-                                <TextBlock Grid.Row="1" TextWrapping="NoWrap" TextTrimming="CharacterEllipsis" HorizontalAlignment="Center" VerticalAlignment="Bottom" Text="{x:Bind DefinitionBase.DisplayNameText}"/>
-                                <Grid HorizontalAlignment="Right" CornerRadius="4" VerticalAlignment="Top" Padding="1" Visibility="{x:Bind HasAdditionalInfo}" Background="{ThemeResource AccentFillColorDefaultBrush}">
-                                    <TextBlock Text="{x:Bind AdditionalInfo}" FontSize="12" Foreground="{ThemeResource TextOnAccentFillColorPrimaryBrush}"/>
-                                </Grid>
-                                <FontIcon HorizontalAlignment="Right" VerticalAlignment="Top" Glyph="{x:Bind CubeSize}" Visibility="{x:Bind HasCubeSize}"/>
-                            </Grid>
-                        </ItemContainer>
-                    </DataTemplate>
-                </ItemsView.ItemTemplate>
             </ItemsView>
             <Grid Grid.Column="1" Margin="0,0,0,24" Background="{ThemeResource CardBackgroundFillColorDefaultBrush}" BorderBrush="{ThemeResource CardStrokeColorDefaultBrush}" CornerRadius="8">
                 <Grid RowDefinitions="Auto, Auto, *">

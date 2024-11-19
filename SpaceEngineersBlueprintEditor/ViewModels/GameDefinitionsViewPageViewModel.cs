@@ -8,7 +8,6 @@ using SpaceEngineersBlueprintEditor.SpaceEngineersCore;
 using SpaceEngineersBlueprintEditor.Utilities;
 using System.Collections.ObjectModel;
 using VRage.Game;
-using XFEExtension.NetCore.StringExtension;
 
 namespace SpaceEngineersBlueprintEditor.ViewModels;
 
@@ -20,6 +19,8 @@ public partial class GameDefinitionsViewPageViewModel : ViewModelBase
     private string propertiesSearchText = "";
     [ObservableProperty]
     private bool isProgressRingVisible = true;
+    [ObservableProperty]
+    private bool isUIVisible = false;
     [ObservableProperty]
     private DefinitionViewData? selectedDefinitionViewData;
     private string currentParameter = "";
@@ -42,31 +43,33 @@ public partial class GameDefinitionsViewPageViewModel : ViewModelBase
         {
             SelectedDefinitionViewData = definitionViewData;
             PropertiesInfo.Clear();
+            _propertiesInfo.Clear();
             foreach (var definition in SelectedDefinitionViewData.DefinitionBase.GetType().GetFields())
             {
                 if (definition.GetValue(SelectedDefinitionViewData.DefinitionBase) is object value)
                 {
                     var valueString = value.ToString();
+                    var isValueType = value.GetType().IsValueType || value.GetType().IsEnum || value.GetType() == typeof(string);
                     var propertyViewData = new PropertyViewData
                     {
                         PropertyName = definition.Name,
-                        Value = string.IsNullOrWhiteSpace(valueString) ? "值为空" : valueString,
-                        IsValueType = value.GetType().IsValueType
+                        Value = string.IsNullOrWhiteSpace(valueString) ? isValueType ? "空值" : "空对象" : valueString,
+                        IsValueType = isValueType
                     };
                     _propertiesInfo.Add(propertyViewData);
-                    PropertiesInfo.Add(propertyViewData);
                 }
             }
+            OnPropertiesSearchTextChanged(PropertiesSearchText);
         }
     }
 
     private async void NavigationParameterService_ParameterChange(object? sender, string e)
     {
         currentParameter = e;
-        while (!Initializer.IsDefinitionsLoadComplete) { await Task.Delay(100); }
+        while (!Initializer.IsDefinitionsLoadComplete || !DefinitionPropertiesDisplayService.IsPageLoaded) { await Task.Delay(100); }
         LoadDefinitions(GetCurrentDefinitions(currentParameter));
+        IsUIVisible = true;
         IsProgressRingVisible = false;
-        while (!DefinitionPropertiesDisplayService.IsPageLoaded) { await Task.Delay(100); }
         DefinitionPropertiesDisplayService.Select(Definitions.First());
     }
 
@@ -86,16 +89,16 @@ public partial class GameDefinitionsViewPageViewModel : ViewModelBase
             }
     }
 
-    private IEnumerable<DefinitionViewData> SearchDefinitions(string definitionsName) => _definitions.Where(definition => definition.DefinitionBase.DisplayNameText is not null && definition.DefinitionBase.DisplayNameText.Contains(definitionsName, StringComparison.OrdinalIgnoreCase));
+    private IEnumerable<DefinitionViewData> SearchDefinitions(string definitionsName) => _definitions.Where(definition => definition.DefinitionBase.DisplayNameText is not null && definition.DefinitionBase.DisplayNameText.Contains(definitionsName, StringComparison.OrdinalIgnoreCase)).OrderBy(definition => definition.DefinitionBase.DisplayNameText);
 
-    private IEnumerable<PropertyViewData> SearchProperties(string propertiesName) => _propertiesInfo.Where(property => property.PropertyName.Contains(propertiesName, StringComparison.OrdinalIgnoreCase) || (property.Value is not null && property.Value.ToString() is string valueString && valueString.Contains(propertiesName, StringComparison.OrdinalIgnoreCase)));
+    private IEnumerable<PropertyViewData> SearchProperties(string propertiesName) => _propertiesInfo.Where(property => property.PropertyName.Contains(propertiesName, StringComparison.OrdinalIgnoreCase) || (property.Value is not null && property.Value.ToString() is string valueString && valueString.Contains(propertiesName, StringComparison.OrdinalIgnoreCase))).OrderBy(property => property.PropertyName);
 
     private static IEnumerable<MyDefinitionBase> GetCurrentDefinitions(string currentLocation) => currentLocation switch
     {
-        "Cubes" => SpaceEngineersHelper.CubeBlockDefinitions.OrderBy(definition => definition.CubeSize),
-        "Components" => SpaceEngineersHelper.ComponentDefinitions,
-        "Items" => SpaceEngineersHelper.ItemDefinitions,
-        "Scenarios" => SpaceEngineersHelper.ScenarioDefinition,
+        "Cubes" => SpaceEngineersHelper.CubeBlockDefinitions.OrderBy(definition => definition.DisplayNameText),
+        "Components" => SpaceEngineersHelper.ComponentDefinitions.OrderBy(definition => definition.DisplayNameText),
+        "Items" => SpaceEngineersHelper.ItemDefinitions.OrderBy(definition => definition.DisplayNameText),
+        "Scenarios" => SpaceEngineersHelper.ScenarioDefinition.OrderBy(definition => definition.DisplayNameText),
         _ => throw new NotImplementedException()
     };
 

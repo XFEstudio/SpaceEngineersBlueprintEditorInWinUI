@@ -41,6 +41,13 @@
                 <Expander Header="所需DLC列表" HorizontalAlignment="Stretch" HorizontalContentAlignment="Stretch">
                     <ListView ItemsSource="{x:Bind ViewModel.DLCList, Mode=OneWay}" HorizontalAlignment="Stretch" HorizontalContentAlignment="Stretch"/>
                 </Expander>
+                <Expander Header="所需材料" HorizontalAlignment="Stretch" HorizontalContentAlignment="Stretch">
+                    <ItemsView ItemsSource="{x:Bind ViewModel.ComponentList, Mode=OneWay}" Padding="4" HorizontalAlignment="Stretch" HorizontalContentAlignment="Stretch" ItemTemplate="{StaticResource ComponentDataTemplate}">
+                        <ItemsView.Layout>
+                            <UniformGridLayout Orientation="Horizontal"/>
+                        </ItemsView.Layout>
+                    </ItemsView>
+                </Expander>
                 <Expander HorizontalAlignment="Stretch" HorizontalContentAlignment="Stretch">
                     <Expander.Header>
                         <Grid ColumnDefinitions="*, Auto, Auto" ColumnSpacing="20">

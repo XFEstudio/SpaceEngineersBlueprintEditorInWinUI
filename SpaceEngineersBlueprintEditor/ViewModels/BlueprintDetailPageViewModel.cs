@@ -1,6 +1,6 @@
 ﻿using CommunityToolkit.Mvvm.ComponentModel;
 using CommunityToolkit.Mvvm.Input;
-using Microsoft.UI.Xaml.Media;
+using Microsoft.UI.Xaml.Media.Imaging;
 using Sandbox.Definitions;
 using SpaceEngineersBlueprintEditor.Implements.Services;
 using SpaceEngineersBlueprintEditor.Interface.Services;
@@ -38,6 +38,7 @@ public partial class BlueprintDetailPageViewModel : ViewModelBase
     private readonly IMessageService? messageService = GlobalServiceManager.GetService<IMessageService>();
     public ObservableCollection<string> DLCList { get; } = [];
     public ObservableCollection<CubeGridInfo> CubeGridList { get; } = [];
+    public ObservableCollection<DefinitionViewData> ComponentList { get; } = [];
     public IBackgroundImageService? BackgroundImageService { get; set; } = GlobalServiceManager.GetService<IBackgroundImageService>();
     public INavigationParameterService<BlueprintInfoViewData> NavigationParameterService { get; set; } = new NavigationParameterService<BlueprintInfoViewData>();
     public BlueprintDetailPageViewModel() => NavigationParameterService.ParameterChange += NavigationParameterService_ParameterChange;
@@ -54,6 +55,7 @@ public partial class BlueprintDetailPageViewModel : ViewModelBase
         TotalCubeNumber = "方块总数：加载中...";
         DLCList.Clear();
         CubeGridList.Clear();
+        ComponentList.Clear();
         IsProgressRingVisible = true;
         if (navigationViewService is not null) navigationViewService.Header = e.Name;
         currentBlueprintInfoViewData = e;
@@ -65,7 +67,7 @@ public partial class BlueprintDetailPageViewModel : ViewModelBase
             IsProgressRingVisible = false;
             return;
         }
-            await Task.Delay(100);
+        while (!SpaceEngineersHelper.IsLoadComplete) await Task.Delay(100);
         await Task.Run(() =>
         {
             currentDefinitions = SpaceEngineerDefinitions.Load<MyObjectBuilder_Definitions>(e.FilePath);
@@ -98,6 +100,34 @@ public partial class BlueprintDetailPageViewModel : ViewModelBase
                         totalCubeCount += grid.CubeBlocks.Count;
                         CubeGridList.Add(new($"网格名称：{grid.DisplayName}", $"方块数量：{grid.CubeBlocks.Count}"));
                     }
+                var cubeHashDictionary = new Dictionary<int, int>();
+                var componentDictionary = new Dictionary<MyComponentDefinition, int>();
+                currentBlueprint.CubeGrids.ForEach(grid => grid.CubeBlocks.ForEach(cube =>
+                {
+                    if (cubeHashDictionary.TryGetValue(cube.SubtypeId.m_hash, out int value))
+                        cubeHashDictionary[cube.SubtypeId.m_hash] = ++value;
+                    else
+                        cubeHashDictionary.TryAdd(cube.SubtypeId.m_hash, 1);
+                }));
+                cubeHashDictionary.ForEach(cubeHashEntry =>
+                {
+                    if (SpaceEngineersHelper.GetDefinition(cubeHashEntry.Key) is MyCubeBlockDefinition definition && definition is not null && definition.Components is not null && definition.Components.Length > 0)
+                    {
+                        definition.Components.ForEach(component =>
+                        {
+                            if (componentDictionary.ContainsKey(component.Definition))
+                                componentDictionary[component.Definition] += component.Count * cubeHashEntry.Value;
+                            else
+                                componentDictionary.TryAdd(component.Definition, component.Count * cubeHashEntry.Value);
+                        });
+                    }
+                });
+                componentDictionary.ForEach(componentEntry => ComponentList.Add(new()
+                {
+                    DefinitionBase = componentEntry.Key,
+                    AdditionalInfo = $"x{componentEntry.Value}",
+                    ImageSource = componentEntry.Key.Icons is not null && componentEntry.Key.Icons.Length > 0 ? new BitmapImage(new(@$"{AppPath.DefinitionImages}\{FileHelper.ChangeExtension(componentEntry.Key.Icons[0], "png")}")) : null
+                }));
                 TotalCubeNumber = $"方块总数：{totalCubeCount}";
                 TotalGridNumber = $"网格总数：{currentBlueprint.CubeGrids.Length}";
             }

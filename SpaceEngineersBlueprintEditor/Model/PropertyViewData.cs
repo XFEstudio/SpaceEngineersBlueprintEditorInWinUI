@@ -6,4 +6,6 @@ public class PropertyViewData
     public object? Value { get; set; }
     public bool IsValueType { get; set; }
     public bool IsNotValueType => !IsValueType;
+    public bool HasValue => Value is not null;
+    public bool HasNoValue => Value is null;
 }

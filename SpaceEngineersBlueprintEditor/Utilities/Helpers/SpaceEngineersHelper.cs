@@ -38,6 +38,8 @@ public static class SpaceEngineersHelper
         LoadComplete?.Invoke(null, EventArgs.Empty);
     }
 
+    public static MyDefinitionBase? GetDefinition(int m_hash) => AllDefinitions.First(definition => definition.Id.SubtypeId.m_hash == m_hash);
+
     public static string? GetGameRootPath()
     {
         var path = GetGameRootPath(@"C:\", @"D:\", @"E:\", @"F:\", @"G:\", @"H:\", @"I:\", @"J:\", @"K:\", @"L:\", @"M:\", @"N:\", @"O:\", @"P:\", @"Q:\", @"R:\", @"S:\", @"T:\", @"U:\", @"V:\", @"W:\", @"X:\", @"Y:\", @"Z:\");

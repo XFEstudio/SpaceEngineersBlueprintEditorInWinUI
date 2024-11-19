@@ -16,6 +16,9 @@
     <ApplicationIcon>Assets\Icons\EditorIcon.ico</ApplicationIcon>
   </PropertyGroup>
   <ItemGroup>
+    <Content Include="Styles\Controls.xaml">
+      <Generator>MSBuild:Compile</Generator>
+    </Content>
     <Content Include="Styles\Thickness.xaml">
       <Generator>MSBuild:Compile</Generator>
     </Content>
@@ -28,7 +31,12 @@
   </ItemGroup>
   
   <ItemGroup>
+    <None Remove="Styles\Controls.xaml" />
     <None Remove="Views\GameDefinitionsViewPage.xaml" />
+  </ItemGroup>
+  
+  <ItemGroup>
+    <Page Remove="Styles\Controls.xaml" />
   </ItemGroup>
   
   <ItemGroup>

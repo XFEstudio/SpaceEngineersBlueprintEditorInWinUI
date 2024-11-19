@@ -1,7 +1,6 @@
 ﻿using Microsoft.UI.Xaml.Media.Imaging;
 using Microsoft.Windows.ApplicationModel.Resources;
 using SpaceEngineersBlueprintEditor.Model;
-using VRage.Game;
 
 namespace SpaceEngineersBlueprintEditor.Utilities.Helpers;
 
