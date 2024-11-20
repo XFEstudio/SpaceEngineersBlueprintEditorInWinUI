@@ -26,7 +26,7 @@
     </Page.Resources>
 
     <Grid>
-        <ContentDialog x:Name="copyToContentDialog" x:FieldModifier="internal" IsPrimaryButtonEnabled="True" IsSecondaryButtonEnabled="True" PrimaryButtonText="OK" SecondaryButtonText="Cancel" DefaultButton="Primary">
+        <ContentDialog x:Name="copyToContentDialog" IsPrimaryButtonEnabled="True" IsSecondaryButtonEnabled="True" PrimaryButtonText="OK" SecondaryButtonText="Cancel" DefaultButton="Primary">
             <TextBox Text="{x:Bind ViewModel.CopyFolderText, Mode=TwoWay}" PlaceholderText="Enter the new blueprint's name"/>
         </ContentDialog>
         <GridView x:Name="blueprintGridView" ItemsSource="{x:Bind ViewModel.BlueprintInfoViewDataList}" SelectionMode="None" IsItemClickEnabled="True" ItemClick="GridView_ItemClick" Loaded="BlueprintGridView_Loaded">

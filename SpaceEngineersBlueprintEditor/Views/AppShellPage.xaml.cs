@@ -1,3 +1,4 @@
+using SpaceEngineersBlueprintEditor.Interface.Services;
 using SpaceEngineersBlueprintEditor.Utilities;
 using SpaceEngineersBlueprintEditor.ViewModels;
 
@@ -79,7 +80,7 @@ public sealed partial class AppShellPage : Page
         ViewModel.MessageService.ShowMessage("游戏定义集加载中...", "正在加载");
         AppThemeHelper.ChangeTheme(SystemProfile.Theme);
         navigationView.PaneDisplayMode = SystemProfile.NavigationStyle;
-        SpaceEngineersHelper.LoadComplete += (sender, e) => ViewModel.MessageService.ShowMessage("定义集图片加载完成", "完成", InfoBarSeverity.Success);
+        SpaceEngineersHelper.LoadComplete += (sender, e) => ViewModel.MessageService?.ShowMessage("游戏集定义加载完成", "完成", InfoBarSeverity.Success); ;
         await SpaceEngineersHelper.LoadDefinitionViewDataListAsync();
     }
 

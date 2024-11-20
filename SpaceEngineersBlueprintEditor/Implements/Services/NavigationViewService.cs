@@ -17,6 +17,8 @@ internal class NavigationViewService : GlobalServiceBase, INavigationViewService
 
     public NavigationView? NavigationView => navigationView;
 
+    public XamlRoot? XamlRoot => navigationView?.XamlRoot;
+
     [MemberNotNull(nameof(navigationView))]
     public void Initialize(NavigationView view, Frame frame)
     {

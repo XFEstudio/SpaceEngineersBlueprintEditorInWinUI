@@ -22,6 +22,7 @@ public partial class BlueprintsViewPageViewModel : ViewModelBase
     [ObservableProperty]
     private string deleteEnsureText = "";
     public INavigationParameterService<object> NavigationParameterService { get; set; } = new NavigationParameterService<object>();
+    public IDialogService DialogService { get; set; } = new DialogService();
     public ObservableCollection<BlueprintInfoViewData> BlueprintInfoViewDataList { get; set; } = [];
 
     public BlueprintsViewPageViewModel()
@@ -94,7 +95,7 @@ public partial class BlueprintsViewPageViewModel : ViewModelBase
     [RelayCommand]
     async Task CopyTo()
     {
-        if (currentBlueprintInfoViewData is not null && Path.GetDirectoryName(currentBlueprintInfoViewData.FilePath) is string path && await BlueprintsViewPage.Current?.copyToContentDialog.ShowAsync() == ContentDialogResult.Primary)
+        if (currentBlueprintInfoViewData is not null && Path.GetDirectoryName(currentBlueprintInfoViewData.FilePath) is string path && await DialogService.ShowDialog("copyToDialog") == ContentDialogResult.Primary)
         {
             var targetPath = $@"{Path.GetDirectoryName(path)}\{CopyFolderText}";
             FileHelper.CopyDirectory(path, targetPath);

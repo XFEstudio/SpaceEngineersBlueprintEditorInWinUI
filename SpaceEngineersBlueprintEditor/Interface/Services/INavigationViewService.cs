@@ -7,5 +7,6 @@ public interface INavigationViewService : IAutoNavigable, IGlobalService
     void Initialize(NavigationView navigationView, Frame frame);
     object? SelectedItem { get; }
     string? Header { get; set; }
+    XamlRoot? XamlRoot { get; }
     NavigationViewItem? GetSelectedItem(Type type, object? parameter = null);
 }

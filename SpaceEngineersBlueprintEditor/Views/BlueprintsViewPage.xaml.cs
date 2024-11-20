@@ -22,6 +22,7 @@ public sealed partial class BlueprintsViewPage : Page
         PageManager.AddOrUpdateCurrentPage(Current = this);
         this.InitializeComponent();
         NavigationCacheMode = NavigationCacheMode.Enabled;
+        ViewModel.DialogService.RegisterDialog(copyToContentDialog);
     }
 
     protected override void OnNavigatedTo(NavigationEventArgs e)

@@ -1,6 +1,10 @@
-﻿using Microsoft.Win32;
+﻿using Microsoft.UI.Xaml.Media.Imaging;
+using Microsoft.Win32;
 using Sandbox.Definitions;
+using SpaceEngineersBlueprintEditor.Model;
 using SpaceEngineersBlueprintEditor.SpaceEngineersCore;
+using System.Collections;
+using System.Reflection;
 using VRage.Collections;
 using VRage.Game;
 
@@ -15,6 +19,111 @@ public static class SpaceEngineersHelper
     public static IEnumerable<MyComponentDefinition> ComponentDefinitions => AllDefinitions.Where(definition => definition is MyComponentDefinition).Cast<MyComponentDefinition>();
     public static IEnumerable<MyPhysicalItemDefinition> ItemDefinitions => AllDefinitions.Where(definition => definition is MyPhysicalItemDefinition).Cast<MyPhysicalItemDefinition>();
     public static IEnumerable<MyScenarioDefinition> ScenarioDefinition => AllDefinitions.Where(definition => definition is MyScenarioDefinition).Cast<MyScenarioDefinition>();
+
+    public static void AnalyzeBlueprint(BlueprintPropertyViewData blueprintPropertyViewData, params string[] exceptedName)
+    {
+        if (CheckIfNull(blueprintPropertyViewData))
+            return;
+        if (IsSpecialObject(blueprintPropertyViewData))
+            return;
+        foreach (var member in blueprintPropertyViewData.Type!.GetMembers())
+        {
+            Type? type = null;
+            try
+            {
+                if (member is FieldInfo fieldInfo && !exceptedName.Contains(fieldInfo.Name) && fieldInfo.IsPublic)
+                {
+                    type = fieldInfo.FieldType;
+                    var value = fieldInfo.GetValue(blueprintPropertyViewData.Value);
+                    blueprintPropertyViewData.Children.Add(new()
+                    {
+                        Type = type,
+                        Name = fieldInfo.Name,
+                        Value = value,
+                        Parent = blueprintPropertyViewData
+                    });
+                }
+                else if (member is PropertyInfo propertyInfo && !exceptedName.Contains(propertyInfo.Name) && propertyInfo.CanWrite && propertyInfo.IsMemberPublic())
+                {
+                    type = propertyInfo.PropertyType;
+                    var value = propertyInfo.GetValue(blueprintPropertyViewData.Value);
+                    blueprintPropertyViewData.Children.Add(new()
+                    {
+                        Type = type,
+                        Name = propertyInfo.Name,
+                        Value = value,
+                        Parent = blueprintPropertyViewData
+                    });
+                }
+            }
+            catch (Exception ex)
+            {
+                blueprintPropertyViewData.Children.Add(new()
+                {
+                    Type = type,
+                    Name = $"错误异常：{ex.Message}",
+                    Parent = blueprintPropertyViewData
+                });
+            }
+        }
+    }
+
+    private static bool CheckIfNull(BlueprintPropertyViewData blueprintPropertyViewData)
+    {
+        if (blueprintPropertyViewData.Value is null || blueprintPropertyViewData.Type is null)
+        {
+            blueprintPropertyViewData.Children.Add(new()
+            {
+                Name = "空对象",
+                Parent = blueprintPropertyViewData
+            });
+            return true;
+        }
+        return false;
+    }
+
+    private static bool IsSpecialObject(BlueprintPropertyViewData blueprintPropertyViewData)
+    {
+        if (blueprintPropertyViewData.Type!.IsAssignableTo(typeof(IEnumerable)))
+        {
+            AddArrayOrEnumerableChildren<IEnumerable>(blueprintPropertyViewData);
+            return true;
+        }
+        return false;
+    }
+
+    private static void AddArrayOrEnumerableChildren<T>(BlueprintPropertyViewData blueprintPropertyViewData) where T : IEnumerable
+    {
+        foreach (var item in (T)blueprintPropertyViewData.Value!)
+        {
+            var type = item.GetType();
+            var child = new BlueprintPropertyViewData()
+            {
+                Type = type,
+                Name = type.Name,
+                Value = item,
+                Parent = blueprintPropertyViewData
+            };
+            SetDetail(child, item);
+            blueprintPropertyViewData.Children.Add(child);
+        }
+    }
+
+    public static void SetDetail(BlueprintPropertyViewData blueprintPropertyViewData, object? value)
+    {
+        if (value is MyObjectBuilder_CubeBlock myObjectBuilder_CubeBlock)
+        {
+            var cubeBlock = MyDefinitionManager.Static.GetCubeBlockDefinition(myObjectBuilder_CubeBlock);
+            blueprintPropertyViewData.Name = cubeBlock.DisplayNameText;
+            blueprintPropertyViewData.CubeImage = new BitmapImage(new(@$"{AppPath.DefinitionImages}\{FileHelper.ChangeExtension(cubeBlock.Icons[0], "png")}"));
+            blueprintPropertyViewData.CustomName = value is MyObjectBuilder_TerminalBlock myObjectBuilder_TerminalBlock ? myObjectBuilder_TerminalBlock.CustomName : string.Empty;
+        }
+        else if (value is MyObjectBuilder_CubeGrid myObjectBuilder_CubeGrid)
+        {
+            blueprintPropertyViewData.Name = myObjectBuilder_CubeGrid.DisplayName;
+        }
+    }
+
     public static async Task LoadDefinitionViewDataListAsync()
     {
         await Helper.Wait(() => Initializer.IsDefinitionsLoadComplete);

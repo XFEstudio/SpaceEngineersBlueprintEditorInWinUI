@@ -30,7 +30,6 @@ public partial class App : Application
                 if (SystemProfile.GameRootPath.IsNullOrEmpty())
                     SystemProfile.GameRootPath = SpaceEngineersHelper.GetGameRootPath();
                 Initializer.Initialize(SpaceEngineersPath.SpaceEngineerContentPath, SpaceEngineersPath.UserGameDataRoot);
-                GlobalServiceManager.GetService<IMessageService>()?.ShowMessage("游戏集定义加载完成", "完成", InfoBarSeverity.Success);
             }
             catch (Exception ex)
             {

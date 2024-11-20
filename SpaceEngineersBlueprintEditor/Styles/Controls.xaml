@@ -14,4 +14,20 @@
             </Grid>
         </ItemContainer>
     </DataTemplate>
+    
+    <DataTemplate x:Key="BlueprintDataTemplate">
+        <TreeViewItem ItemsSource="{Binding Children}">
+            <Grid Padding="0,0,5,0">
+                <Grid.ColumnDefinitions>
+                    <ColumnDefinition Width="*"/>
+                    <ColumnDefinition Width="150"/>
+                </Grid.ColumnDefinitions>
+                <StackPanel Orientation="Horizontal" Spacing="20">
+                    <FontIcon VerticalAlignment="Center" Glyph="{Binding Icon}"/>
+                    <TextBlock VerticalAlignment="Center" Text="{Binding Name}"/>
+                </StackPanel>
+                <TextBlock VerticalAlignment="Center" HorizontalAlignment="Right" TextTrimming="CharacterEllipsis" Text="{Binding ValueInString}" Grid.Column="1" Visibility="{Binding IsBasicType}" Foreground="{ThemeResource AccentTextFillColorPrimaryBrush}"/>
+            </Grid>
+        </TreeViewItem>
+    </DataTemplate>
 </ResourceDictionary>

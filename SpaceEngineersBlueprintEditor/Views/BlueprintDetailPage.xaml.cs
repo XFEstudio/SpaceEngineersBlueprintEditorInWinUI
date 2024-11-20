@@ -39,6 +39,7 @@ public sealed partial class BlueprintDetailPage : Page
         base.OnNavigatingFrom(e);
         if (e.SourcePageType == typeof(BlueprintsViewPage))
             ConnectedAnimationService.GetForCurrentView().PrepareToAnimate("BackConnectedAnimation", detailPreviewImage);
-        ViewModel.BackgroundImageService?.ResetBackground();
+        if (e.SourcePageType != typeof(BlueprintEditPage))
+            ViewModel.BackgroundImageService?.ResetBackground();
     }
 }
