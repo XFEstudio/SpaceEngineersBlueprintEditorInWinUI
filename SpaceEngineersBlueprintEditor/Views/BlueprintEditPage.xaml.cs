@@ -2,6 +2,7 @@ using Microsoft.UI.Xaml.Navigation;
 using SpaceEngineersBlueprintEditor.Model;
 using SpaceEngineersBlueprintEditor.Utilities;
 using SpaceEngineersBlueprintEditor.ViewModels;
+using XFEExtension.NetCore.StringExtension;
 
 namespace SpaceEngineersBlueprintEditor.Views;
 
@@ -18,6 +19,7 @@ public sealed partial class BlueprintEditPage : Page
         PageManager.AddOrUpdateCurrentPage(Current = this);
         this.InitializeComponent();
         ViewModel.DialogService.RegisterDialog(editValueContentDialog);
+        ViewModel.DialogService.RegisterDialog(editEnumContentDialog);
     }
 
     protected override void OnNavigatedTo(NavigationEventArgs e)
@@ -54,7 +56,7 @@ public sealed partial class BlueprintEditPage : Page
                 treeViewNode.Children.Add(new TreeViewNode
                 {
                     Content = child,
-                    HasUnrealizedChildren = child.IsNotBasicType && child.Type is not null
+                    HasUnrealizedChildren = !child.IsBasicType && child.Type is not null
                 });
             }
             treeViewNode.HasUnrealizedChildren = false;
@@ -69,5 +71,23 @@ public sealed partial class BlueprintEditPage : Page
             blueprintPropertyViewData.Children.Clear();
         args.Node.Children.Clear();
         args.Node.HasUnrealizedChildren = true;
+    }
+
+    private void NumberBox_ValueChanged(NumberBox sender, NumberBoxValueChangedEventArgs args)
+    {
+        if (sender.DataContext is BlueprintPropertyViewData blueprintPropertyViewData)
+            blueprintPropertyViewData.Value = sender.Value;
+    }
+
+    private void ComboBox_SelectionChanged(object sender, SelectionChangedEventArgs e)
+    {
+        if (sender is ComboBox comboBox && comboBox.DataContext is BlueprintPropertyViewData blueprintPropertyViewData && comboBox.SelectedItem?.ToString() is string value && !value.IsNullOrEmpty())
+            blueprintPropertyViewData.Value = comboBox.SelectedItem;
+    }
+
+    private void Flyout_Closed(object sender, object e)
+    {
+        if (sender is Flyout flyout && flyout.Content is StackPanel stackPanel && stackPanel.DataContext is BlueprintPropertyViewData blueprintPropertyViewData && blueprintPropertyViewData.Type is not null)
+            blueprintPropertyViewData.Value = Enum.Parse(blueprintPropertyViewData.Type, string.Join(", ", stackPanel.Children.Where(child => child is CheckBox checkBox && checkBox.IsChecked is not null && checkBox.IsChecked.Value).Cast<CheckBox>().Select(checkBox => checkBox.Content.ToString())));
     }
 }

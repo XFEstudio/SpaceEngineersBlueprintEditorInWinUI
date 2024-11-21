@@ -46,7 +46,12 @@ public partial class BlueprintDetailPageViewModel : ViewModelBase
     private async void NavigationParameterService_ParameterChange(object? sender, BlueprintInfoViewData e)
     {
         if (navigationViewService is not null) navigationViewService.Header = e.Name;
-        if (currentBlueprintInfoViewData == e) return;
+        await Helper.Wait(() => SpaceEngineersHelper.IsLoadComplete);
+        if (currentBlueprintInfoViewData != e)
+        {
+            currentBlueprintInfoViewData = e;
+            await LoadBlueprintAsync();
+        }
         AuthorName = "蓝图作者：加载中...";
         BlueprintFileSize = "蓝图大小：加载中...";
         BlueprintPath = "蓝图路径：加载中...";
@@ -58,7 +63,6 @@ public partial class BlueprintDetailPageViewModel : ViewModelBase
         CubeGridList.Clear();
         ComponentList.Clear();
         IsProgressRingVisible = true;
-        currentBlueprintInfoViewData = e;
         if (e.NoBlueprint)
         {
             messageService?.ShowMessage("该蓝图不包含蓝图文件（bp.sbc）", "警告", InfoBarSeverity.Warning);
@@ -67,8 +71,6 @@ public partial class BlueprintDetailPageViewModel : ViewModelBase
             IsProgressRingVisible = false;
             return;
         }
-        await Helper.Wait(() => SpaceEngineersHelper.IsLoadComplete);
-        await LoadBlueprintAsync();
         if (currentBlueprint is not null)
         {
             AuthorName = $"蓝图作者：{currentBlueprint.DisplayName}(Steam ID: {currentBlueprint.OwnerSteamId})";

@@ -48,11 +48,7 @@ public partial class BlueprintsViewPageViewModel : ViewModelBase
 
     private void LoadCurrentBlueprints() => LoadBlueprints(GetCurrentBlueprints(currentParameter));
 
-    private void LoadBlueprints(List<BlueprintInfo> blueprintInfoList)
-    {
-        foreach (var info in blueprintInfoList)
-            BlueprintInfoViewDataList.Add(info.ToBlueprintInfoViewData());
-    }
+    private void LoadBlueprints(List<BlueprintInfo> blueprintInfoList) => blueprintInfoList.ForEach(info => BlueprintInfoViewDataList.Add(info.ToBlueprintInfoViewData()));
 
     private async void NavigationParameterService_ParameterChange(object? sender, object e)
     {

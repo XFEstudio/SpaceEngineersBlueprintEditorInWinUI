@@ -7,6 +7,7 @@ using SpaceEngineersBlueprintEditor.Model;
 using SpaceEngineersBlueprintEditor.SpaceEngineersCore;
 using SpaceEngineersBlueprintEditor.Utilities;
 using System.Collections.ObjectModel;
+using System.Linq;
 using VRage.Game;
 
 namespace SpaceEngineersBlueprintEditor.ViewModels;
@@ -105,14 +106,12 @@ public partial class GameDefinitionsViewPageViewModel : ViewModelBase
     partial void OnSearchTextChanged(string value)
     {
         Definitions.Clear();
-        foreach (var definition in SearchDefinitions(value))
-            Definitions.Add(definition);
+        SearchDefinitions(value).ForEach(Definitions.Add);
     }
 
     partial void OnPropertiesSearchTextChanged(string value)
     {
         PropertiesInfo.Clear();
-        foreach (var property in SearchProperties(value))
-            PropertiesInfo.Add(property);
+        SearchProperties(value).ForEach(PropertiesInfo.Add);
     }
 }

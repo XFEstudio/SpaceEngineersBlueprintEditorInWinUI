@@ -1,4 +1,5 @@
-﻿using Microsoft.UI.Xaml.Media.Imaging;
+﻿using Microsoft.UI.Xaml.Controls;
+using Microsoft.UI.Xaml.Media.Imaging;
 using Microsoft.Win32;
 using Sandbox.Definitions;
 using SpaceEngineersBlueprintEditor.Model;
@@ -35,25 +36,29 @@ public static class SpaceEngineersHelper
                 {
                     type = fieldInfo.FieldType;
                     var value = fieldInfo.GetValue(blueprintPropertyViewData.Value);
-                    blueprintPropertyViewData.Children.Add(new()
+                    var child = new BlueprintPropertyViewData()
                     {
                         Type = type,
                         Name = fieldInfo.Name,
                         Value = value,
                         Parent = blueprintPropertyViewData
-                    });
+                    };
+                    SetDetail(child, value);
+                    blueprintPropertyViewData.Children.Add(child);
                 }
                 else if (member is PropertyInfo propertyInfo && !exceptedName.Contains(propertyInfo.Name) && propertyInfo.CanWrite && propertyInfo.IsMemberPublic())
                 {
                     type = propertyInfo.PropertyType;
                     var value = propertyInfo.GetValue(blueprintPropertyViewData.Value);
-                    blueprintPropertyViewData.Children.Add(new()
+                    var child = new BlueprintPropertyViewData()
                     {
                         Type = type,
                         Name = propertyInfo.Name,
                         Value = value,
                         Parent = blueprintPropertyViewData
-                    });
+                    };
+                    SetDetail(child, value);
+                    blueprintPropertyViewData.Children.Add(child);
                 }
             }
             catch (Exception ex)
@@ -116,11 +121,34 @@ public static class SpaceEngineersHelper
             var cubeBlock = MyDefinitionManager.Static.GetCubeBlockDefinition(myObjectBuilder_CubeBlock);
             blueprintPropertyViewData.Name = cubeBlock.DisplayNameText;
             blueprintPropertyViewData.CubeImage = new BitmapImage(new(@$"{AppPath.DefinitionImages}\{FileHelper.ChangeExtension(cubeBlock.Icons[0], "png")}"));
-            blueprintPropertyViewData.CustomName = value is MyObjectBuilder_TerminalBlock myObjectBuilder_TerminalBlock ? myObjectBuilder_TerminalBlock.CustomName : string.Empty;
+            blueprintPropertyViewData.CustomData = value is MyObjectBuilder_TerminalBlock myObjectBuilder_TerminalBlock ? myObjectBuilder_TerminalBlock.CustomName : string.Empty;
         }
         else if (value is MyObjectBuilder_CubeGrid myObjectBuilder_CubeGrid)
         {
             blueprintPropertyViewData.Name = myObjectBuilder_CubeGrid.DisplayName;
+        }
+        else if (blueprintPropertyViewData.IsMultiEnum)
+        {
+            var stackPanel = new StackPanel
+            {
+                DataContext = blueprintPropertyViewData
+            };
+            foreach (var enumItem in blueprintPropertyViewData.EnumValues)
+            {
+                stackPanel.Children.Add(new CheckBox
+                {
+                    Content = enumItem,
+                    IsChecked = blueprintPropertyViewData.Value?.ToString()?.Contains(enumItem)
+                });
+            }
+            blueprintPropertyViewData.CustomData = stackPanel;
+        }
+        else if (value is not null && value.GetType().IsAssignableTo(typeof(IEnumerable)))
+        {
+            var count = 0;
+            foreach (var item in (IEnumerable)value)
+                count++;
+            blueprintPropertyViewData.CustomData = $"数量：{count}";
         }
     }
 
