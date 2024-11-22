@@ -17,15 +17,12 @@ public sealed partial class GameDefinitionsViewPage : Page
         PageManager.AddOrUpdateCurrentPage(Current = this);
         this.InitializeComponent();
         ViewModel.DefinitionPropertiesDisplayService.Initialize(this, definitionsItemView);
+        ViewModel.NavigationParameterService.Initialize(this);
     }
 
     protected override void OnNavigatedTo(NavigationEventArgs e)
     {
         base.OnNavigatedTo(e);
-        if (e.Parameter is string parameter)
-        {
-            Parameter = parameter;
-            ViewModel.NavigationParameterService.OnParameterChange(Parameter);
-        }
+        ViewModel.NavigationParameterService.OnParameterChange(e.Parameter);
     }
 }

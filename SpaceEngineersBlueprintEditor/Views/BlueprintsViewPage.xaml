@@ -10,7 +10,7 @@
     mc:Ignorable="d">
     <Page.Resources>
         <CommandBarFlyout Placement="Right" x:FieldModifier="internal" x:Name="commandBarFlyout" ShowMode="Auto">
-            <AppBarButton Label="Open" Icon="OpenLocal" ToolTipService.ToolTip="Open In Folder" Command="{x:Bind ViewModel.OpenFolderCommand}"/>
+            <AppBarButton Label="Open" Icon="OpenLocal" ToolTipService.ToolTip="Open In Folder" Command="{x:Bind ViewModel.OpenInFolderCommand}"/>
             <AppBarButton Label="Copy" Icon="Copy" ToolTipService.ToolTip="Copy" Command="{x:Bind ViewModel.CopyToCommand}"/>
             <AppBarButton Label="Delete" Icon="Delete" ToolTipService.ToolTip="Delete">
                 <AppBarButton.Flyout>
@@ -41,7 +41,7 @@
                         </StackPanel>
                         <Grid Height="38" ColumnSpacing="5" Padding="5,0,5,0" HorizontalAlignment="Stretch" VerticalAlignment="Bottom" Background="{ThemeResource AcrylicInAppFillColorDefaultBrush}">
                             <Grid.ColumnDefinitions>
-                                <ColumnDefinition Width="*"/>
+                                <ColumnDefinition/>
                                 <ColumnDefinition Width="Auto"/>
                             </Grid.ColumnDefinitions>
                             <TextBlock Text="{x:Bind Name}" Style="{ThemeResource SubtitleTextBlockStyle}" TextTrimming="CharacterEllipsis" VerticalAlignment="Center"/>

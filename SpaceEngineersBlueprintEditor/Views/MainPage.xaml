@@ -9,7 +9,18 @@
     mc:Ignorable="d">
 
     <Grid>
-        <Grid HorizontalAlignment="Center" VerticalAlignment="Center">
+        <Grid Canvas.ZIndex="1" VerticalAlignment="Stretch" HorizontalAlignment="Stretch" Visibility="{x:Bind ViewModel.IsProgressRingVisible, Mode=OneWay}" Background="{ThemeResource SmokeFillColorDefaultBrush}">
+            <Grid VerticalAlignment="Center" HorizontalAlignment="Center" CornerRadius="15" Padding="100">
+                <Grid.Background>
+                    <SolidColorBrush Color="Black" Opacity="0.5"/>
+                </Grid.Background>
+                <StackPanel Spacing="30">
+                    <TextBlock Text="Loading Blueprint..." Foreground="White" FontSize="34" VerticalAlignment="Center" HorizontalAlignment="Center"/>
+                    <ProgressRing IsActive="True" Width="60" Height="60" VerticalAlignment="Center" HorizontalAlignment="Center"/>
+                </StackPanel>
+            </Grid>
+        </Grid>
+        <Grid Canvas.ZIndex="0" HorizontalAlignment="Center" VerticalAlignment="Center">
             <StackPanel>
                 <Grid x:Name="blueprintDragGrid" CornerRadius="45" Width="600" Height="400" AllowDrop="True" CenterPoint="300,200,0">
                     <Grid.BackgroundTransition>
@@ -28,8 +39,8 @@
                 </Grid>
                 <Grid ColumnSpacing="10" Margin="0,20,0,0">
                     <Grid.ColumnDefinitions>
-                        <ColumnDefinition Width="*"/>
-                        <ColumnDefinition Width="*"/>
+                        <ColumnDefinition/>
+                        <ColumnDefinition/>
                     </Grid.ColumnDefinitions>
                     <Button x:Name="viewBlueprintsList" VerticalAlignment="Top" HorizontalAlignment="Right" Command="{x:Bind ViewModel.ViewBlueprintsListCommand}">
                         <StackPanel Orientation="Horizontal" Spacing="5">

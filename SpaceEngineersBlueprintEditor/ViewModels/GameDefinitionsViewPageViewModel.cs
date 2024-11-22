@@ -64,8 +64,10 @@ public partial class GameDefinitionsViewPageViewModel : ViewModelBase
         }
     }
 
-    private async void NavigationParameterService_ParameterChange(object? sender, string e)
+    private async void NavigationParameterService_ParameterChange(object? sender, string? e)
     {
+        if (e is null || NavigationParameterService.SameAsLast)
+            return;
         currentParameter = e;
         await Helper.Wait(() => Initializer.IsDefinitionsLoadComplete && DefinitionPropertiesDisplayService.IsPageLoaded);
         LoadDefinitions(GetCurrentDefinitions(currentParameter));

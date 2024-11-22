@@ -61,7 +61,7 @@
                             <DataTemplate x:DataType="model:CubeGridInfo">
                                 <Grid HorizontalAlignment="Stretch">
                                     <Grid.ColumnDefinitions>
-                                        <ColumnDefinition Width="*"/>
+                                        <ColumnDefinition/>
                                         <ColumnDefinition Width="Auto" MinWidth="100"/>
                                     </Grid.ColumnDefinitions>
                                     <TextBlock Text="{x:Bind GridName}" HorizontalAlignment="Left"/>

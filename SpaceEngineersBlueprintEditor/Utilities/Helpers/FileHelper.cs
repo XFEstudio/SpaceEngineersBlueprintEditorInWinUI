@@ -32,6 +32,14 @@ public static class FileHelper
         return currentFileName;
     }
 
+    public static string GetCopyDirectoryName(string originalName, int currentNum = 1)
+    {
+        var currentDirectoryName = @$"{Path.GetDirectoryName(originalName)}\{Path.GetFileName(originalName)}_{currentNum}";
+        if (File.Exists(currentDirectoryName) || Directory.Exists(currentDirectoryName))
+            return GetCopyFileName(originalName, ++currentNum);
+        return currentDirectoryName;
+    }
+
     public static void CopyDirectory(string sourceDirectory, string targetDirectory, bool overwrite = false)
     {
         if (!Directory.Exists(sourceDirectory)) throw new DirectoryNotFoundException($"源目录未找到: {sourceDirectory}");

@@ -12,7 +12,7 @@ namespace SpaceEngineersBlueprintEditor.Views;
 /// </summary>
 public sealed partial class BlueprintsViewPage : Page
 {
-    public string? Parameter { get; set; }
+    public object? Parameter { get; set; }
     public BlueprintInfoViewData? CurrentBlueprintInfoViewData { get; set; }
     public BlueprintsViewPageViewModel ViewModel { get; set; } = new();
     public static BlueprintsViewPage? Current { get; set; }
@@ -22,17 +22,14 @@ public sealed partial class BlueprintsViewPage : Page
         PageManager.AddOrUpdateCurrentPage(Current = this);
         this.InitializeComponent();
         NavigationCacheMode = NavigationCacheMode.Enabled;
+        ViewModel.NavigationParameterService.Initialize(this);
         ViewModel.DialogService.RegisterDialog(copyToContentDialog);
     }
 
     protected override void OnNavigatedTo(NavigationEventArgs e)
     {
         base.OnNavigatedTo(e);
-        if (e.Parameter is string parameter && parameter != Parameter)
-        {
-            Parameter = parameter;
-            ViewModel.NavigationParameterService.OnParameterChange(Parameter);
-        }
+        ViewModel.NavigationParameterService.OnParameterChange(e.Parameter);
     }
 
     private void GridView_ItemClick(object sender, ItemClickEventArgs e)

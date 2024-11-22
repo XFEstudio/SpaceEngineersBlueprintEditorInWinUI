@@ -1,14 +1,16 @@
 ﻿using CommunityToolkit.Mvvm.ComponentModel;
 using CommunityToolkit.Mvvm.Input;
+using Microsoft.UI.Xaml.Media.Animation;
 using Microsoft.UI.Xaml.Media.Imaging;
 using Sandbox.Definitions;
 using SpaceEngineersBlueprintEditor.Implements.Services;
 using SpaceEngineersBlueprintEditor.Interface.Services;
 using SpaceEngineersBlueprintEditor.Model;
-using SpaceEngineersBlueprintEditor.SpaceEngineersCore;
 using SpaceEngineersBlueprintEditor.Utilities;
 using SpaceEngineersBlueprintEditor.Views;
 using System.Collections.ObjectModel;
+using System.Diagnostics.CodeAnalysis;
+using System.Reflection.Metadata;
 using VRage.Game;
 
 namespace SpaceEngineersBlueprintEditor.ViewModels;
@@ -43,14 +45,19 @@ public partial class BlueprintDetailPageViewModel : ViewModelBase
     public INavigationParameterService<BlueprintInfoViewData> NavigationParameterService { get; set; } = new NavigationParameterService<BlueprintInfoViewData>();
     public BlueprintDetailPageViewModel() => NavigationParameterService.ParameterChange += NavigationParameterService_ParameterChange;
 
-    private async void NavigationParameterService_ParameterChange(object? sender, BlueprintInfoViewData e)
+    private async void NavigationParameterService_ParameterChange(object? sender, BlueprintInfoViewData? e)
     {
+        if (e is null) return;
         if (navigationViewService is not null) navigationViewService.Header = e.Name;
+        IsProgressRingVisible = true;
+        BackgroundImageService?.SetBackgroundImage(e.BlueprintImage);
         await Helper.Wait(() => SpaceEngineersHelper.IsLoadComplete);
-        if (currentBlueprintInfoViewData != e)
+        if (!NavigationParameterService.SameAsLast)
         {
             currentBlueprintInfoViewData = e;
-            await LoadBlueprintAsync();
+            currentDefinitions = await SpaceEngineersHelper.LoadBlueprintAsync(currentBlueprintInfoViewData.FilePath);
+            if (currentDefinitions is not null && currentDefinitions.ShipBlueprints is not null && currentDefinitions.ShipBlueprints.Length > 0)
+                currentBlueprint = currentDefinitions.ShipBlueprints[0];
         }
         AuthorName = "蓝图作者：加载中...";
         BlueprintFileSize = "蓝图大小：加载中...";
@@ -62,44 +69,30 @@ public partial class BlueprintDetailPageViewModel : ViewModelBase
         DLCList.Clear();
         CubeGridList.Clear();
         ComponentList.Clear();
-        IsProgressRingVisible = true;
         if (e.NoBlueprint)
         {
             messageService?.ShowMessage("该蓝图不包含蓝图文件（bp.sbc）", "警告", InfoBarSeverity.Warning);
-            BlueprintFileSize = $"蓝图大小：{currentBlueprintInfoViewData.FileSize}";
-            BlueprintPath = $"蓝图路径：{currentBlueprintInfoViewData.FilePath}";
-            IsProgressRingVisible = false;
+            BlueprintFileSize = $"蓝图大小：{currentBlueprintInfoViewData!.FileSize}";
+            BlueprintPath = $"蓝图路径：{currentBlueprintInfoViewData!.FilePath}";
             return;
         }
         if (currentBlueprint is not null)
         {
             AuthorName = $"蓝图作者：{currentBlueprint.DisplayName}(Steam ID: {currentBlueprint.OwnerSteamId})";
-            BlueprintFileSize = $"蓝图大小：{currentBlueprintInfoViewData.FileSize}";
-            BlueprintPath = $"蓝图路径：{currentBlueprintInfoViewData.FilePath}";
+            BlueprintFileSize = $"蓝图大小：{currentBlueprintInfoViewData!.FileSize}";
+            BlueprintPath = $"蓝图路径：{currentBlueprintInfoViewData!.FilePath}";
             IsBlueprintDestructible = $"是否可被破坏：{(currentBlueprint.CubeGrids.Any(grid => !grid.DestructibleBlocks) ? currentBlueprint.CubeGrids.Any(grid => grid.DestructibleBlocks) ? "部分可被破坏" : "整体不可破坏" : "可被破坏")}";
             IsBlueprintEditable = $"是否可在游戏内编辑：{(currentBlueprint.CubeGrids.Any(grid => !grid.Editable) ? currentBlueprint.CubeGrids.Any(grid => grid.Editable) ? "部分可编辑" : "整体不可编辑" : "可编辑")}";
             CalculateDLC();
             CalculateCubeGrids();
             CalculateComponent();
-            IsProgressRingVisible = false;
             messageService?.ShowMessage("蓝图加载完成", "完成", InfoBarSeverity.Success);
         }
         else
         {
-            IsProgressRingVisible = false;
             messageService?.ShowMessage("未能加载蓝图", "错误", InfoBarSeverity.Error);
         }
-    }
-
-    private async Task LoadBlueprintAsync()
-    {
-        if (currentBlueprintInfoViewData is not null)
-            await Task.Run(() =>
-            {
-                currentDefinitions = SpaceEngineerDefinitions.Load<MyObjectBuilder_Definitions>(currentBlueprintInfoViewData.FilePath);
-                if (currentDefinitions is not null && currentDefinitions.ShipBlueprints is not null && currentDefinitions.ShipBlueprints.Length > 0)
-                    currentBlueprint = currentDefinitions.ShipBlueprints[0];
-            });
+        IsProgressRingVisible = false;
     }
 
     private void CalculateCubeGrids()
@@ -183,5 +176,5 @@ public partial class BlueprintDetailPageViewModel : ViewModelBase
     {
         BlueprintDefinitions = currentDefinitions,
         ViewData = currentBlueprintInfoViewData
-    });
+    }, new DrillInNavigationTransitionInfo());
 }

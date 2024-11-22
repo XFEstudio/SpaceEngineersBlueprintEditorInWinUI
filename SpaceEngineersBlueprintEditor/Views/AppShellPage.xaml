@@ -88,8 +88,8 @@
                     </NavigationViewItem.Icon>
                 </NavigationViewItem>
             </NavigationView.FooterMenuItems>
-            <Grid Margin="56,24,56,0">
-                <Frame x:Name="navigationFrame"/>
+            <Grid>
+                <Frame Padding="56,24,56,0" x:Name="navigationFrame"/>
             </Grid>
         </NavigationView>
     </Grid>

@@ -2,7 +2,6 @@
 using Microsoft.UI.Xaml.Media;
 using SpaceEngineersBlueprintEditor.Interface.Services;
 using System.Diagnostics.CodeAnalysis;
-using Windows.UI;
 
 namespace SpaceEngineersBlueprintEditor.Implements.Services;
 
@@ -28,16 +27,19 @@ class BackgroundImageService : GlobalServiceBase, IBackgroundImageService
 
     public void SetBackgroundImage(ImageSource imageSource)
     {
-        if (_page is not null)
-            _page.Background = new ImageBrush
-            {
-                ImageSource = imageSource
-            };
-        if (_grid is not null)
-            _grid.Background = new AcrylicBrush
-            {
-                TintLuminosityOpacity = 0,
-                TintColor = Colors.Transparent
-            };
+        if ((SystemProfile.Theme == ElementTheme.Default && Application.Current.RequestedTheme == ApplicationTheme.Dark) || SystemProfile.Theme == ElementTheme.Dark)
+        {
+            if (_page is not null)
+                _page.Background = new ImageBrush
+                {
+                    ImageSource = imageSource
+                };
+            if (_grid is not null)
+                _grid.Background = new AcrylicBrush
+                {
+                    TintLuminosityOpacity = 0,
+                    TintColor = Colors.Transparent
+                };
+        }
     }
 }

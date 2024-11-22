@@ -8,32 +8,44 @@ namespace SpaceEngineersBlueprintEditor.Implements.Services;
 
 internal class NavigationViewService : GlobalServiceBase, INavigationViewService
 {
-    private NavigationView? navigationView;
+    private NavigationView? _navigationView;
+    private Frame? _frame;
     private readonly AutoNavigationService navigationService = new();
 
     public IAutoNavigationService NavigationService => navigationService;
-    public object? SelectedItem => navigationView?.SelectedItem;
-    public string? Header { get => navigationView?.Header.ToString(); set { if (navigationView is not null) navigationView.Header = value; } }
+    public object? SelectedItem => _navigationView?.SelectedItem;
+    public string? Header { get => _navigationView?.Header.ToString(); set { if (_navigationView is not null) _navigationView.Header = value; } }
 
-    public NavigationView? NavigationView => navigationView;
+    public NavigationView? NavigationView => _navigationView;
 
-    public XamlRoot? XamlRoot => navigationView?.XamlRoot;
+    public XamlRoot? XamlRoot => _navigationView?.XamlRoot;
 
-    [MemberNotNull(nameof(navigationView))]
+    public Thickness ContentMargin
+    {
+        get => _frame?.Padding ?? new();
+        set
+        {
+            if (_frame is not null)
+                _frame.Padding = value;
+        }
+    }
+
+    [MemberNotNull(nameof(_navigationView))]
     public void Initialize(NavigationView view, Frame frame)
     {
+        _frame = frame;
         navigationService.Frame = frame;
-        navigationView = view;
-        navigationView.ItemInvoked += NavigationView_ItemInvoked;
-        navigationView.BackRequested += NavigationView_BackRequested;
+        _navigationView = view;
+        _navigationView.ItemInvoked += NavigationView_ItemInvoked;
+        _navigationView.BackRequested += NavigationView_BackRequested;
         navigationService.Navigated += NavigationService_Navigated;
     }
 
     private void NavigationService_Navigated(object? sender, NavigationEventArgs e)
     {
-        if (navigationView is not null && GetSelectedItem(e.SourcePageType, e.Parameter) is NavigationViewItem navigationViewItem)
+        if (_navigationView is not null && GetSelectedItem(e.SourcePageType, e.Parameter) is NavigationViewItem navigationViewItem)
         {
-            navigationView.SelectedItem = navigationViewItem;
+            _navigationView.SelectedItem = navigationViewItem;
             Header = navigationViewItem.Content.ToString() ?? string.Empty;
         }
     }
@@ -50,7 +62,7 @@ internal class NavigationViewService : GlobalServiceBase, INavigationViewService
             NavigateTo(targetUrl, args.InvokedItemContainer.GetValue(NavigationAddition.NavigateParameterProperty) is string parameter ? parameter : null);
     }
 
-    public NavigationViewItem? GetSelectedItem(Type type, object? parameter = null) => navigationView is null ? null : GetSelectedItem(navigationView.MenuItems, navigationView.FooterMenuItems, type, parameter);
+    public NavigationViewItem? GetSelectedItem(Type type, object? parameter = null) => _navigationView is null ? null : GetSelectedItem(_navigationView.MenuItems, _navigationView.FooterMenuItems, type, parameter);
 
     private static NavigationViewItem? GetSelectedItem(IEnumerable<object> menuItems, IEnumerable<object> footerMenuItems, Type pageType, object? parameter)
     {

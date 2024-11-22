@@ -1,5 +1,4 @@
-﻿using Microsoft.UI.Xaml.Controls;
-using Microsoft.UI.Xaml.Media.Imaging;
+﻿using Microsoft.UI.Xaml.Media.Imaging;
 using Microsoft.Win32;
 using Sandbox.Definitions;
 using SpaceEngineersBlueprintEditor.Model;
@@ -8,6 +7,7 @@ using System.Collections;
 using System.Reflection;
 using VRage.Collections;
 using VRage.Game;
+using XFEExtension.NetCore.FileExtension;
 
 namespace SpaceEngineersBlueprintEditor.Utilities.Helpers;
 
@@ -20,6 +20,21 @@ public static class SpaceEngineersHelper
     public static IEnumerable<MyComponentDefinition> ComponentDefinitions => AllDefinitions.Where(definition => definition is MyComponentDefinition).Cast<MyComponentDefinition>();
     public static IEnumerable<MyPhysicalItemDefinition> ItemDefinitions => AllDefinitions.Where(definition => definition is MyPhysicalItemDefinition).Cast<MyPhysicalItemDefinition>();
     public static IEnumerable<MyScenarioDefinition> ScenarioDefinition => AllDefinitions.Where(definition => definition is MyScenarioDefinition).Cast<MyScenarioDefinition>();
+
+    public static async Task<BlueprintModel?> LoadBlueprintModel(string blueprintFile) => new()
+    {
+        ViewData = LoadBlueprintInfo(blueprintFile)?.ToBlueprintInfoViewData(),
+        BlueprintDefinitions = await LoadBlueprintAsync(blueprintFile)
+    };
+
+    public static async Task<MyObjectBuilder_Definitions> LoadBlueprintAsync(string blueprintFile) => await Task.Run(() => SpaceEngineerDefinitions.Load<MyObjectBuilder_Definitions>(blueprintFile));
+
+    public static BlueprintInfo? LoadBlueprintInfo(string blueprintFile)
+    {
+        var rootPath = Path.GetDirectoryName(blueprintFile);
+        var imagePath = $@"{rootPath}\thumb.png";
+        return new(imagePath, File.Exists(blueprintFile), File.Exists(imagePath), Path.GetFileName(rootPath)!, new FileInfo(blueprintFile).Length.FileSize(), blueprintFile);
+    }
 
     public static void AnalyzeBlueprint(BlueprintPropertyViewData blueprintPropertyViewData, params string[] exceptedName)
     {
@@ -125,7 +140,7 @@ public static class SpaceEngineersHelper
         }
         else if (value is MyObjectBuilder_CubeGrid myObjectBuilder_CubeGrid)
         {
-            blueprintPropertyViewData.Name = myObjectBuilder_CubeGrid.DisplayName;
+            blueprintPropertyViewData.CustomData = myObjectBuilder_CubeGrid.DisplayName;
         }
         else if (blueprintPropertyViewData.IsMultiEnum)
         {
@@ -149,6 +164,10 @@ public static class SpaceEngineersHelper
             foreach (var item in (IEnumerable)value)
                 count++;
             blueprintPropertyViewData.CustomData = $"数量：{count}";
+        }
+        else
+        {
+            blueprintPropertyViewData.CustomData = blueprintPropertyViewData.Name;
         }
     }
 

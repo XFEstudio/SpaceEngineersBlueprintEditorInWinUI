@@ -2,7 +2,10 @@
 
 public interface INavigationParameterService<T>
 {
-    T? Parameter { get; }
-    event EventHandler<T> ParameterChange;
-    void OnParameterChange(T parameter);
+    bool SameAsLast { get; }
+    Page? Page { get; }
+    T? Parameter { get; set; }
+    event EventHandler<T?> ParameterChange;
+    void Initialize(Page page);
+    void OnParameterChange(object? parameter);
 }

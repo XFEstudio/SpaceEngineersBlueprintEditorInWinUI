@@ -8,12 +8,14 @@
     <Platforms>x86;x64;ARM64</Platforms>
     <RuntimeIdentifiers>win-x86;win-x64;win-arm64</RuntimeIdentifiers>
     <UseWinUI>true</UseWinUI>
+    <Version>0.1.0</Version>
     <EnableMsixTooling>true</EnableMsixTooling>
     <Nullable>enable</Nullable>
     <WindowsPackageType>None</WindowsPackageType>
     <WindowsAppSDKSelfContained>true</WindowsAppSDKSelfContained>
     <ImplicitUsings>enable</ImplicitUsings>
     <ApplicationIcon>Assets\Icons\EditorIcon.ico</ApplicationIcon>
+    <AllowUnsafeBlocks>true</AllowUnsafeBlocks>
   </PropertyGroup>
   <ItemGroup>
     <Content Include="Styles\Controls.xaml">
@@ -32,6 +34,7 @@
   
   <ItemGroup>
     <None Remove="Styles\Controls.xaml" />
+    <None Remove="Views\BlueprintEditSubPage.xaml" />
     <None Remove="Views\GameDefinitionsViewPage.xaml" />
   </ItemGroup>
   
@@ -56,6 +59,7 @@
     <PackageReference Include="CommunityToolkit.WinUI.Controls.SettingsControls" Version="8.2.241112-preview1" />
     <PackageReference Include="Microsoft.Windows.SDK.BuildTools" Version="10.0.26100.1742" />
     <PackageReference Include="Microsoft.WindowsAppSDK" Version="1.6.241114003" />
+    <PackageReference Include="Newtonsoft.Json" Version="13.0.3" />
     <PackageReference Include="System.Drawing.Common" Version="9.0.0" />
     <PackageReference Include="WinUIEx" Version="2.5.0" />
     <PackageReference Include="XFEExtension.NetCore" Version="3.2.1" />
@@ -187,6 +191,11 @@
     <Reference Include="VRage.XmlSerializers">
       <HintPath>..\DLLReference\VRage.XmlSerializers.dll</HintPath>
     </Reference>
+  </ItemGroup>
+  <ItemGroup>
+    <Page Update="Views\BlueprintEditSubPage.xaml">
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
   </ItemGroup>
   <ItemGroup>
     <Page Update="Views\GameDefinitionsViewPage.xaml">

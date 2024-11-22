@@ -19,7 +19,7 @@
         <TreeViewItem ItemsSource="{Binding Children}">
             <Grid Padding="0,0,5,0">
                 <Grid.ColumnDefinitions>
-                    <ColumnDefinition Width="*"/>
+                    <ColumnDefinition/>
                     <ColumnDefinition Width="150"/>
                 </Grid.ColumnDefinitions>
                 <StackPanel Orientation="Horizontal" Spacing="20">

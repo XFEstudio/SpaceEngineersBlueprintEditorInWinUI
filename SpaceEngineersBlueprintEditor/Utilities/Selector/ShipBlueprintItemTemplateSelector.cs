@@ -22,16 +22,16 @@ public partial class ShipBlueprintItemTemplateSelector : DataTemplateSelector
         {
             if (blueprintPropertyViewData.IsBasicType)
             {
-                if (blueprintPropertyViewData.Type == typeof(string))
-                    return StringValueItemTemplate;
-                if (blueprintPropertyViewData.Type == typeof(bool))
-                    return BooleanValueItemTemplate;
-                else if (blueprintPropertyViewData.IsMultiEnum)
+                if (blueprintPropertyViewData.IsMultiEnum)
                     return MultiEnumValueItemTemplate;
                 else if (blueprintPropertyViewData.Type is not null && blueprintPropertyViewData.Type.IsEnum)
                     return EnumValueItemTemplate;
-                else
+                else if (blueprintPropertyViewData.Type == typeof(int) || blueprintPropertyViewData.Type == typeof(double) || blueprintPropertyViewData.Type == typeof(float) || blueprintPropertyViewData.Type == typeof(short) || blueprintPropertyViewData.Type == typeof(byte) || blueprintPropertyViewData.Type == typeof(uint) || blueprintPropertyViewData.Type == typeof(ushort))
                     return NumberValueItemTemplate;
+                else if (blueprintPropertyViewData.Type == typeof(bool))
+                    return BooleanValueItemTemplate;
+                else
+                    return StringValueItemTemplate;
             }
             else if (blueprintPropertyViewData.IsEnumerable)
                 return EnumerableTemplate;

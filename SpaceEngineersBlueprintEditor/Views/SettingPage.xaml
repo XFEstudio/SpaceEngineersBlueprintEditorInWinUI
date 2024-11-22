@@ -63,8 +63,8 @@
                             </toolkit:SettingsCard.ActionIcon>
                             <Grid ColumnSpacing="20">
                                 <Grid.ColumnDefinitions>
-                                    <ColumnDefinition Width="*"/>
-                                    <ColumnDefinition Width="*"/>
+                                    <ColumnDefinition/>
+                                    <ColumnDefinition/>
                                 </Grid.ColumnDefinitions>
                                 <TextBlock Style="{ThemeResource CaptionTextBlockStyle}" Text="{x:Bind ViewModel.AppCacheSize, Mode=OneWay}" VerticalAlignment="Center"/>
                                 <Button Grid.Column="1" x:Uid="SettingPage_ClearCache" Command="{x:Bind ViewModel.ClearCacheCommand}"/>

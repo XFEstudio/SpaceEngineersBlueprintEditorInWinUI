@@ -19,18 +19,17 @@ public sealed partial class BlueprintDetailPage : Page
         PageManager.AddOrUpdateCurrentPage(Current = this);
         NavigationCacheMode = NavigationCacheMode.Enabled;
         this.InitializeComponent();
+        ViewModel.NavigationParameterService.Initialize(this);
     }
 
     protected override void OnNavigatedTo(NavigationEventArgs e)
     {
         base.OnNavigatedTo(e);
+        ViewModel.NavigationParameterService.OnParameterChange(e.Parameter);
         if (e.Parameter is BlueprintInfoViewData parameter)
         {
             ConnectedAnimationService.GetForCurrentView().GetAnimation("ForwardConnectedAnimation")?.TryStart(detailPreviewImage, []);
             detailPreviewImage.Source = parameter.BlueprintImage;
-            Parameter = parameter;
-            ViewModel.NavigationParameterService.OnParameterChange(Parameter);
-            ViewModel.BackgroundImageService?.SetBackgroundImage(parameter.BlueprintImage);
         }
     }
 

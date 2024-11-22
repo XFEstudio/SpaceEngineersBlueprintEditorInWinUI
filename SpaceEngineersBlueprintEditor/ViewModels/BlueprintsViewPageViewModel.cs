@@ -50,7 +50,7 @@ public partial class BlueprintsViewPageViewModel : ViewModelBase
 
     private void LoadBlueprints(List<BlueprintInfo> blueprintInfoList) => blueprintInfoList.ForEach(info => BlueprintInfoViewDataList.Add(info.ToBlueprintInfoViewData()));
 
-    private async void NavigationParameterService_ParameterChange(object? sender, object e)
+    private async void NavigationParameterService_ParameterChange(object? sender, object? e)
     {
         if (e is string stringParameter)
         {
@@ -63,7 +63,7 @@ public partial class BlueprintsViewPageViewModel : ViewModelBase
         {
             currentBlueprintInfoViewData = blueprintInfoViewData;
             DeleteEnsureText = $"Are you sure to delete {blueprintInfoViewData.Name}?";
-            CopyFolderText = Path.GetFileName(FileHelper.GetCopyFileName(path)) ?? throw new NullReferenceException("Can't get the folder name");
+            CopyFolderText = Path.GetFileName(FileHelper.GetCopyDirectoryName(path)) ?? throw new NullReferenceException("Can't get the folder name");
         }
     }
 
@@ -79,7 +79,7 @@ public partial class BlueprintsViewPageViewModel : ViewModelBase
     }
 
     [RelayCommand]
-    void OpenFolder()
+    void OpenInFolder()
     {
         if (currentBlueprintInfoViewData is not null && Path.GetDirectoryName(currentBlueprintInfoViewData.FilePath) is string path)
         {
@@ -91,7 +91,7 @@ public partial class BlueprintsViewPageViewModel : ViewModelBase
     [RelayCommand]
     async Task CopyTo()
     {
-        if (currentBlueprintInfoViewData is not null && Path.GetDirectoryName(currentBlueprintInfoViewData.FilePath) is string path && await DialogService.ShowDialog("copyToDialog") == ContentDialogResult.Primary)
+        if (currentBlueprintInfoViewData is not null && Path.GetDirectoryName(currentBlueprintInfoViewData.FilePath) is string path && await DialogService.ShowDialog("copyToContentDialog") == ContentDialogResult.Primary)
         {
             var targetPath = $@"{Path.GetDirectoryName(path)}\{CopyFolderText}";
             FileHelper.CopyDirectory(path, targetPath);

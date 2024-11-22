@@ -11,7 +11,7 @@ public sealed partial class MainPage : Page
 {
     public static MainPage? Current { get; set; }
     public MainPageViewModel ViewModel { get; set; } = new();
-    private Compositor compositor = App.MainWindow.Compositor;
+    private readonly Compositor compositor = App.MainWindow.Compositor;
     public MainPage()
     {
         PageManager.AddOrUpdateCurrentPage(Current = this);
