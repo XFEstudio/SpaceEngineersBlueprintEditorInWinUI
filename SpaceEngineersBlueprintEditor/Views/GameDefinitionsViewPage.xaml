@@ -8,52 +8,39 @@
     xmlns:model="using:SpaceEngineersBlueprintEditor.Model"
     mc:Ignorable="d">
 
-    <Grid>
-        <Grid Canvas.ZIndex="1" VerticalAlignment="Stretch" HorizontalAlignment="Stretch" Visibility="{x:Bind ViewModel.IsProgressRingVisible, Mode=OneWay}" Background="{ThemeResource SmokeFillColorDefaultBrush}">
-            <Grid VerticalAlignment="Center" HorizontalAlignment="Center" CornerRadius="15" Padding="100">
-                <Grid.Background>
-                    <SolidColorBrush Color="Black" Opacity="0.5"/>
-                </Grid.Background>
-                <StackPanel Spacing="30">
-                    <TextBlock Text="Loading Definitions..." Foreground="White" FontSize="34" VerticalAlignment="Center" HorizontalAlignment="Center"/>
-                    <ProgressRing IsActive="True" Width="60" Height="60" VerticalAlignment="Center" HorizontalAlignment="Center"/>
+    <Grid ColumnDefinitions="8*, 3*" RowSpacing="20" Visibility="{x:Bind ViewModel.IsUIVisible, Mode=OneWay}">
+        <ItemsView x:Name="definitionsItemView" Canvas.ZIndex="0" Padding="4" ItemsSource="{x:Bind ViewModel.Definitions}" ItemTemplate="{StaticResource ComponentDataTemplate}">
+            <ItemsView.Layout>
+                <UniformGridLayout Orientation="Horizontal" />
+            </ItemsView.Layout>
+        </ItemsView>
+        <Grid Grid.Column="1" Margin="0,0,0,24" Background="{ThemeResource CardBackgroundFillColorDefaultBrush}" BorderBrush="{ThemeResource CardStrokeColorDefaultBrush}" CornerRadius="8">
+            <Grid RowDefinitions="Auto, Auto, *">
+                <StackPanel Padding="16" Spacing="20">
+                    <TextBlock Text="{x:Bind ViewModel.SelectedDefinitionViewData.DefinitionBase.DisplayNameText, Mode=OneWay}" HorizontalAlignment="Left" Style="{ThemeResource SubtitleTextBlockStyle}"/>
+                    <Image Source="{x:Bind ViewModel.SelectedDefinitionViewData.ImageSource, Mode=OneWay}" HorizontalAlignment="Left" Width="128" Height="128"/>
+                    <TextBlock Text="{x:Bind ViewModel.SelectedDefinitionViewData.DefinitionBase.DescriptionText, Mode=OneWay}" HorizontalAlignment="Left" Style="{ThemeResource CaptionTextBlockStyle}"/>
                 </StackPanel>
+                <AutoSuggestBox Margin="5,10,5,0" Grid.Row="1" HorizontalAlignment="Stretch" PlaceholderText="Search properties..." QueryIcon="Find" Text="{x:Bind ViewModel.PropertiesSearchText, Mode=TwoWay}"/>
+                <ScrollView Padding="5" Grid.Row="2">
+                    <ListView ItemsSource="{x:Bind ViewModel.PropertiesInfo}">
+                        <ListView.ItemTemplate>
+                            <DataTemplate x:DataType="model:PropertyViewData">
+                                <ListViewItem>
+                                    <Grid ColumnDefinitions="*, *" ColumnSpacing="20">
+                                        <TextBlock ToolTipService.ToolTip="{x:Bind Value}" Grid.Column="1" Text="{x:Bind Value}" Foreground="{ThemeResource AccentTextFillColorPrimaryBrush}" HorizontalAlignment="Right" Visibility="{x:Bind IsValueType}" TextTrimming="CharacterEllipsis"/>
+                                        <TextBlock ToolTipService.ToolTip="{x:Bind Value}" Grid.Column="1" Text="{x:Bind Value}" HorizontalAlignment="Right" Visibility="{x:Bind IsNotValueType}" TextTrimming="CharacterEllipsis"/>
+                                        <TextBlock ToolTipService.ToolTip="{x:Bind PropertyName}" Text="{x:Bind PropertyName}" HorizontalAlignment="Left" TextTrimming="CharacterEllipsis"/>
+                                    </Grid>
+                                </ListViewItem>
+                            </DataTemplate>
+                        </ListView.ItemTemplate>
+                    </ListView>
+                </ScrollView>
             </Grid>
         </Grid>
-        <Grid ColumnDefinitions="8*, 3*" RowSpacing="20" Visibility="{x:Bind ViewModel.IsUIVisible, Mode=OneWay}">
-            <ItemsView x:Name="definitionsItemView" Canvas.ZIndex="0" Padding="4" ItemsSource="{x:Bind ViewModel.Definitions}" ItemTemplate="{StaticResource ComponentDataTemplate}">
-                <ItemsView.Layout>
-                    <UniformGridLayout Orientation="Horizontal" />
-                </ItemsView.Layout>
-            </ItemsView>
-            <Grid Grid.Column="1" Margin="0,0,0,24" Background="{ThemeResource CardBackgroundFillColorDefaultBrush}" BorderBrush="{ThemeResource CardStrokeColorDefaultBrush}" CornerRadius="8">
-                <Grid RowDefinitions="Auto, Auto, *">
-                    <StackPanel Padding="16" Spacing="20">
-                        <TextBlock Text="{x:Bind ViewModel.SelectedDefinitionViewData.DefinitionBase.DisplayNameText, Mode=OneWay}" HorizontalAlignment="Left" Style="{ThemeResource SubtitleTextBlockStyle}"/>
-                        <Image Source="{x:Bind ViewModel.SelectedDefinitionViewData.ImageSource, Mode=OneWay}" HorizontalAlignment="Left" Width="128" Height="128"/>
-                        <TextBlock Text="{x:Bind ViewModel.SelectedDefinitionViewData.DefinitionBase.DescriptionText, Mode=OneWay}" HorizontalAlignment="Left" Style="{ThemeResource CaptionTextBlockStyle}"/>
-                    </StackPanel>
-                    <AutoSuggestBox Margin="5,10,5,0" Grid.Row="1" HorizontalAlignment="Stretch" PlaceholderText="Search properties..." QueryIcon="Find" Text="{x:Bind ViewModel.PropertiesSearchText, Mode=TwoWay}"/>
-                    <ScrollView Padding="5" Grid.Row="2">
-                        <ListView ItemsSource="{x:Bind ViewModel.PropertiesInfo}">
-                            <ListView.ItemTemplate>
-                                <DataTemplate x:DataType="model:PropertyViewData">
-                                    <ListViewItem>
-                                        <Grid ColumnDefinitions="*, *" ColumnSpacing="20">
-                                            <TextBlock ToolTipService.ToolTip="{x:Bind Value}" Grid.Column="1" Text="{x:Bind Value}" Foreground="{ThemeResource AccentTextFillColorPrimaryBrush}" HorizontalAlignment="Right" Visibility="{x:Bind IsValueType}" TextTrimming="CharacterEllipsis"/>
-                                            <TextBlock ToolTipService.ToolTip="{x:Bind Value}" Grid.Column="1" Text="{x:Bind Value}" HorizontalAlignment="Right" Visibility="{x:Bind IsNotValueType}" TextTrimming="CharacterEllipsis"/>
-                                            <TextBlock ToolTipService.ToolTip="{x:Bind PropertyName}" Text="{x:Bind PropertyName}" HorizontalAlignment="Left" TextTrimming="CharacterEllipsis"/>
-                                        </Grid>
-                                    </ListViewItem>
-                                </DataTemplate>
-                            </ListView.ItemTemplate>
-                        </ListView>
-                    </ScrollView>
-                </Grid>
-            </Grid>
-            <Grid Margin="0,0,0,20" Width="250" Padding="5" CornerRadius="8" VerticalAlignment="Bottom" HorizontalAlignment="Center" Background="{ThemeResource AcrylicInAppFillColorDefaultBrush}">
-                <AutoSuggestBox PlaceholderText="Search definitions..." QueryIcon="Find" Text="{x:Bind ViewModel.SearchText, Mode=TwoWay}"/>
-            </Grid>
+        <Grid Margin="0,0,0,20" Width="250" Padding="5" CornerRadius="8" VerticalAlignment="Bottom" HorizontalAlignment="Center" Background="{ThemeResource AcrylicInAppFillColorDefaultBrush}">
+            <AutoSuggestBox PlaceholderText="Search definitions..." QueryIcon="Find" Text="{x:Bind ViewModel.SearchText, Mode=TwoWay}"/>
         </Grid>
     </Grid>
 </Page>

@@ -137,61 +137,46 @@
         <selector:ShipBlueprintItemTemplateSelector x:Key="ShipBlueprintItemTemplateSelector" DefaultTemplate="{StaticResource TreeViewItemDataTemplate}" CubeItemTemplate="{StaticResource CubeItemDataTemplate}" GridItemTemplate="{StaticResource GridItemDataTemplate}" ObjectItemTemplate="{StaticResource ObjectItemDataTemplate}" EnumerableTemplate="{StaticResource EnumerableItemDataTemplate}" StringValueItemTemplate="{StaticResource StringValueItemDataTemplate}" NumberValueItemTemplate="{StaticResource NumberValueItemDataTemplate}" EnumValueItemTemplate="{StaticResource EnumValueItemDataTemplate}" MultiEnumValueItemTemplate="{StaticResource MultiEnumValueItemDataTemplate}" BooleanValueItemTemplate="{StaticResource BooleanValueItemDataTemplate}"/>
     </Page.Resources>
 
-    <Grid>
-        <Grid Canvas.ZIndex="1" VerticalAlignment="Stretch" HorizontalAlignment="Stretch" Visibility="{x:Bind ViewModel.IsProgressRingVisible, Mode=OneWay}" Background="{ThemeResource SmokeFillColorDefaultBrush}">
-            <Grid VerticalAlignment="Center" HorizontalAlignment="Center" CornerRadius="15" Padding="100">
-                <Grid.Background>
-                    <SolidColorBrush Color="Black" Opacity="0.5"/>
-                </Grid.Background>
-                <StackPanel Spacing="30">
-                    <TextBlock Text="{x:Bind ViewModel.LoadingText, Mode=OneWay}" Foreground="White" FontSize="34" VerticalAlignment="Center" HorizontalAlignment="Center"/>
-                    <ProgressRing IsActive="True" Width="60" Height="60" VerticalAlignment="Center" HorizontalAlignment="Center"/>
-                </StackPanel>
-            </Grid>
-        </Grid>
-        <Grid Background="{ThemeResource SolidBackgroundFillColorBaseBrush}">
-            <Grid RowSpacing="10">
+    <Grid Background="{ThemeResource SolidBackgroundFillColorBaseBrush}">
+        <Grid RowSpacing="10">
+            <Grid.RowDefinitions>
+                <RowDefinition Height="Auto"/>
+                <RowDefinition/>
+            </Grid.RowDefinitions>
+            <MenuBar>
+                <MenuBarItem Title="File">
+                    <MenuFlyoutItem Text="Open blueprint" Icon="OpenFile" Command="{x:Bind ViewModel.OpenBlueprintCommand}">
+                        <MenuFlyoutItem.KeyboardAccelerators>
+                            <KeyboardAccelerator Modifiers="Control" Key="N"/>
+                        </MenuFlyoutItem.KeyboardAccelerators>
+                    </MenuFlyoutItem>
+                    <MenuFlyoutItem Text="Save" Icon="Save" Command="{x:Bind ViewModel.SaveCommand}">
+                        <MenuFlyoutItem.KeyboardAccelerators>
+                            <KeyboardAccelerator Modifiers="Control" Key="S"/>
+                        </MenuFlyoutItem.KeyboardAccelerators>
+                    </MenuFlyoutItem>
+                </MenuBarItem>
+                <MenuBarItem Title="Edit">
+                    <MenuFlyoutItem Icon="RepeatAll" Text="Convert to destructible" Command="{x:Bind ViewModel.ConvertBlueprintCommand}" CommandParameter="Destructible"/>
+                    <MenuFlyoutItem Icon="RepeatAll" Text="Convert to indestructible" Command="{x:Bind ViewModel.ConvertBlueprintCommand}" CommandParameter="Indestructible"/>
+                    <MenuFlyoutSeparator/>
+                    <MenuFlyoutItem Icon="RepeatAll" Text="Convert to editable" Command="{x:Bind ViewModel.ConvertBlueprintCommand}" CommandParameter="Editable"/>
+                    <MenuFlyoutItem Icon="RepeatAll" Text="Convert to non-editable" Command="{x:Bind ViewModel.ConvertBlueprintCommand}" CommandParameter="Non-Editable"/>
+                </MenuBarItem>
+                <MenuBarItem Title="View">
+                    <MenuFlyoutItem Text="Open in folder" Icon="OpenLocal" Command="{x:Bind ViewModel.OpenInFolderCommand}"/>
+                </MenuBarItem>
+            </MenuBar>
+            <Grid Grid.Row="1" Visibility="{x:Bind ViewModel.IsContentGridVisible, Mode=OneWay}">
                 <Grid.RowDefinitions>
-                    <RowDefinition Height="Auto"/>
                     <RowDefinition Height="Auto"/>
                     <RowDefinition/>
                 </Grid.RowDefinitions>
-                <MenuBar>
-                    <MenuBarItem Title="File">
-                        <MenuFlyoutItem Text="Open blueprint" Icon="OpenFile" Command="{x:Bind ViewModel.OpenBlueprintCommand}">
-                            <MenuFlyoutItem.KeyboardAccelerators>
-                                <KeyboardAccelerator Modifiers="Control" Key="N"/>
-                            </MenuFlyoutItem.KeyboardAccelerators>
-                        </MenuFlyoutItem>
-                        <MenuFlyoutItem Text="Save" Icon="Save" Command="{x:Bind ViewModel.SaveCommand}">
-                            <MenuFlyoutItem.KeyboardAccelerators>
-                                <KeyboardAccelerator Modifiers="Control" Key="S"/>
-                            </MenuFlyoutItem.KeyboardAccelerators>
-                        </MenuFlyoutItem>
-                    </MenuBarItem>
-                    <MenuBarItem Title="Edit">
-                        <MenuFlyoutSubItem Icon="RepeatAll" Text="Convert">
-                            <MenuFlyoutItem Text="Convert to destructible" Command="{x:Bind ViewModel.ConvertBlueprintCommand}" CommandParameter="Destructible"/>
-                            <MenuFlyoutItem Text="Convert to indestructible" Command="{x:Bind ViewModel.ConvertBlueprintCommand}" CommandParameter="Indestructible"/>
-                            <MenuFlyoutSeparator/>
-                            <MenuFlyoutItem Text="Convert to editable" Command="{x:Bind ViewModel.ConvertBlueprintCommand}" CommandParameter="Editable"/>
-                            <MenuFlyoutItem Text="Convert to non-editable" Command="{x:Bind ViewModel.ConvertBlueprintCommand}" CommandParameter="Non-Editable"/>
-                        </MenuFlyoutSubItem>
-                    </MenuBarItem>
-                    <MenuBarItem Title="View">
-                        <MenuFlyoutSubItem Icon="View" Text="Display mode">
-                            <RadioMenuFlyoutItem Text="Grids" GroupName="ViewMode" IsChecked="True"/>
-                            <RadioMenuFlyoutItem Text="Properties" GroupName="ViewMode"/>
-                        </MenuFlyoutSubItem>
-                        <MenuFlyoutSeparator/>
-                        <MenuFlyoutItem Text="Open in folder" Icon="OpenLocal" Command="{x:Bind ViewModel.ConvertBlueprintCommand}"/>
-                    </MenuBarItem>
-                </MenuBar>
-                <SelectorBar x:Name="selectorBar" Grid.Row="1">
+                <SelectorBar x:Name="selectorBar">
                     <SelectorBarItem Text="Grids" IsSelected="True"/>
                     <SelectorBarItem Text="Properties"/>
                 </SelectorBar>
-                <Grid Grid.Row="2">
+                <Grid Grid.Row="1">
                     <Grid RowSpacing="10" Visibility="{x:Bind ViewModel.IsCubeGridListVisible, Mode=OneWay}">
                         <Grid.RowDefinitions>
                             <RowDefinition Height="Auto"/>
@@ -237,6 +222,43 @@
                         <TreeView x:Name="propertyTreeView" SelectedItem="{x:Bind ViewModel.SelectedTreeViewNode, Mode=TwoWay}" ItemTemplateSelector="{StaticResource ShipBlueprintItemTemplateSelector}" Expanding="TreeView_Expanding" Collapsed="TreeView_Collapsed" CanDrag="False" CanDragItems="False"/>
                     </Grid>
                 </Grid>
+            </Grid>
+            <Grid HorizontalAlignment="Center" VerticalAlignment="Center" Grid.Row="1" Visibility="{x:Bind ViewModel.IsInitialGridVisible, Mode=OneWay}">
+                <StackPanel>
+                    <Grid x:Name="blueprintDragGrid" CornerRadius="45" Width="600" Height="400" AllowDrop="True" CenterPoint="300,200,0">
+                        <Grid.BackgroundTransition>
+                            <BrushTransition/>
+                        </Grid.BackgroundTransition>
+                        <Rectangle Stretch="Fill" Stroke="{ThemeResource TextFillColorSecondaryBrush}" StrokeThickness="5" RadiusX="45" RadiusY="45">
+                            <Rectangle.StrokeDashArray>
+                                <x:Double>5</x:Double>
+                                <x:Double>4</x:Double>
+                            </Rectangle.StrokeDashArray>
+                        </Rectangle>
+                        <StackPanel Orientation="Vertical" VerticalAlignment="Center" HorizontalAlignment="Center" Spacing="10">
+                            <FontIcon Glyph="&#xF8AA;" FontSize="80"/>
+                            <TextBlock Text="Drag blueprint here" Style="{ThemeResource SubtitleTextBlockStyle}"/>
+                        </StackPanel>
+                    </Grid>
+                    <Grid ColumnSpacing="10" Margin="0,20,0,0">
+                        <Grid.ColumnDefinitions>
+                            <ColumnDefinition/>
+                            <ColumnDefinition/>
+                        </Grid.ColumnDefinitions>
+                        <Button x:Name="viewBlueprintsList" VerticalAlignment="Top" HorizontalAlignment="Right" Command="{x:Bind ViewModel.ViewBlueprintsListCommand}">
+                            <StackPanel Orientation="Horizontal" Spacing="5">
+                                <FontIcon Glyph="&#xE890;"/>
+                                <TextBlock Text="查看蓝图列表"/>
+                            </StackPanel>
+                        </Button>
+                        <Button x:Name="openLocalFile" Grid.Column="1" VerticalAlignment="Top" HorizontalAlignment="Left" Command="{x:Bind ViewModel.OpenBlueprintCommand}">
+                            <StackPanel Orientation="Horizontal" Spacing="5">
+                                <FontIcon Glyph="&#xE8DA;"/>
+                                <TextBlock Text="打开本地文件"/>
+                            </StackPanel>
+                        </Button>
+                    </Grid>
+                </StackPanel>
             </Grid>
         </Grid>
     </Grid>

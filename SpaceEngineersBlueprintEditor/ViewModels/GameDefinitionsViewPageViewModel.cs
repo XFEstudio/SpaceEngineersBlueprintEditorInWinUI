@@ -19,14 +19,13 @@ public partial class GameDefinitionsViewPageViewModel : ViewModelBase
     [ObservableProperty]
     private string propertiesSearchText = "";
     [ObservableProperty]
-    private bool isProgressRingVisible = true;
-    [ObservableProperty]
     private bool isUIVisible = false;
     [ObservableProperty]
     private DefinitionViewData? selectedDefinitionViewData;
     private string currentParameter = "";
     private readonly List<DefinitionViewData> _definitions = [];
     private readonly List<PropertyViewData> _propertiesInfo = [];
+    private readonly ILoadingService? loadingService = GlobalServiceManager.GetService<ILoadingService>();
     public ObservableCollection<DefinitionViewData> Definitions { get; } = [];
     public ObservableCollection<PropertyViewData> PropertiesInfo { get; } = [];
     public INavigationParameterService<string> NavigationParameterService { get; } = new NavigationParameterService<string>();
@@ -68,11 +67,12 @@ public partial class GameDefinitionsViewPageViewModel : ViewModelBase
     {
         if (e is null || NavigationParameterService.SameAsLast)
             return;
+        loadingService?.StartLoading("Loading blueprint...");
         currentParameter = e;
         await Helper.Wait(() => Initializer.IsDefinitionsLoadComplete && DefinitionPropertiesDisplayService.IsPageLoaded);
         LoadDefinitions(GetCurrentDefinitions(currentParameter));
         IsUIVisible = true;
-        IsProgressRingVisible = false;
+        loadingService?.StopLoading();
         DefinitionPropertiesDisplayService.Select(Definitions.First());
     }
 

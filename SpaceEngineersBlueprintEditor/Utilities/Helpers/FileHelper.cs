@@ -36,7 +36,7 @@ public static class FileHelper
     {
         var currentDirectoryName = @$"{Path.GetDirectoryName(originalName)}\{Path.GetFileName(originalName)}_{currentNum}";
         if (File.Exists(currentDirectoryName) || Directory.Exists(currentDirectoryName))
-            return GetCopyFileName(originalName, ++currentNum);
+            return GetCopyDirectoryName(originalName, ++currentNum);
         return currentDirectoryName;
     }
 

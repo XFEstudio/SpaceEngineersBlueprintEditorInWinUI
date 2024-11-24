@@ -1,3 +1,4 @@
+using Microsoft.UI.Composition;
 using Microsoft.UI.Xaml.Navigation;
 using SpaceEngineersBlueprintEditor.Model;
 using SpaceEngineersBlueprintEditor.ViewModels;
@@ -10,6 +11,7 @@ namespace SpaceEngineersBlueprintEditor.Views;
 /// </summary>
 public sealed partial class BlueprintEditSubPage : Page
 {
+    private readonly Compositor compositor = App.MainWindow.Compositor;
     public BlueprintModel? Parameter { get; set; }
     public BlueprintEditSubPageViewModel ViewModel { get; set; } = new();
 
@@ -18,8 +20,15 @@ public sealed partial class BlueprintEditSubPage : Page
         this.InitializeComponent();
         NavigationCacheMode = NavigationCacheMode.Required;
         ViewModel.TreeViewService.Initialize(propertyTreeView);
+        ViewModel.FileDropService.Initialize(blueprintDragGrid, compositor);
         ViewModel.SelectorBarService.Initialize(selectorBar);
         ViewModel.NavigationParameterService.Initialize(this);
+        var expressionAnimation = compositor.CreateExpressionAnimation();
+        expressionAnimation.Expression = "(dragElement.Scale.Y - 1) * 200";
+        expressionAnimation.Target = "Translation.Y";
+        expressionAnimation.SetExpressionReferenceParameter("dragElement", blueprintDragGrid);
+        viewBlueprintsList.StartAnimation(expressionAnimation);
+        openLocalFile.StartAnimation(expressionAnimation);
     }
 
     protected override void OnNavigatedTo(NavigationEventArgs e)

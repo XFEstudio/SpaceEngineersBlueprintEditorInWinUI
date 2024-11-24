@@ -17,8 +17,19 @@ public partial class BlueprintEditPageViewModel : ViewModelBase
     public BlueprintModel? CurrentSelectedModel => SelectedTabViewItem is not null ? SelectedTabViewItem.Content is Frame frame ? frame.Content is BlueprintEditSubPage blueprintEditSubPage ? blueprintEditSubPage.Parameter : null : null : null;
     public ObservableCollection<TabViewItem> TabViewItems { get; set; } = [];
     public IBackgroundImageService? BackgroundImageService { get; set; } = GlobalServiceManager.GetService<IBackgroundImageService>();
+    public ITabViewTitleService TabViewTitleService { get; set; } = new TabViewTitleService();
     public INavigationParameterService<BlueprintModel?> NavigationParameterService { get; set; } = new NavigationParameterService<BlueprintModel?>();
-    public BlueprintEditPageViewModel() => NavigationParameterService.ParameterChange += NavigationParameterService_ParameterChange;
+    public BlueprintEditPageViewModel()
+    {
+        NavigationParameterService.ParameterChange += NavigationParameterService_ParameterChange;
+        TabViewTitleService.ChangeTitleRequest += TabViewTitleService_ChangeTitleRequest;
+    }
+
+    private void TabViewTitleService_ChangeTitleRequest(string sender, BlueprintModel e)
+    {
+        if (GetCurrentItem(e) is TabViewItem tabViewItem)
+            tabViewItem.Header = sender;
+    }
 
     partial void OnSelectedTabViewItemChanged(TabViewItem? value)
     {
@@ -28,23 +39,40 @@ public partial class BlueprintEditPageViewModel : ViewModelBase
             BackgroundImageService?.ResetBackground();
     }
 
-    private void NavigationParameterService_ParameterChange(object? sender, BlueprintModel? e)
+    private TabViewItem? GetCurrentItem(BlueprintModel blueprintModel)
     {
-        if (e is not null || e is null && TabViewItems.Count == 0)
-            CreateTabViewItem(e);
+        foreach (var tabViewItem in TabViewItems)
+            if (tabViewItem.Content is Frame frame && frame.Content is BlueprintEditSubPage blueprintEditSubPage && blueprintEditSubPage.Parameter == blueprintModel)
+                return tabViewItem;
+        return null;
     }
 
-    private void CreateTabViewItem(BlueprintModel? blueprintModel)
+    private void NavigationParameterService_ParameterChange(object? sender, BlueprintModel? e)
+    {
+        if (e is not null)
+        {
+            if (GetCurrentItem(e) is TabViewItem tabViewItem)
+                SelectedTabViewItem = tabViewItem;
+            else
+                CreateTabViewItem(e);
+        }
+        else if (e is null && TabViewItems.Count == 0)
+        {
+            CreateTabViewItem(null);
+        }
+    }
+
+    public void CreateTabViewItem(BlueprintModel? blueprintModel)
     {
         var frame = new Frame();
         var tabView = new TabViewItem
         {
-            Header = blueprintModel?.ViewData?.Name ?? "未命名蓝图",
+            Header = "新的蓝图编辑页",
             Content = frame
         };
-        frame.Navigate(typeof(BlueprintEditSubPage), blueprintModel);
         TabViewItems.Add(tabView);
         SelectedTabViewItem = tabView;
+        frame.Navigate(typeof(BlueprintEditSubPage), blueprintModel);
     }
 
     [RelayCommand]

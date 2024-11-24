@@ -5,6 +5,7 @@ using SpaceEngineersBlueprintEditor.Implements.Services;
 using SpaceEngineersBlueprintEditor.Interface.Services;
 using SpaceEngineersBlueprintEditor.Model;
 using SpaceEngineersBlueprintEditor.Utilities;
+using SpaceEngineersBlueprintEditor.Views;
 using System.Collections.ObjectModel;
 using System.Diagnostics;
 using VRage.Game;
@@ -17,13 +18,13 @@ namespace SpaceEngineersBlueprintEditor.ViewModels;
 public partial class BlueprintEditSubPageViewModel : ViewModelBase
 {
     [ObservableProperty]
-    private bool isProgressRingVisible;
-    [ObservableProperty]
     private bool isCubeGridListVisible;
     [ObservableProperty]
     private bool isShipBlueprintPropertyVisible;
     [ObservableProperty]
-    private string loadingText = string.Empty;
+    private bool isContentGridVisible = false;
+    [ObservableProperty]
+    private bool isInitialGridVisible = true;
     [ObservableProperty]
     private string searchText = string.Empty;
     [ObservableProperty]
@@ -31,12 +32,14 @@ public partial class BlueprintEditSubPageViewModel : ViewModelBase
     private BlueprintModel? currentBlueprintModel;
     private MyObjectBuilder_Definitions? currentDefinitions;
     private MyObjectBuilder_ShipBlueprintDefinition? currentShipBlueprint;
+    private readonly ILoadingService? loadingService = GlobalServiceManager.GetService<ILoadingService>();
     private readonly IMessageService? messageService = GlobalServiceManager.GetService<IMessageService>();
     private readonly INavigationViewService? navigationViewService = GlobalServiceManager.GetService<INavigationViewService>();
-    public bool IsPageLoaded { get; set; }
+    private readonly ITabViewTitleService? tabViewTitleService = GlobalServiceManager.GetService<ITabViewTitleService>();
     public ObservableCollection<BlueprintGroupList> BlueprintCubeGridList { get; } = [];
     public IBackgroundImageService? BackgroundImageService { get; set; } = GlobalServiceManager.GetService<IBackgroundImageService>();
     public INavigationParameterService<BlueprintModel> NavigationParameterService { get; set; } = new NavigationParameterService<BlueprintModel>();
+    public IFileDropService FileDropService { get; set; } = new BlueprintDropService();
     public ITreeViewService TreeViewService { get; set; } = new TreeViewService();
     public ISelectorBarService SelectorBarService { get; set; } = new SelectorBarService();
 
@@ -44,6 +47,20 @@ public partial class BlueprintEditSubPageViewModel : ViewModelBase
     {
         NavigationParameterService.ParameterChange += NavigationParameterService_ParameterChange;
         SelectorBarService.SelectionChanged += SelectorBarService_SelectionChanged;
+        FileDropService.Drop += FileDropService_Drop;
+    }
+
+    private async void FileDropService_Drop(object? sender, (string, DragEventArgs) e)
+    {
+        loadingService?.StartLoading("Loading definitions...");
+        if (File.Exists(e.Item1) && await SpaceEngineersHelper.LoadBlueprintModel(e.Item1) is BlueprintModel blueprintModel)
+        {
+            NavigationParameterService.Parameter = blueprintModel;
+            if (blueprintModel.ViewData is not null)
+                tabViewTitleService?.SetTabViewTitle(blueprintModel.ViewData.Name, blueprintModel);
+            await SetDefinitions(blueprintModel.BlueprintDefinitions);
+        }
+        loadingService?.StopLoading();
     }
 
     partial void OnSearchTextChanged(string value) => SearchCubeGrids(value);
@@ -58,8 +75,10 @@ public partial class BlueprintEditSubPageViewModel : ViewModelBase
             if (currentDefinitions.ShipBlueprints is not null && currentDefinitions.ShipBlueprints.Length > 0)
             {
                 currentShipBlueprint = currentDefinitions.ShipBlueprints[0];
-                if(IsPageLoaded)
-                    await LoadByName("Grids");
+                IsContentGridVisible = true;
+                IsInitialGridVisible = false;
+                await Task.Delay(200);
+                await LoadByName("Grids");
             }
             else
             {
@@ -80,6 +99,8 @@ public partial class BlueprintEditSubPageViewModel : ViewModelBase
         if (currentBlueprintModel.ViewData is not null)
             BackgroundImageService?.SetBackgroundImage(currentBlueprintModel.ViewData.BlueprintImage);
         if (navigationViewService is not null) navigationViewService.Header = null;
+        if (e.ViewData is not null)
+            tabViewTitleService?.SetTabViewTitle(e.ViewData.Name, e);
         if (e.BlueprintDefinitions is not null)
         {
             await SetDefinitions(e.BlueprintDefinitions);
@@ -93,8 +114,7 @@ public partial class BlueprintEditSubPageViewModel : ViewModelBase
     private async Task LoadByName(string caseName)
     {
         if (currentShipBlueprint is null) return;
-        LoadingText = "Loading definitions...";
-        IsProgressRingVisible = true;
+        loadingService?.StartLoading("Loading definitions...");
         await Task.Delay(50);
         switch (caseName)
         {
@@ -111,7 +131,7 @@ public partial class BlueprintEditSubPageViewModel : ViewModelBase
             default:
                 break;
         }
-        IsProgressRingVisible = false;
+        loadingService?.StopLoading();
     }
 
     private void LoadBlueprintPropertyDefinitions()
@@ -180,6 +200,7 @@ public partial class BlueprintEditSubPageViewModel : ViewModelBase
     [RelayCommand]
     async Task OpenBlueprint()
     {
+        loadingService?.StartLoading("Loading definitions...");
         var openPicker = new FileOpenPicker();
         InitializeWithWindow.Initialize(openPicker, WindowNative.GetWindowHandle(App.MainWindow));
         openPicker.ViewMode = PickerViewMode.List;
@@ -189,25 +210,30 @@ public partial class BlueprintEditSubPageViewModel : ViewModelBase
             if (await SpaceEngineersHelper.LoadBlueprintModel(file.Path) is BlueprintModel blueprintModel)
             {
                 NavigationParameterService.Parameter = blueprintModel;
+                if (blueprintModel.ViewData is not null)
+                    tabViewTitleService?.SetTabViewTitle(blueprintModel.ViewData.Name, blueprintModel);
                 await SetDefinitions(blueprintModel.BlueprintDefinitions);
             }
         }
+        loadingService?.StopLoading();
     }
 
     [RelayCommand]
     void OpenInFolder()
     {
         if (currentBlueprintModel is not null && currentBlueprintModel.ViewData is not null)
-            Process.Start("explorer.exe", currentBlueprintModel.ViewData.FilePath);
+            Process.Start("explorer.exe", Path.GetDirectoryName(currentBlueprintModel.ViewData.FilePath) ?? string.Empty);
         else
             messageService?.ShowMessage("无法找到文件", "警告", InfoBarSeverity.Warning);
     }
 
     [RelayCommand]
+    void ViewBlueprintsList() => navigationViewService?.NavigateTo<BlueprintsViewPage>("Local");
+
+    [RelayCommand]
     async Task Save()
     {
-        LoadingText = "Saving blueprint...";
-        IsProgressRingVisible = true;
+        loadingService?.StartLoading("Saving blueprint...");
         var savePicker = new FileSavePicker();
         InitializeWithWindow.Initialize(savePicker, WindowNative.GetWindowHandle(App.MainWindow));
         savePicker.FileTypeChoices.Add(new("Blueprint file", [".sbc"]));
@@ -251,16 +277,20 @@ public partial class BlueprintEditSubPageViewModel : ViewModelBase
                     }
                     else if (result.StartsWith("Error:"))
                     {
-                        messageService?.ShowMessage(result.Replace("Error:", string.Empty), "错误", InfoBarSeverity.Error);
+                        messageService?.ShowMessage(result.Replace("Error:", string.Empty), "失败", InfoBarSeverity.Error);
                     }
+                }
+                else
+                {
+                    messageService?.ShowMessage("保存失败：未知原因", "失败", InfoBarSeverity.Error);
                 }
             }
             catch (Exception ex)
             {
-                Console.WriteLine(ex.ToString());
+                messageService?.ShowMessage($"保存失败：{ex.Message}", "失败", InfoBarSeverity.Error);
             }
         }
-        IsProgressRingVisible = false;
+        loadingService?.StopLoading();
     }
 
     [RelayCommand]

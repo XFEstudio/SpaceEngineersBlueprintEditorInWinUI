@@ -14,6 +14,7 @@ public partial class AppShellPageViewModel : ViewModelBase
     public INavigationViewService NavigationViewService { get; set; } = new NavigationViewService();
     public IBackgroundImageService BackgroundImageService { get; set; } = new BackgroundImageService();
     public IMessageService MessageService { get; set; } = new MessageService();
+    public ILoadingService LoadingService { get; set; } = new LoadingService();
 
     public AppShellPageViewModel() => NavigationViewService.NavigationService.Navigated += NavigationService_Navigated;
 

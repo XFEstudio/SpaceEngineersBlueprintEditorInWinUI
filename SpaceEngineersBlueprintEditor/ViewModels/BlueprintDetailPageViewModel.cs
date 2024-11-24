@@ -31,11 +31,10 @@ public partial class BlueprintDetailPageViewModel : ViewModelBase
     private string totalGridNumber = "网格总数：加载中...";
     [ObservableProperty]
     private string totalCubeNumber = "方块总数：加载中...";
-    [ObservableProperty]
-    private bool isProgressRingVisible = true;
     private BlueprintInfoViewData? currentBlueprintInfoViewData;
     private MyObjectBuilder_Definitions? currentDefinitions;
     private MyObjectBuilder_ShipBlueprintDefinition? currentBlueprint;
+    private readonly ILoadingService? loadingService = GlobalServiceManager.GetService<ILoadingService>();
     private readonly INavigationViewService? navigationViewService = GlobalServiceManager.GetService<INavigationViewService>();
     private readonly IMessageService? messageService = GlobalServiceManager.GetService<IMessageService>();
     public ObservableCollection<string> DLCList { get; } = [];
@@ -49,16 +48,9 @@ public partial class BlueprintDetailPageViewModel : ViewModelBase
     {
         if (e is null) return;
         if (navigationViewService is not null) navigationViewService.Header = e.Name;
-        IsProgressRingVisible = true;
+        loadingService?.StartLoading("Loading blueprint...");
         BackgroundImageService?.SetBackgroundImage(e.BlueprintImage);
         await Helper.Wait(() => SpaceEngineersHelper.IsLoadComplete);
-        if (!NavigationParameterService.SameAsLast)
-        {
-            currentBlueprintInfoViewData = e;
-            currentDefinitions = await SpaceEngineersHelper.LoadBlueprintAsync(currentBlueprintInfoViewData.FilePath);
-            if (currentDefinitions is not null && currentDefinitions.ShipBlueprints is not null && currentDefinitions.ShipBlueprints.Length > 0)
-                currentBlueprint = currentDefinitions.ShipBlueprints[0];
-        }
         AuthorName = "蓝图作者：加载中...";
         BlueprintFileSize = "蓝图大小：加载中...";
         BlueprintPath = "蓝图路径：加载中...";
@@ -69,6 +61,13 @@ public partial class BlueprintDetailPageViewModel : ViewModelBase
         DLCList.Clear();
         CubeGridList.Clear();
         ComponentList.Clear();
+        if (!NavigationParameterService.SameAsLast)
+        {
+            currentBlueprintInfoViewData = e;
+            currentDefinitions = await SpaceEngineersHelper.LoadBlueprintAsync(currentBlueprintInfoViewData.FilePath);
+            if (currentDefinitions is not null && currentDefinitions.ShipBlueprints is not null && currentDefinitions.ShipBlueprints.Length > 0)
+                currentBlueprint = currentDefinitions.ShipBlueprints[0];
+        }
         if (e.NoBlueprint)
         {
             messageService?.ShowMessage("该蓝图不包含蓝图文件（bp.sbc）", "警告", InfoBarSeverity.Warning);
@@ -92,7 +91,7 @@ public partial class BlueprintDetailPageViewModel : ViewModelBase
         {
             messageService?.ShowMessage("未能加载蓝图", "错误", InfoBarSeverity.Error);
         }
-        IsProgressRingVisible = false;
+        loadingService?.StopLoading();
     }
 
     private void CalculateCubeGrids()

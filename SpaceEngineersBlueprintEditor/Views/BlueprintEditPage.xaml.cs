@@ -43,5 +43,7 @@ public sealed partial class BlueprintEditPage : Page
     private void TabView_TabCloseRequested(TabView sender, TabViewTabCloseRequestedEventArgs args)
     {
         ViewModel.TabViewItems.Remove(args.Tab);
+        if (ViewModel.TabViewItems.Count == 0)
+            ViewModel.CreateTabViewItem(null);
     }
 }

@@ -12,15 +12,15 @@ namespace SpaceEngineersBlueprintEditor.ViewModels;
 
 public partial class BlueprintsViewPageViewModel : ViewModelBase
 {
-    private string currentParameter = "";
-    private BlueprintInfoViewData? currentBlueprintInfoViewData;
-    private readonly IMessageService? messageService = GlobalServiceManager.GetService<IMessageService>();
     [ObservableProperty]
     private string searchText = "";
     [ObservableProperty]
     private string copyFolderText = "";
     [ObservableProperty]
     private string deleteEnsureText = "";
+    private string currentParameter = "";
+    private BlueprintInfoViewData? currentBlueprintInfoViewData;
+    private readonly IMessageService? messageService = GlobalServiceManager.GetService<IMessageService>();
     public INavigationParameterService<object> NavigationParameterService { get; set; } = new NavigationParameterService<object>();
     public IDialogService DialogService { get; set; } = new DialogService();
     public ObservableCollection<BlueprintInfoViewData> BlueprintInfoViewDataList { get; set; } = [];
@@ -52,7 +52,7 @@ public partial class BlueprintsViewPageViewModel : ViewModelBase
 
     private async void NavigationParameterService_ParameterChange(object? sender, object? e)
     {
-        if (e is string stringParameter)
+        if (e is string stringParameter && !currentParameter.Equals(stringParameter))
         {
             currentParameter = stringParameter;
             await BlueprintsManager.LoadBlueprintsAsync();

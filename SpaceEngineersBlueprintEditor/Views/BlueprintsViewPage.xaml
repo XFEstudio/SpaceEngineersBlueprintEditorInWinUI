@@ -34,7 +34,7 @@
                 <DataTemplate x:DataType="model:BlueprintInfoViewData">
                     <Grid Width="280" ToolTipService.ToolTip="{x:Bind Name}" IsRightTapEnabled="True" RightTapped="Grid_RightTapped">
                         <Rectangle Opacity="0.5" Fill="{ThemeResource AcrylicInAppFillColorDefaultBrush}"/>
-                        <Image x:Name="connectedElement" Grid.RowSpan="2" Source="{x:Bind BlueprintImage,FallbackValue='/Assets/Images/BlueprintDrag.png'}" Stretch="Uniform" VerticalAlignment="Top"/>
+                        <Image x:Name="connectedElement" Grid.RowSpan="2" Source="{x:Bind BlueprintImage, FallbackValue='/Assets/Images/BlueprintDrag.png'}" Stretch="Uniform" VerticalAlignment="Top"/>
                         <StackPanel Visibility="{x:Bind NoBlueprint}" Opacity="0.5" Background="{ThemeResource AcrylicInAppFillColorDefaultBrush}">
                             <Image Source="/Assets/Images/forbidden.svg" Width="80" Height="80"/>
                             <TextBlock Text="No Blueprint" Style="{ThemeResource TitleTextBlockStyle}" HorizontalAlignment="Center"/>

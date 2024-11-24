@@ -1,5 +1,4 @@
-﻿using CommunityToolkit.Mvvm.ComponentModel;
-using CommunityToolkit.Mvvm.Input;
+﻿using CommunityToolkit.Mvvm.Input;
 using SpaceEngineersBlueprintEditor.Implements.Services;
 using SpaceEngineersBlueprintEditor.Interface.Services;
 using SpaceEngineersBlueprintEditor.Utilities;
@@ -12,9 +11,7 @@ namespace SpaceEngineersBlueprintEditor.ViewModels;
 
 public partial class MainPageViewModel : ViewModelBase
 {
-    [ObservableProperty]
-    private bool isProgressRingVisible;
-    private readonly IAutoNavigationService? navigationService = GlobalServiceManager.GetService<IAutoNavigationService>();
+    private readonly INavigationViewService? navigationViewService = GlobalServiceManager.GetService<INavigationViewService>();
     public IFileDropService FileDropService { get; set; } = new BlueprintDropService();
 
     public MainPageViewModel()
@@ -25,11 +22,11 @@ public partial class MainPageViewModel : ViewModelBase
     private void FileDropService_Drop(object? sender, (string, DragEventArgs) e)
     {
         if (File.Exists(e.Item1))
-            navigationService?.NavigateTo<BlueprintDetailPage>(SpaceEngineersHelper.LoadBlueprintInfo(e.Item1)?.ToBlueprintInfoViewData());
+            navigationViewService?.NavigateTo<BlueprintDetailPage>(SpaceEngineersHelper.LoadBlueprintInfo(e.Item1)?.ToBlueprintInfoViewData());
     }
 
     [RelayCommand]
-    void ViewBlueprintsList() => navigationService?.NavigateTo<BlueprintsViewPage>("Local");
+    void ViewBlueprintsList() => navigationViewService?.NavigateTo<BlueprintsViewPage>("Local");
 
     [RelayCommand]
     async Task OpenBlueprintInFolder()
@@ -39,6 +36,6 @@ public partial class MainPageViewModel : ViewModelBase
         openPicker.ViewMode = PickerViewMode.List;
         openPicker.FileTypeFilter.Add(".sbc");
         if (await openPicker.PickSingleFileAsync() is StorageFile file)
-            navigationService?.NavigateTo<BlueprintDetailPage>(SpaceEngineersHelper.LoadBlueprintInfo(file.Path)?.ToBlueprintInfoViewData());
+            navigationViewService?.NavigateTo<BlueprintDetailPage>(SpaceEngineersHelper.LoadBlueprintInfo(file.Path)?.ToBlueprintInfoViewData());
     }
 }

@@ -9,6 +9,6 @@
     mc:Ignorable="d">
 
     <Grid Background="{ThemeResource SolidBackgroundFillColorBaseBrush}" VerticalAlignment="Stretch" HorizontalAlignment="Stretch">
-        <TabView TabItemsSource="{x:Bind ViewModel.TabViewItems, Mode=OneWay}" SelectedItem="{x:Bind ViewModel.SelectedTabViewItem, Mode=TwoWay}" AddTabButtonCommand="{x:Bind ViewModel.AddNewTabViewItemCommand}" TabCloseRequested="TabView_TabCloseRequested"/>
+        <TabView VerticalAlignment="Stretch" VerticalContentAlignment="Stretch" TabItemsSource="{x:Bind ViewModel.TabViewItems, Mode=OneWay}" SelectedItem="{x:Bind ViewModel.SelectedTabViewItem, Mode=TwoWay}" AddTabButtonCommand="{x:Bind ViewModel.AddNewTabViewItemCommand}" TabCloseRequested="TabView_TabCloseRequested"/>
     </Grid>
 </Page>
