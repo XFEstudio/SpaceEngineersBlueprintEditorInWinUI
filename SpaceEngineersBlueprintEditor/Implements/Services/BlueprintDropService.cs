@@ -10,6 +10,7 @@ using Windows.UI;
 
 namespace SpaceEngineersBlueprintEditor.Implements.Services;
 
+/// <inheritdoc cref="IFileDropService"/>
 internal class BlueprintDropService : IFileDropService
 {
     private string currentPath = "";

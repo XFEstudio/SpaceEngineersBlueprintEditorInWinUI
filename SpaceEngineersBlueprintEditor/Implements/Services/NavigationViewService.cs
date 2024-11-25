@@ -6,6 +6,7 @@ using System.Diagnostics.CodeAnalysis;
 
 namespace SpaceEngineersBlueprintEditor.Implements.Services;
 
+/// <inheritdoc cref="INavigationViewService"/>
 internal class NavigationViewService : GlobalServiceBase, INavigationViewService
 {
     private NavigationView? _navigationView;

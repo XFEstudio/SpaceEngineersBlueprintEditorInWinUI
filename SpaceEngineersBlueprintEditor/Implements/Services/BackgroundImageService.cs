@@ -5,6 +5,7 @@ using System.Diagnostics.CodeAnalysis;
 
 namespace SpaceEngineersBlueprintEditor.Implements.Services;
 
+/// <inheritdoc cref="IBackgroundImageService"/>
 class BackgroundImageService : GlobalServiceBase, IBackgroundImageService
 {
     private Page? _page;

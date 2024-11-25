@@ -6,8 +6,16 @@ using VRage.FileSystem;
 
 namespace SpaceEngineersBlueprintEditor.Utilities.Helpers;
 
+/// <summary>
+/// 文件帮助类
+/// </summary>
 public static class FileHelper
 {
+    /// <summary>
+    /// 获取文件夹大小
+    /// </summary>
+    /// <param name="directoryInfo">文件夹信息</param>
+    /// <returns>文件夹大小</returns>
     public static long GetDirectorySize(DirectoryInfo directoryInfo)
     {
         long size = 0;
@@ -24,6 +32,12 @@ public static class FileHelper
         return size;
     }
 
+    /// <summary>
+    /// 获取目标文件的复制名称
+    /// </summary>
+    /// <param name="originalName">目标文件原始名称</param>
+    /// <param name="currentNum">当前递归层数</param>
+    /// <returns></returns>
     public static string GetCopyFileName(string originalName, int currentNum = 1)
     {
         var currentFileName = @$"{Path.GetDirectoryName(originalName)}\{Path.GetFileNameWithoutExtension(originalName)}_{currentNum}{Path.GetExtension(originalName)}";
@@ -32,6 +46,12 @@ public static class FileHelper
         return currentFileName;
     }
 
+    /// <summary>
+    /// 获取目标文件夹的复制名称
+    /// </summary>
+    /// <param name="originalName">目标文件夹原始名称</param>
+    /// <param name="currentNum">当前递归层数</param>
+    /// <returns></returns>
     public static string GetCopyDirectoryName(string originalName, int currentNum = 1)
     {
         var currentDirectoryName = @$"{Path.GetDirectoryName(originalName)}\{Path.GetFileName(originalName)}_{currentNum}";
@@ -40,6 +60,13 @@ public static class FileHelper
         return currentDirectoryName;
     }
 
+    /// <summary>
+    /// 复制整个文件及其子文件夹
+    /// </summary>
+    /// <param name="sourceDirectory">源文件夹</param>
+    /// <param name="targetDirectory">目标文件夹</param>
+    /// <param name="overwrite">覆盖</param>
+    /// <exception cref="DirectoryNotFoundException"></exception>
     public static void CopyDirectory(string sourceDirectory, string targetDirectory, bool overwrite = false)
     {
         if (!Directory.Exists(sourceDirectory)) throw new DirectoryNotFoundException($"源目录未找到: {sourceDirectory}");
@@ -58,6 +85,11 @@ public static class FileHelper
         }
     }
 
+    /// <summary>
+    /// 转为Bitmap
+    /// </summary>
+    /// <param name="ddsFilePath">DDS文件路径</param>
+    /// <param name="savePath">保存位置</param>
     public static void ToBitmap(string ddsFilePath, string savePath)
     {
         try
@@ -80,8 +112,19 @@ public static class FileHelper
         }
     }
 
+    /// <summary>
+    /// 更改文件的拓展名
+    /// </summary>
+    /// <param name="filePath">文件路径</param>
+    /// <param name="extension">目标扩展名</param>
+    /// <returns></returns>
     public static string ChangeExtension(string filePath, string extension) => @$"{Path.GetDirectoryName(filePath)}\{Path.GetFileNameWithoutExtension(filePath)}.{extension}";
 
+    /// <summary>
+    /// 如果目标目录不存在则自动创建目录
+    /// </summary>
+    /// <param name="filePath">目标目录</param>
+    /// <returns>是否创建了新的目录</returns>
     public static bool AutoCreateDirectory(string filePath)
     {
         if (Path.GetDirectoryName(filePath) is string directory && !Directory.Exists(directory))

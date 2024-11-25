@@ -4,13 +4,28 @@ using XFEExtension.NetCore.AutoConfig;
 
 namespace SpaceEngineersBlueprintEditor.Profiles.CrossVersionProfiles;
 
+/// <summary>
+/// 系统配置文件
+/// </summary>
 public partial class SystemProfile
 {
+    /// <summary>
+    /// 系统配置文件
+    /// </summary>
     SystemProfile() => ProfilePath = $@"{AppPath.LocalProfile}\{nameof(SystemProfile)}.xpf";
+    /// <summary>
+    /// 游戏根目录
+    /// </summary>
     [ProfileProperty]
     private string gameRootPath = "";
+    /// <summary>
+    /// 导航栏样式
+    /// </summary>
     [ProfileProperty]
     private NavigationViewPaneDisplayMode navigationStyle = NavigationViewPaneDisplayMode.Left;
+    /// <summary>
+    /// 应用程序主题样式
+    /// </summary>
     [ProfileProperty]
     private ElementTheme theme = ElementTheme.Default;
 

@@ -2,6 +2,9 @@
 
 namespace SpaceEngineersBlueprintEditor.Utilities.Helpers;
 
+/// <summary>
+/// 配置文件帮助类
+/// </summary>
 public static class ProfileHelper
 {
     /// <summary>
@@ -23,6 +26,7 @@ public static class ProfileHelper
             throw new ArgumentException($"Value is not assignable to property '{propertyName}' of type '{propertyInfo.PropertyType}'.");
         propertyInfo.SetValue(null, value);
     }
+
     /// <summary>
     /// 获取配置文件值
     /// </summary>
@@ -43,6 +47,7 @@ public static class ProfileHelper
             return default;
         return propertyInfo.GetValue(null);
     }
+
     /// <summary>
     /// 获取配置文件值
     /// </summary>
@@ -67,6 +72,17 @@ public static class ProfileHelper
             return resultT;
         return default;
     }
+    
+    /// <summary>
+    /// 获取枚举类型的配置文件项的保存方法
+    /// </summary>
+    /// <typeparam name="T">目标配置文件项泛型</typeparam>
+    /// <returns>保存方法</returns>
     public static Func<string, object?> GetEnumProfileSaveFunc<T>() where T : struct => value => Enum.Parse<T>(value);
+
+    /// <summary>
+    /// 获取ComboBox的枚举类型的配置文件项的加载方法
+    /// </summary>
+    /// <returns>ComboBox的枚举类型加载方法</returns>
     public static Func<List<object>, object?, object?> GetEnumProfileLoadFuncForComboBox() => (items, value) => items.OfType<ComboBoxItem>().Where(item => item.Tag.ToString() == value?.ToString()).FirstOrDefault();
 }

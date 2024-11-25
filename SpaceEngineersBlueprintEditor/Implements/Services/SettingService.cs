@@ -4,6 +4,7 @@ using SpaceEngineersBlueprintEditor.Model;
 
 namespace SpaceEngineersBlueprintEditor.Implements.Services;
 
+/// <inheritdoc cref="ISettingService"/>
 internal class SettingService : GlobalServiceBase, ISettingService
 {
     private readonly Dictionary<object, IProfileInfoEntry> settingControls = [];

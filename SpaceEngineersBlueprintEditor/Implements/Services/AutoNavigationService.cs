@@ -5,6 +5,7 @@ using SpaceEngineersBlueprintEditor.Utilities;
 
 namespace SpaceEngineersBlueprintEditor.Implements.Services;
 
+/// <inheritdoc cref="IAutoNavigationService"/>
 internal class AutoNavigationService : GlobalServiceBase, IAutoNavigationService
 {
     private Frame? frame;
@@ -39,7 +40,6 @@ internal class AutoNavigationService : GlobalServiceBase, IAutoNavigationService
 
     public void NavigateTo(Type type, object? parameter = null, NavigationTransitionInfo? navigationTransitionInfo = null)
     {
-        GlobalServiceManager.GetService<ILoadingService>()?.StopLoading();
         if (frame?.SourcePageType != type || (frame.Content is Page page && !Equals(page.GetParameter(), parameter)))
             frame?.Navigate(type, parameter, navigationTransitionInfo);
     }

@@ -6,6 +6,7 @@ using Windows.Foundation;
 
 namespace SpaceEngineersBlueprintEditor.Implements.Services;
 
+/// <inheritdoc cref="IDefinitionPropertiesDisplayService{T}"/>
 internal class DefinitionPropertiesDisplayService<T> : IDefinitionPropertiesDisplayService<T> where T : DefinitionViewData
 {
     private ItemsView? _itemsView;

@@ -28,6 +28,8 @@ public partial class BlueprintEditSubPageViewModel : ViewModelBase
     [ObservableProperty]
     private string searchText = string.Empty;
     [ObservableProperty]
+    private BlueprintPropertyViewData? selectedCubeBlock;
+    [ObservableProperty]
     private TreeViewNode? selectedTreeViewNode;
     private BlueprintModel? currentBlueprintModel;
     private MyObjectBuilder_Definitions? currentDefinitions;
@@ -37,6 +39,7 @@ public partial class BlueprintEditSubPageViewModel : ViewModelBase
     private readonly INavigationViewService? navigationViewService = GlobalServiceManager.GetService<INavigationViewService>();
     private readonly ITabViewTitleService? tabViewTitleService = GlobalServiceManager.GetService<ITabViewTitleService>();
     public ObservableCollection<BlueprintGroupList> BlueprintCubeGridList { get; } = [];
+    public ObservableCollection<BlueprintPropertyViewData> CubeProperties { get; } = [];
     public IBackgroundImageService? BackgroundImageService { get; set; } = GlobalServiceManager.GetService<IBackgroundImageService>();
     public INavigationParameterService<BlueprintModel> NavigationParameterService { get; set; } = new NavigationParameterService<BlueprintModel>();
     public IFileDropService FileDropService { get; set; } = new BlueprintDropService();
@@ -52,7 +55,7 @@ public partial class BlueprintEditSubPageViewModel : ViewModelBase
 
     private async void FileDropService_Drop(object? sender, (string, DragEventArgs) e)
     {
-        loadingService?.StartLoading("Loading definitions...");
+        loadingService?.StartLoading<BlueprintEditSubPage>("Loading definitions...");
         if (File.Exists(e.Item1) && await SpaceEngineersHelper.LoadBlueprintModel(e.Item1) is BlueprintModel blueprintModel)
         {
             NavigationParameterService.Parameter = blueprintModel;
@@ -60,7 +63,7 @@ public partial class BlueprintEditSubPageViewModel : ViewModelBase
                 tabViewTitleService?.SetTabViewTitle(blueprintModel.ViewData.Name, blueprintModel);
             await SetDefinitions(blueprintModel.BlueprintDefinitions);
         }
-        loadingService?.StopLoading();
+        loadingService?.StopLoading<BlueprintEditSubPage>();
     }
 
     partial void OnSearchTextChanged(string value) => SearchCubeGrids(value);
@@ -114,7 +117,7 @@ public partial class BlueprintEditSubPageViewModel : ViewModelBase
     private async Task LoadByName(string caseName)
     {
         if (currentShipBlueprint is null) return;
-        loadingService?.StartLoading("Loading definitions...");
+        loadingService?.StartLoading<BlueprintEditSubPage>("Loading definitions...");
         await Task.Delay(50);
         switch (caseName)
         {
@@ -131,7 +134,7 @@ public partial class BlueprintEditSubPageViewModel : ViewModelBase
             default:
                 break;
         }
-        loadingService?.StopLoading();
+        loadingService?.StopLoading<BlueprintEditSubPage>();
     }
 
     private void LoadBlueprintPropertyDefinitions()
@@ -200,7 +203,7 @@ public partial class BlueprintEditSubPageViewModel : ViewModelBase
     [RelayCommand]
     async Task OpenBlueprint()
     {
-        loadingService?.StartLoading("Loading definitions...");
+        loadingService?.StartLoading<BlueprintEditSubPage>("Loading definitions...");
         var openPicker = new FileOpenPicker();
         InitializeWithWindow.Initialize(openPicker, WindowNative.GetWindowHandle(App.MainWindow));
         openPicker.ViewMode = PickerViewMode.List;
@@ -215,7 +218,7 @@ public partial class BlueprintEditSubPageViewModel : ViewModelBase
                 await SetDefinitions(blueprintModel.BlueprintDefinitions);
             }
         }
-        loadingService?.StopLoading();
+        loadingService?.StopLoading<BlueprintEditSubPage>();
     }
 
     [RelayCommand]
@@ -233,7 +236,7 @@ public partial class BlueprintEditSubPageViewModel : ViewModelBase
     [RelayCommand]
     async Task Save()
     {
-        loadingService?.StartLoading("Saving blueprint...");
+        loadingService?.StartLoading<BlueprintEditSubPage>("Saving blueprint...");
         var savePicker = new FileSavePicker();
         InitializeWithWindow.Initialize(savePicker, WindowNative.GetWindowHandle(App.MainWindow));
         savePicker.FileTypeChoices.Add(new("Blueprint file", [".sbc"]));
@@ -290,7 +293,7 @@ public partial class BlueprintEditSubPageViewModel : ViewModelBase
                 messageService?.ShowMessage($"保存失败：{ex.Message}", "失败", InfoBarSeverity.Error);
             }
         }
-        loadingService?.StopLoading();
+        loadingService?.StopLoading<BlueprintEditSubPage>();
     }
 
     [RelayCommand]

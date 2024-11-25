@@ -1,5 +1,8 @@
 ﻿namespace SpaceEngineersBlueprintEditor.Utilities.Addition;
 
+/// <summary>
+/// 导航附加属性
+/// </summary>
 public class NavigationAddition
 {
     public static string GetNavigateTo(NavigationViewItem item) => (string)item.GetValue(NavigateToProperty);

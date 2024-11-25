@@ -2,6 +2,7 @@
 
 namespace SpaceEngineersBlueprintEditor.Implements.Services;
 
+/// <inheritdoc cref="IDialogService"/>
 public class DialogService : IDialogService
 {
     private readonly Dictionary<string, ContentDialog> dialogDictionary = [];

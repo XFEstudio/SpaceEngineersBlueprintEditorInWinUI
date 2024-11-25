@@ -6,6 +6,7 @@ using XFEExtension.NetCore.StringExtension;
 
 namespace SpaceEngineersBlueprintEditor.Implements.Services;
 
+/// <inheritdoc cref="IMessageService"/>
 class MessageService : GlobalServiceBase, IMessageService
 {
     private StackPanel? messageStackPanel;

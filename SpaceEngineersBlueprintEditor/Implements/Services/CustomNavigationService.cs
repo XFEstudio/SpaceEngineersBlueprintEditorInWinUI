@@ -5,6 +5,7 @@ using System.Numerics;
 
 namespace SpaceEngineersBlueprintEditor.Implements.Services;
 
+/// <inheritdoc cref="ICustomNavigationService"/>
 internal class NavigationService : GlobalServiceBase, ICustomNavigationService
 {
     private Frame? frame;

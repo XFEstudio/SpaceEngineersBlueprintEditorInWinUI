@@ -3,6 +3,7 @@ using System.Diagnostics.CodeAnalysis;
 
 namespace SpaceEngineersBlueprintEditor.Implements.Services;
 
+/// <inheritdoc cref="INavigationParameterService{T}"/>
 internal class NavigationParameterService<T> : INavigationParameterService<T>
 {
     private bool sameAsLast;
@@ -18,9 +19,9 @@ internal class NavigationParameterService<T> : INavigationParameterService<T>
         }
     }
 
-    public Page? Page => _page;
-
     public bool SameAsLast => sameAsLast;
+
+    public Page? CurrentPage => _page;
 
     public event EventHandler<T?>? ParameterChange;
 

@@ -6,6 +6,7 @@ using SpaceEngineersBlueprintEditor.Interface.Services;
 using SpaceEngineersBlueprintEditor.Model;
 using SpaceEngineersBlueprintEditor.SpaceEngineersCore;
 using SpaceEngineersBlueprintEditor.Utilities;
+using SpaceEngineersBlueprintEditor.Views;
 using System.Collections.ObjectModel;
 using System.Linq;
 using VRage.Game;
@@ -67,12 +68,12 @@ public partial class GameDefinitionsViewPageViewModel : ViewModelBase
     {
         if (e is null || NavigationParameterService.SameAsLast)
             return;
-        loadingService?.StartLoading("Loading blueprint...");
+        loadingService?.StartLoading<GameDefinitionsViewPage>("Loading blueprint...");
         currentParameter = e;
         await Helper.Wait(() => Initializer.IsDefinitionsLoadComplete && DefinitionPropertiesDisplayService.IsPageLoaded);
         LoadDefinitions(GetCurrentDefinitions(currentParameter));
         IsUIVisible = true;
-        loadingService?.StopLoading();
+        loadingService?.StopLoading<GameDefinitionsViewPage>();
         DefinitionPropertiesDisplayService.Select(Definitions.First());
     }
 

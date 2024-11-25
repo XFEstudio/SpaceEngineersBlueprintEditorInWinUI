@@ -37,6 +37,7 @@ public partial class BlueprintDetailPageViewModel : ViewModelBase
     private readonly ILoadingService? loadingService = GlobalServiceManager.GetService<ILoadingService>();
     private readonly INavigationViewService? navigationViewService = GlobalServiceManager.GetService<INavigationViewService>();
     private readonly IMessageService? messageService = GlobalServiceManager.GetService<IMessageService>();
+    public bool IsLoadingInProgress { get; set; }
     public ObservableCollection<string> DLCList { get; } = [];
     public ObservableCollection<CubeGridInfo> CubeGridList { get; } = [];
     public ObservableCollection<DefinitionViewData> ComponentList { get; } = [];
@@ -48,7 +49,6 @@ public partial class BlueprintDetailPageViewModel : ViewModelBase
     {
         if (e is null) return;
         if (navigationViewService is not null) navigationViewService.Header = e.Name;
-        loadingService?.StartLoading("Loading blueprint...");
         BackgroundImageService?.SetBackgroundImage(e.BlueprintImage);
         await Helper.Wait(() => SpaceEngineersHelper.IsLoadComplete);
         AuthorName = "蓝图作者：加载中...";
@@ -63,11 +63,18 @@ public partial class BlueprintDetailPageViewModel : ViewModelBase
         ComponentList.Clear();
         if (!NavigationParameterService.SameAsLast)
         {
+            IsLoadingInProgress = true;
+            loadingService?.StartLoading<BlueprintDetailPage>("Loading blueprint...");
             currentBlueprintInfoViewData = e;
             currentDefinitions = await SpaceEngineersHelper.LoadBlueprintAsync(currentBlueprintInfoViewData.FilePath);
             if (currentDefinitions is not null && currentDefinitions.ShipBlueprints is not null && currentDefinitions.ShipBlueprints.Length > 0)
                 currentBlueprint = currentDefinitions.ShipBlueprints[0];
+            messageService?.ShowMessage("蓝图加载完成", "完成", InfoBarSeverity.Success);
+            loadingService?.StopLoading<BlueprintDetailPage>();
+            IsLoadingInProgress = false;
         }
+        await Helper.Wait(() => !IsLoadingInProgress);
+        loadingService?.StartLoading<BlueprintDetailPage>("Calculating blueprint...");
         if (e.NoBlueprint)
         {
             messageService?.ShowMessage("该蓝图不包含蓝图文件（bp.sbc）", "警告", InfoBarSeverity.Warning);
@@ -85,13 +92,12 @@ public partial class BlueprintDetailPageViewModel : ViewModelBase
             CalculateDLC();
             CalculateCubeGrids();
             CalculateComponent();
-            messageService?.ShowMessage("蓝图加载完成", "完成", InfoBarSeverity.Success);
         }
         else
         {
             messageService?.ShowMessage("未能加载蓝图", "错误", InfoBarSeverity.Error);
         }
-        loadingService?.StopLoading();
+        loadingService?.StopLoading<BlueprintDetailPage>();
     }
 
     private void CalculateCubeGrids()

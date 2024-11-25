@@ -4,6 +4,7 @@ using XFEExtension.NetCore.DelegateExtension;
 
 namespace SpaceEngineersBlueprintEditor.Implements.Services;
 
+/// <inheritdoc cref="ITabViewTitleService"/>
 internal class TabViewTitleService : GlobalServiceBase, ITabViewTitleService
 {
     public event XFEEventHandler<string, BlueprintModel>? ChangeTitleRequest;

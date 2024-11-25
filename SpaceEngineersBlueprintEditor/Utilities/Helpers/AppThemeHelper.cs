@@ -4,8 +4,15 @@ using Windows.UI.ViewManagement;
 
 namespace SpaceEngineersBlueprintEditor.Utilities.Helpers;
 
+/// <summary>
+/// 应用程序主题帮助类
+/// </summary>
 public static class AppThemeHelper
 {
+    /// <summary>
+    /// 更改应用程序主题
+    /// </summary>
+    /// <param name="theme">目标主题</param>
     public static void ChangeTheme(ElementTheme theme)
     {
         if (App.MainWindow.Content is FrameworkElement rootElement)
@@ -57,9 +64,15 @@ public static class AppThemeHelper
         App.MainWindow.AppWindow.TitleBar.BackgroundColor = Colors.Transparent;
     }
 
+    /// <summary>
+    /// 转换为应用程序主题
+    /// </summary>
+    /// <param name="theme">目标主题</param>
+    /// <returns>应用程序主题</returns>
+    /// <exception cref="NotImplementedException"></exception>
     public static ApplicationTheme ToAppTheme(this ElementTheme theme) => theme switch
     {
-        ElementTheme.Default => App.Current.RequestedTheme,
+        ElementTheme.Default => Application.Current.RequestedTheme,
         ElementTheme.Light => ApplicationTheme.Light,
         ElementTheme.Dark => ApplicationTheme.Dark,
         _ => throw new NotImplementedException()
