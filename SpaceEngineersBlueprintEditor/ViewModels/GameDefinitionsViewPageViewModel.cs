@@ -54,7 +54,7 @@ public partial class GameDefinitionsViewPageViewModel : ViewModelBase
                     var propertyViewData = new PropertyViewData
                     {
                         PropertyName = definition.Name,
-                        Value = string.IsNullOrWhiteSpace(valueString) ? isValueType ? "空值" : "空对象" : valueString,
+                        Value = string.IsNullOrWhiteSpace(valueString) ? isValueType ? "EmptyValue".GetLocalized() : "NullObject".GetLocalized() : valueString,
                         IsValueType = isValueType
                     };
                     _propertiesInfo.Add(propertyViewData);
@@ -68,7 +68,7 @@ public partial class GameDefinitionsViewPageViewModel : ViewModelBase
     {
         if (e is null || NavigationParameterService.SameAsLast)
             return;
-        loadingService?.StartLoading<GameDefinitionsViewPage>($"Loading {e.ToLower()} definitions...");
+        loadingService?.StartLoading<GameDefinitionsViewPage>($"{"Loading".GetLocalized()} {e.ToLower()} {"Definitions".GetLocalized()}...");
         currentParameter = e;
         await Helper.Wait(() => Initializer.IsDefinitionsLoadComplete && ItemsViewDisplayService.IsPageLoaded);
         LoadDefinitions(GetCurrentDefinitions(currentParameter));

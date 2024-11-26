@@ -261,6 +261,18 @@
     <value>None</value>
     <comment>无</comment>
   </data>
+  <data name="EmptyValue" xml:space="preserve">
+    <value>Empty value</value>
+    <comment>空值</comment>
+  </data>
+  <data name="NullObject" xml:space="preserve">
+    <value>Null</value>
+    <comment>空对象</comment>
+  </data>
+  <data name="Definitions" xml:space="preserve">
+    <value>Definitions</value>
+    <comment>定义集</comment>
+  </data>
   <data name="DragFileToEditorText" xml:space="preserve">
     <value>Drag blueprint here</value>
     <comment>拖动蓝图文件至此处</comment>
