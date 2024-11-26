@@ -1,0 +1,704 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<root>
+  <!-- 
+    Microsoft ResX Schema 
+    
+    Version 2.0
+    
+    The primary goals of this format is to allow a simple XML format 
+    that is mostly human readable. The generation and parsing of the 
+    various data types are done through the TypeConverter classes 
+    associated with the data types.
+    
+    Example:
+    
+    ... ado.net/XML headers & schema ...
+    <resheader name="resmimetype">text/microsoft-resx</resheader>
+    <resheader name="version">2.0</resheader>
+    <resheader name="reader">System.Resources.ResXResourceReader, System.Windows.Forms, ...</resheader>
+    <resheader name="writer">System.Resources.ResXResourceWriter, System.Windows.Forms, ...</resheader>
+    <data name="Name1"><value>this is my long string</value><comment>this is a comment</comment></data>
+    <data name="Color1" type="System.Drawing.Color, System.Drawing">Blue</data>
+    <data name="Bitmap1" mimetype="application/x-microsoft.net.object.binary.base64">
+        <value>[base64 mime encoded serialized .NET Framework object]</value>
+    </data>
+    <data name="Icon1" type="System.Drawing.Icon, System.Drawing" mimetype="application/x-microsoft.net.object.bytearray.base64">
+        <value>[base64 mime encoded string representing a byte array form of the .NET Framework object]</value>
+        <comment>This is a comment</comment>
+    </data>
+                
+    There are any number of "resheader" rows that contain simple 
+    name/value pairs.
+    
+    Each data row contains a name, and value. The row also contains a 
+    type or mimetype. Type corresponds to a .NET class that support 
+    text/value conversion through the TypeConverter architecture. 
+    Classes that don't support this are serialized and stored with the 
+    mimetype set.
+    
+    The mimetype is used for serialized objects, and tells the 
+    ResXResourceReader how to depersist the object. This is currently not 
+    extensible. For a given mimetype the value must be set accordingly:
+    
+    Note - application/x-microsoft.net.object.binary.base64 is the format 
+    that the ResXResourceWriter will generate, however the reader can 
+    read any of the formats listed below.
+    
+    mimetype: application/x-microsoft.net.object.binary.base64
+    value   : The object must be serialized with 
+            : System.Runtime.Serialization.Formatters.Binary.BinaryFormatter
+            : and then encoded with base64 encoding.
+    
+    mimetype: application/x-microsoft.net.object.soap.base64
+    value   : The object must be serialized with 
+            : System.Runtime.Serialization.Formatters.Soap.SoapFormatter
+            : and then encoded with base64 encoding.
+
+    mimetype: application/x-microsoft.net.object.bytearray.base64
+    value   : The object must be serialized into a byte array 
+            : using a System.ComponentModel.TypeConverter
+            : and then encoded with base64 encoding.
+    -->
+  <xsd:schema id="root" xmlns="" xmlns:xsd="http://www.w3.org/2001/XMLSchema" xmlns:msdata="urn:schemas-microsoft-com:xml-msdata">
+    <xsd:import namespace="http://www.w3.org/XML/1998/namespace" />
+    <xsd:element name="root" msdata:IsDataSet="true">
+      <xsd:complexType>
+        <xsd:choice maxOccurs="unbounded">
+          <xsd:element name="metadata">
+            <xsd:complexType>
+              <xsd:sequence>
+                <xsd:element name="value" type="xsd:string" minOccurs="0" />
+              </xsd:sequence>
+              <xsd:attribute name="name" use="required" type="xsd:string" />
+              <xsd:attribute name="type" type="xsd:string" />
+              <xsd:attribute name="mimetype" type="xsd:string" />
+              <xsd:attribute ref="xml:space" />
+            </xsd:complexType>
+          </xsd:element>
+          <xsd:element name="assembly">
+            <xsd:complexType>
+              <xsd:attribute name="alias" type="xsd:string" />
+              <xsd:attribute name="name" type="xsd:string" />
+            </xsd:complexType>
+          </xsd:element>
+          <xsd:element name="data">
+            <xsd:complexType>
+              <xsd:sequence>
+                <xsd:element name="value" type="xsd:string" minOccurs="0" msdata:Ordinal="1" />
+                <xsd:element name="comment" type="xsd:string" minOccurs="0" msdata:Ordinal="2" />
+              </xsd:sequence>
+              <xsd:attribute name="name" type="xsd:string" use="required" msdata:Ordinal="1" />
+              <xsd:attribute name="type" type="xsd:string" msdata:Ordinal="3" />
+              <xsd:attribute name="mimetype" type="xsd:string" msdata:Ordinal="4" />
+              <xsd:attribute ref="xml:space" />
+            </xsd:complexType>
+          </xsd:element>
+          <xsd:element name="resheader">
+            <xsd:complexType>
+              <xsd:sequence>
+                <xsd:element name="value" type="xsd:string" minOccurs="0" msdata:Ordinal="1" />
+              </xsd:sequence>
+              <xsd:attribute name="name" type="xsd:string" use="required" />
+            </xsd:complexType>
+          </xsd:element>
+        </xsd:choice>
+      </xsd:complexType>
+    </xsd:element>
+  </xsd:schema>
+  <resheader name="resmimetype">
+    <value>text/microsoft-resx</value>
+  </resheader>
+  <resheader name="version">
+    <value>2.0</value>
+  </resheader>
+  <resheader name="reader">
+    <value>System.Resources.ResXResourceReader, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </resheader>
+  <resheader name="writer">
+    <value>System.Resources.ResXResourceWriter, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </resheader>
+  <data name="AppShell_ShellItem_EditorPage.Content" xml:space="preserve">
+    <value>编辑蓝图</value>
+    <comment>编辑蓝图</comment>
+  </data>
+  <data name="AppShell_ShellMenu_ViewBlurprints.Content" xml:space="preserve">
+    <value>查看蓝图列表</value>
+    <comment>查看蓝图列表</comment>
+  </data>
+  <data name="AppShell_ShellItem_ViewLocalBlueprints.Content" xml:space="preserve">
+    <value>本地蓝图</value>
+    <comment>本地蓝图</comment>
+  </data>
+  <data name="AppShell_ShellItem_AppSetting.Content" xml:space="preserve">
+    <value>设置</value>
+    <comment>设置</comment>
+  </data>
+  <data name="AppShell_ShellItem_MainPage.Content" xml:space="preserve">
+    <value>主页</value>
+    <comment>主页</comment>
+  </data>
+  <data name="AppShell_ShellItem_ViewWorkshopBlueprints.Content" xml:space="preserve">
+    <value>工坊蓝图</value>
+    <comment>工坊蓝图</comment>
+  </data>
+  <data name="AppShell_ShellItem_ViewCloudBlueprints.Content" xml:space="preserve">
+    <value>云端蓝图</value>
+    <comment>云端蓝图</comment>
+  </data>
+  <data name="AppDisplayName" xml:space="preserve">
+    <value>太空工程师蓝图修改器</value>
+    <comment>太空工程师蓝图修改器</comment>
+  </data>
+  <data name="GameDefinitionsLoading" xml:space="preserve">
+    <value>游戏定义集加载中...</value>
+    <comment>游戏定义集加载中...</comment>
+  </data>
+  <data name="GameDefinitionsLoadingComplete" xml:space="preserve">
+    <value>游戏定义集加载完成</value>
+    <comment>游戏定义集加载完成</comment>
+  </data>
+  <data name="LoadingBlueprint" xml:space="preserve">
+    <value>加载蓝图中</value>
+    <comment>加载蓝图中</comment>
+  </data>
+  <data name="CalculatingBlueprint" xml:space="preserve">
+    <value>计算蓝图中</value>
+    <comment>计算蓝图中</comment>
+  </data>
+  <data name="LoadingDefinitions" xml:space="preserve">
+    <value>加载定义中</value>
+    <comment>加载定义中</comment>
+  </data>
+  <data name="SavingBlueprint" xml:space="preserve">
+    <value>保存蓝图中</value>
+    <comment>保存蓝图中</comment>
+  </data>
+  <data name="SavingSuccessful" xml:space="preserve">
+    <value>保存成功</value>
+    <comment>保存成功</comment>
+  </data>
+  <data name="BlueprintFile" xml:space="preserve">
+    <value>蓝图文件</value>
+    <comment>蓝图文件</comment>
+  </data>
+  <data name="BlueprintLoadComplete" xml:space="preserve">
+    <value>蓝图加载完成</value>
+    <comment>蓝图加载完成</comment>
+  </data>
+  <data name="Error_LoadingDefinitions" xml:space="preserve">
+    <value>加载定义时发生错误</value>
+    <comment>加载定义时发生错误</comment>
+  </data>
+  <data name="Error_LoadingDefinitions_Title" xml:space="preserve">
+    <value>未能加载定义</value>
+    <comment>未能加载定义</comment>
+  </data>
+  <data name="Error_CantLoadingShipDefinitions" xml:space="preserve">
+    <value>未能加载飞船蓝图定义</value>
+    <comment>未能加载飞船蓝图定义</comment>
+  </data>
+  <data name="Error_CantFindShipDefinitions" xml:space="preserve">
+    <value>未能找到蓝图定义</value>
+    <comment>未能找到蓝图定义</comment>
+  </data>
+  <data name="Error_CantLoadingBlueprint" xml:space="preserve">
+    <value>未能加载蓝图</value>
+    <comment>未能加载蓝图</comment>
+  </data>
+  <data name="Error_CantSetValue_CantSetProperty" xml:space="preserve">
+    <value>无法设置属性</value>
+    <comment>无法设置属性</comment>
+  </data>
+  <data name="Error_CantSetValue_ValueTo" xml:space="preserve">
+    <value>的值为</value>
+    <comment>的值为</comment>
+  </data>
+  <data name="Warning_BlueprintContainsNoFile" xml:space="preserve">
+    <value>该蓝图不包含蓝图文件（bp.sbc）</value>
+    <comment>该蓝图不包含蓝图文件（bp.sbc）</comment>
+  </data>
+  <data name="Warning_CantFindFile" xml:space="preserve">
+    <value>Can't find file</value>
+    <comment>无法找到文件</comment>
+  </data>
+  <data name="ConvertComplete" xml:space="preserve">
+    <value>转换完成</value>
+    <comment>转换完成</comment>
+  </data>
+  <data name="RefreshComplete" xml:space="preserve">
+    <value>刷新完成</value>
+    <comment>刷新完成</comment>
+  </data>
+  <data name="CopyToComplete" xml:space="preserve">
+    <value>已复制至</value>
+    <comment>已复制至</comment>
+  </data>
+  <data name="DeleteAtComplete" xml:space="preserve">
+    <value>已删除</value>
+    <comment>已删除</comment>
+  </data>
+  <data name="Complete" xml:space="preserve">
+    <value>完成</value>
+    <comment>完成</comment>
+  </data>
+  <data name="Warning" xml:space="preserve">
+    <value>警告</value>
+    <comment>警告</comment>
+  </data>
+  <data name="Error" xml:space="preserve">
+    <value>错误</value>
+    <comment>错误</comment>
+  </data>
+  <data name="Error_Exception" xml:space="preserve">
+    <value>错误异常</value>
+    <comment>错误异常</comment>
+  </data>
+  <data name="Failed" xml:space="preserve">
+    <value>失败</value>
+    <comment>失败</comment>
+  </data>
+  <data name="Failed_SaveFailed" xml:space="preserve">
+    <value>保存失败</value>
+    <comment>保存失败</comment>
+  </data>
+  <data name="UnknownReason" xml:space="preserve">
+    <value>保存失败</value>
+    <comment>保存失败</comment>
+  </data>
+  <data name="Loading" xml:space="preserve">
+    <value>正在加载</value>
+    <comment>正在加载</comment>
+  </data>
+  <data name="None" xml:space="preserve">
+    <value>无</value>
+    <comment>无</comment>
+  </data>
+  <data name="EmptyValue" xml:space="preserve">
+    <value>空值</value>
+    <comment>空值</comment>
+  </data>
+  <data name="EmptyList" xml:space="preserve">
+    <value>空列表</value>
+    <comment>空列表</comment>
+  </data>
+  <data name="Amount" xml:space="preserve">
+    <value>数量</value>
+    <comment>数量</comment>
+  </data>
+  <data name="NullObject" xml:space="preserve">
+    <value>空对象</value>
+    <comment>空对象</comment>
+  </data>
+  <data name="Definitions" xml:space="preserve">
+    <value>定义集</value>
+    <comment>定义集</comment>
+  </data>
+  <data name="Confirm" xml:space="preserve">
+    <value>确认</value>
+    <comment>确认</comment>
+  </data>
+  <data name="Cancel" xml:space="preserve">
+    <value>取消</value>
+    <comment>取消</comment>
+  </data>
+  <data name="ChangePath_FromPath" xml:space="preserve">
+    <value>将目录从</value>
+    <comment>将目录从</comment>
+  </data>
+  <data name="ChangePath_ToPath" xml:space="preserve">
+    <value>更改为</value>
+    <comment>更改为</comment>
+  </data>
+  <data name="ChangePath_Ensure" xml:space="preserve">
+    <value>是否更改？</value>
+    <comment>是否更改？</comment>
+  </data>
+  <data name="ClearCache_Ensure" xml:space="preserve">
+    <value>是否清除包括已加载的游戏定义集在内的缓存文件？</value>
+    <comment>是否清除包括已加载的游戏定义集在内的缓存文件？</comment>
+  </data>
+  <data name="DragFileToEditorText" xml:space="preserve">
+    <value>Drag blueprint here</value>
+    <comment>拖动蓝图文件至此处</comment>
+  </data>
+  <data name="SettingPage_AppInfo_Author.Header" xml:space="preserve">
+    <value>作者</value>
+    <comment>作者</comment>
+  </data>
+  <data name="SettingPage_AppInfo_Contact.Header" xml:space="preserve">
+    <value>联系我们</value>
+    <comment>联系我们</comment>
+  </data>
+  <data name="SettingPage_AppInfo_Expander.Description" xml:space="preserve">
+    <value>版权所有 © 2024 XFEstudio. All rights reserved.</value>
+    <comment>版权所有 © 2024 XFEstudio. All rights reserved.</comment>
+  </data>
+  <data name="SettingPage_AppInfo_Expander.Header" xml:space="preserve">
+    <value>太空工程师蓝图修改器</value>
+    <comment>太空工程师蓝图修改器</comment>
+  </data>
+  <data name="SettingPage_AppInfo_GithubProject.Header" xml:space="preserve">
+    <value>Github仓库</value>
+    <comment>Github仓库</comment>
+  </data>
+  <data name="SettingPage_AppInfo_Contact_Bilibili.Content" xml:space="preserve">
+    <value>哔哩哔哩</value>
+    <comment>哔哩哔哩</comment>
+  </data>
+  <data name="SettingPage_AppInfo_Contact_Github.Content" xml:space="preserve">
+    <value>Github</value>
+    <comment>Github</comment>
+  </data>
+  <data name="SettingPage_AppInfo_Contact_QQ.Content" xml:space="preserve">
+    <value>太空工程师交流群</value>
+    <comment>太空工程师交流群</comment>
+  </data>
+  <data name="SettingPage_AppInfo_Contact_Twitter.Content" xml:space="preserve">
+    <value>推特（X）</value>
+    <comment>推特（X）</comment>
+  </data>
+  <data name="SettingPage_AppInfo_Contact_Youtube.Content" xml:space="preserve">
+    <value>油管</value>
+    <comment>油管</comment>
+  </data>
+  <data name="AppShell_AppTitle.Text" xml:space="preserve">
+    <value>太空工程师蓝图修改器</value>
+    <comment>太空工程师蓝图修改器</comment>
+  </data>
+  <data name="SettingPage_AppTheme.Header" xml:space="preserve">
+    <value>色彩模式</value>
+    <comment>色彩模式</comment>
+  </data>
+  <data name="SettingPage_AppTheme.Description" xml:space="preserve">
+    <value>编辑器显示的颜色主题</value>
+    <comment>编辑器显示的颜色主题</comment>
+  </data>
+  <data name="SettingPage_AppTheme_Light.Content" xml:space="preserve">
+    <value>浅色</value>
+    <comment>浅色</comment>
+  </data>
+  <data name="SettingPage_AppTheme_Default.Content" xml:space="preserve">
+    <value>跟随系统</value>
+    <comment>跟随系统</comment>
+  </data>
+  <data name="SettingPage_AppTheme_Dark.Content" xml:space="preserve">
+    <value>深色</value>
+    <comment>深色</comment>
+  </data>
+  <data name="SettingPage_AppearanceTitle.Text" xml:space="preserve">
+    <value>外观 &amp; 行为</value>
+    <comment>外观 &amp; 行为</comment>
+  </data>
+  <data name="SettingPage_NavigationStyle.Header" xml:space="preserve">
+    <value>导航栏样式</value>
+    <comment>导航栏样式</comment>
+  </data>
+  <data name="SettingPage_NavigationStyle.Description" xml:space="preserve">
+    <value>导航栏出现的位置</value>
+    <comment>导航栏出现的位置</comment>
+  </data>
+  <data name="SettingPage_NavigationStyle_Auto.Content" xml:space="preserve">
+    <value>自动</value>
+    <comment>自动</comment>
+  </data>
+  <data name="SettingPage_NavigationStyle_Left.Content" xml:space="preserve">
+    <value>左侧</value>
+    <comment>左侧</comment>
+  </data>
+  <data name="SettingPage_NavigationStyle_Top.Content" xml:space="preserve">
+    <value>置顶</value>
+    <comment>置顶</comment>
+  </data>
+  <data name="SettingPage_NavigationStyle_LeftCompact.Content" xml:space="preserve">
+    <value>左侧小组件</value>
+    <comment>左侧小组件</comment>
+  </data>
+  <data name="SettingPage_NavigationStyle_LeftMinimal.Content" xml:space="preserve">
+    <value>左侧收起</value>
+    <comment>左侧收起</comment>
+  </data>
+  <data name="SettingPage_AboutTitle.Text" xml:space="preserve">
+    <value>关于</value>
+    <comment>关于</comment>
+  </data>
+  <data name="SettingPage_EnvironmentTitle.Text" xml:space="preserve">
+    <value>环境</value>
+    <comment>环境</comment>
+  </data>
+  <data name="SettingPage_Paths.Header" xml:space="preserve">
+    <value>所有目录</value>
+    <comment>所有目录</comment>
+  </data>
+  <data name="SettingPage_Paths.Description" xml:space="preserve">
+    <value>应用程序的环境目录</value>
+    <comment>应用程序的环境目录</comment>
+  </data>
+  <data name="SettingPage_GameRootPath.Header" xml:space="preserve">
+    <value>游戏根目录</value>
+    <comment>游戏根目录</comment>
+  </data>
+  <data name="SettingPage_CachePath.Header" xml:space="preserve">
+    <value>缓存目录</value>
+    <comment>缓存目录</comment>
+  </data>
+  <data name="SettingPage_OpenPath.Content" xml:space="preserve">
+    <value>打开目录</value>
+    <comment>打开目录</comment>
+  </data>
+  <data name="SettingPage_ChangePath.Content" xml:space="preserve">
+    <value>更改目录</value>
+    <comment>更改目录</comment>
+  </data>
+  <data name="SettingPage_ClearCache.Content" xml:space="preserve">
+    <value>清除缓存</value>
+    <comment>清除缓存</comment>
+  </data>
+  <data name="AppShell_ShellMenu_ViewDefinitions.Content" xml:space="preserve">
+    <value>游戏定义集</value>
+    <comment>游戏定义集</comment>
+  </data>
+  <data name="AppShell_ShellMenu_ViewDefinitions_CubeDefinitions.Content" xml:space="preserve">
+    <value>方块定义集</value>
+    <comment>方块定义集</comment>
+  </data>
+  <data name="AppShell_ShellMenu_ViewDefinitions_ItemDefinitions.Content" xml:space="preserve">
+    <value>物品定义集</value>
+    <comment>物品定义集</comment>
+  </data>
+  <data name="AppShell_ShellMenu_ViewDefinitions_ComponentDefinitions.Content" xml:space="preserve">
+    <value>组件定义集</value>
+    <comment>组件定义集</comment>
+  </data>
+  <data name="AppShell_ShellMenu_ViewDefinitions_ScenariosDefinitions.Content" xml:space="preserve">
+    <value>预设存档定义集</value>
+    <comment>预设存档定义集</comment>
+  </data>
+  <data name="BlueprintDetailPage_RequiredDLC.Header" xml:space="preserve">
+    <value>所需DLC</value>
+    <comment>所需DLC</comment>
+  </data>
+  <data name="BlueprintDetailPage_RequiredComponent.Header" xml:space="preserve">
+    <value>建造所需材料</value>
+    <comment>建造所需材料</comment>
+  </data>
+  <data name="BlueprintDetailPage_BlueprintGrids.Text" xml:space="preserve">
+    <value>蓝图网格</value>
+    <comment>蓝图网格</comment>
+  </data>
+  <data name="BlueprintDetailPage_OpenInEditor.Text" xml:space="preserve">
+    <value>在编辑器中打开</value>
+    <comment>在编辑器中打开</comment>
+  </data>
+  <data name="BlueprintDetailPage_BlueprintBaseInfo.Text" xml:space="preserve">
+    <value>蓝图基本信息</value>
+    <comment>蓝图基本信息</comment>
+  </data>
+  <data name="BlueprintDetailPage_BlueprintAuthor" xml:space="preserve">
+    <value>蓝图作者</value>
+    <comment>蓝图作者</comment>
+  </data>
+  <data name="BlueprintDetailPage_BlueprintSize" xml:space="preserve">
+    <value>蓝图大小</value>
+    <comment>蓝图大小</comment>
+  </data>
+  <data name="BlueprintDetailPage_BlueprintPath" xml:space="preserve">
+    <value>蓝图路径</value>
+    <comment>蓝图路径</comment>
+  </data>
+  <data name="BlueprintDetailPage_BlueprintDestructible" xml:space="preserve">
+    <value>可被破坏</value>
+    <comment>可被破坏</comment>
+  </data>
+  <data name="BlueprintDetailPage_BlueprintEditable" xml:space="preserve">
+    <value>可在游戏内编辑</value>
+    <comment>可在游戏内编辑</comment>
+  </data>
+  <data name="BlueprintDetailPage_BlueprintTotalGrids" xml:space="preserve">
+    <value>网格总数</value>
+    <comment>网格总数</comment>
+  </data>
+  <data name="BlueprintDetailPage_BlueprintTotalCubes" xml:space="preserve">
+    <value>方块总数</value>
+    <comment>方块总数</comment>
+  </data>
+  <data name="BlueprintDetailPage_PartiallyDestructible" xml:space="preserve">
+    <value>部分可破坏</value>
+    <comment>部分可破坏</comment>
+  </data>
+  <data name="BlueprintDetailPage_OverallIndestructible" xml:space="preserve">
+    <value>整体不可破坏</value>
+    <comment>整体不可破坏</comment>
+  </data>
+  <data name="BlueprintDetailPage_Destructible" xml:space="preserve">
+    <value>可破坏</value>
+    <comment>可破坏</comment>
+  </data>
+  <data name="BlueprintDetailPage_PartiallyEditable" xml:space="preserve">
+    <value>部分可编辑</value>
+    <comment>部分可编辑</comment>
+  </data>
+  <data name="BlueprintDetailPage_OverallNonEditable" xml:space="preserve">
+    <value>整体不可编辑</value>
+    <comment>整体不可编辑</comment>
+  </data>
+  <data name="BlueprintDetailPage_Editable" xml:space="preserve">
+    <value>可编辑</value>
+    <comment>可编辑</comment>
+  </data>
+  <data name="BlueprintDetailPage_GridName" xml:space="preserve">
+    <value>网格名称</value>
+    <comment>网格名称</comment>
+  </data>
+  <data name="BlueprintDetailPage_CubeCount" xml:space="preserve">
+    <value>方块数量</value>
+    <comment>方块数量</comment>
+  </data>
+  <data name="BlueprintDetailPage_CantFindGrid" xml:space="preserve">
+    <value>未找到网格</value>
+    <comment>未找到网格</comment>
+  </data>
+  <data name="BlueprintEditPage_NewBlueprintEditPage" xml:space="preserve">
+    <value>新的蓝图编辑页</value>
+    <comment>新的蓝图编辑页</comment>
+  </data>
+  <data name="BlueprintEditSubPage_File.Title" xml:space="preserve">
+    <value>文件</value>
+    <comment>文件</comment>
+  </data>
+  <data name="BlueprintEditSubPage_Edit.Title" xml:space="preserve">
+    <value>编辑</value>
+    <comment>编辑</comment>
+  </data>
+  <data name="BlueprintEditSubPage_View.Title" xml:space="preserve">
+    <value>查看</value>
+    <comment>查看</comment>
+  </data>
+  <data name="BlueprintEditSubPage_OpenBlueprint.Text" xml:space="preserve">
+    <value>打开蓝图文件</value>
+    <comment>打开蓝图文件</comment>
+  </data>
+  <data name="BlueprintEditSubPage_ConvertDestructible.Text" xml:space="preserve">
+    <value>转为可破坏</value>
+    <comment>转为可破坏</comment>
+  </data>
+  <data name="BlueprintEditSubPage_ConvertIndestructible.Text" xml:space="preserve">
+    <value>转为不可破坏</value>
+    <comment>转为不可破坏</comment>
+  </data>
+  <data name="BlueprintEditSubPage_ConvertEditable.Text" xml:space="preserve">
+    <value>转为可编辑</value>
+    <comment>转为可编辑</comment>
+  </data>
+  <data name="BlueprintEditSubPage_ConvertNonEditable.Text" xml:space="preserve">
+    <value>转为不可编辑</value>
+    <comment>转为不可编辑</comment>
+  </data>
+  <data name="BlueprintEditSubPage_Save.Text" xml:space="preserve">
+    <value>保存</value>
+    <comment>保存</comment>
+  </data>
+  <data name="BlueprintEditSubPage_OpenInFolder.Text" xml:space="preserve">
+    <value>在文件夹中打开</value>
+    <comment>在文件夹中打开</comment>
+  </data>
+  <data name="BlueprintEditSubPage_SelectorBar_Grids.Text" xml:space="preserve">
+    <value>网格</value>
+    <comment>网格</comment>
+  </data>
+  <data name="BlueprintEditSubPage_SelectorBar_Groups.Text" xml:space="preserve">
+    <value>编组（实验性功能）</value>
+    <comment>编组（实验性功能）</comment>
+  </data>
+  <data name="BlueprintEditSubPage_SelectorBar_Properties.Text" xml:space="preserve">
+    <value>属性</value>
+    <comment>属性</comment>
+  </data>
+  <data name="BlueprintEditSubPage_AutoSuggestBox_CubeBlocks.PlaceholderText" xml:space="preserve">
+    <value>搜索方块...</value>
+    <comment>搜索方块...</comment>
+  </data>
+  <data name="TextBlock_DragBlueprint.Text" xml:space="preserve">
+    <value>拖拽蓝图文件至此</value>
+    <comment>拖拽蓝图文件至此</comment>
+  </data>
+  <data name="TextBlock_ViewBlueprintsList.Text" xml:space="preserve">
+    <value>查看蓝图列表</value>
+    <comment>查看蓝图列表</comment>
+  </data>
+  <data name="TextBlock_OpenLocalFile.Text" xml:space="preserve">
+    <value>打开本地文件</value>
+    <comment>打开本地文件</comment>
+  </data>
+  <data name="BlueprintViewPage_AppBarButton_Open.Label" xml:space="preserve">
+    <value>打开</value>
+    <comment>打开</comment>
+  </data>
+  <data name="BlueprintViewPage_AppBarButton_Copy.Label" xml:space="preserve">
+    <value>复制</value>
+    <comment>复制</comment>
+  </data>
+  <data name="BlueprintViewPage_AppBarButton_Delete.Label" xml:space="preserve">
+    <value>删除</value>
+    <comment>删除</comment>
+  </data>
+  <data name="BlueprintViewPage_EnterNewBlueprintName.PlaceholderText" xml:space="preserve">
+    <value>输入新蓝图的名称</value>
+    <comment>输入新蓝图的名称</comment>
+  </data>
+  <data name="BlueprintViewPage_NoBlueprint.Text" xml:space="preserve">
+    <value>无蓝图文件</value>
+    <comment>无蓝图文件</comment>
+  </data>
+  <data name="BlueprintViewPage_AutoSuggestBox_Blueprints.PlaceholderText" xml:space="preserve">
+    <value>搜索蓝图名称...</value>
+    <comment>搜索蓝图名称...</comment>
+  </data>
+  <data name="BlueprintViewPage_RefreshBlueprintsList.Text" xml:space="preserve">
+    <value>刷新列表</value>
+    <comment>刷新列表</comment>
+  </data>
+  <data name="BlueprintViewPage_EnsureToDelete" xml:space="preserve">
+    <value>你确定要删除</value>
+    <comment>你确定要删除</comment>
+  </data>
+  <data name="GameDefinitionsViewPage_AutoSuggestBox_Properties.PlaceholderText" xml:space="preserve">
+    <value>搜索属性...</value>
+    <comment>搜索属性...</comment>
+  </data>
+  <data name="GameDefinitionsViewPage_AutoSuggestBox_Definitions.PlaceholderText" xml:space="preserve">
+    <value>搜索属性...</value>
+    <comment>搜索属性...</comment>
+  </data>
+  <data name="Button_Yes.Content" xml:space="preserve">
+    <value>是</value>
+    <comment>是</comment>
+  </data>
+  <data name="Button_No.Content" xml:space="preserve">
+    <value>否</value>
+    <comment>否</comment>
+  </data>
+  <data name="Button_Confirm.Content" xml:space="preserve">
+    <value>确认</value>
+    <comment>确认</comment>
+  </data>
+  <data name="Button_Cancel.Content" xml:space="preserve">
+    <value>取消</value>
+    <comment>取消</comment>
+  </data>
+  <data name="ContentDialog_YesOrNo.PrimaryButtonText" xml:space="preserve">
+    <value>是</value>
+    <comment>是</comment>
+  </data>
+  <data name="ContentDialog_YesOrNo.SecondaryButtonText" xml:space="preserve">
+    <value>否</value>
+    <comment>否</comment>
+  </data>
+  <data name="ContentDialog_ConfirmOrCancel.PrimaryButtonText" xml:space="preserve">
+    <value>确认</value>
+    <comment>确认</comment>
+  </data>
+  <data name="ContentDialog_ConfirmOrCancel.SecondaryButtonText" xml:space="preserve">
+    <value>取消</value>
+    <comment>取消</comment>
+  </data>
+</root>
