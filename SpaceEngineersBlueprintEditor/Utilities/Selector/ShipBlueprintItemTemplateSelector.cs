@@ -29,25 +29,9 @@ public partial class ShipBlueprintItemTemplateSelector : DataTemplateSelector
     /// </summary>
     public DataTemplate? EnumerableTemplate { get; set; }
     /// <summary>
-    /// 字符串模板项
+    /// 值类型模板项
     /// </summary>
-    public DataTemplate? StringValueItemTemplate { get; set; }
-    /// <summary>
-    /// 数字模板项
-    /// </summary>
-    public DataTemplate? NumberValueItemTemplate { get; set; }
-    /// <summary>
-    /// 枚举模板项
-    /// </summary>
-    public DataTemplate? EnumValueItemTemplate { get; set; }
-    /// <summary>
-    /// 复合枚举模板项
-    /// </summary>
-    public DataTemplate? MultiEnumValueItemTemplate { get; set; }
-    /// <summary>
-    /// 布尔模板项
-    /// </summary>
-    public DataTemplate? BooleanValueItemTemplate { get; set; }
+    public DataTemplate? ValueItemTemplate { get; set; }
 
     ///<inheritdoc/>
     protected override DataTemplate? SelectTemplateCore(object item)
@@ -56,16 +40,7 @@ public partial class ShipBlueprintItemTemplateSelector : DataTemplateSelector
         {
             if (blueprintPropertyViewData.IsBasicType)
             {
-                if (blueprintPropertyViewData.IsMultiEnum)
-                    return MultiEnumValueItemTemplate;
-                else if (blueprintPropertyViewData.Type is not null && blueprintPropertyViewData.Type.IsEnum)
-                    return EnumValueItemTemplate;
-                else if (blueprintPropertyViewData.Type == typeof(int) || blueprintPropertyViewData.Type == typeof(double) || blueprintPropertyViewData.Type == typeof(float) || blueprintPropertyViewData.Type == typeof(short) || blueprintPropertyViewData.Type == typeof(byte) || blueprintPropertyViewData.Type == typeof(uint) || blueprintPropertyViewData.Type == typeof(ushort))
-                    return NumberValueItemTemplate;
-                else if (blueprintPropertyViewData.Type == typeof(bool))
-                    return BooleanValueItemTemplate;
-                else
-                    return StringValueItemTemplate;
+                return ValueItemTemplate;
             }
             else if (blueprintPropertyViewData.IsEnumerable)
                 return EnumerableTemplate;

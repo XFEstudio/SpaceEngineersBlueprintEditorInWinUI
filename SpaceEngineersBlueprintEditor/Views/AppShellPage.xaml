@@ -89,17 +89,6 @@
                 </NavigationViewItem>
             </NavigationView.FooterMenuItems>
             <Grid x:Name="loadingGrid">
-                <Grid Margin="0,-72,0,0" VerticalAlignment="Stretch" HorizontalAlignment="Stretch" Visibility="Collapsed" Background="{ThemeResource SmokeFillColorDefaultBrush}">
-                    <Grid VerticalAlignment="Center" HorizontalAlignment="Center" CornerRadius="15" Padding="100">
-                        <Grid.Background>
-                            <SolidColorBrush Color="Black" Opacity="0.5"/>
-                        </Grid.Background>
-                        <StackPanel Spacing="30">
-                            <TextBlock Foreground="White" FontSize="34" VerticalAlignment="Center" HorizontalAlignment="Center"/>
-                            <ProgressRing IsActive="True" Width="60" Height="60" VerticalAlignment="Center" HorizontalAlignment="Center"/>
-                        </StackPanel>
-                    </Grid>
-                </Grid>
                 <Frame Padding="56,24,56,0" x:Name="navigationFrame"/>
             </Grid>
         </NavigationView>

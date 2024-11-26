@@ -50,7 +50,6 @@ public partial class BlueprintDetailPageViewModel : ViewModelBase
         if (e is null) return;
         if (navigationViewService is not null) navigationViewService.Header = e.Name;
         BackgroundImageService?.SetBackgroundImage(e.BlueprintImage);
-        await Helper.Wait(() => SpaceEngineersHelper.IsLoadComplete);
         AuthorName = "蓝图作者：加载中...";
         BlueprintFileSize = "蓝图大小：加载中...";
         BlueprintPath = "蓝图路径：加载中...";
@@ -66,6 +65,7 @@ public partial class BlueprintDetailPageViewModel : ViewModelBase
             IsLoadingInProgress = true;
             loadingService?.StartLoading<BlueprintDetailPage>("Loading blueprint...");
             currentBlueprintInfoViewData = e;
+            await Helper.Wait(() => SpaceEngineersHelper.IsLoadComplete);
             currentDefinitions = await SpaceEngineersHelper.LoadBlueprintAsync(currentBlueprintInfoViewData.FilePath);
             if (currentDefinitions is not null && currentDefinitions.ShipBlueprints is not null && currentDefinitions.ShipBlueprints.Length > 0)
                 currentBlueprint = currentDefinitions.ShipBlueprints[0];
@@ -80,6 +80,7 @@ public partial class BlueprintDetailPageViewModel : ViewModelBase
             messageService?.ShowMessage("该蓝图不包含蓝图文件（bp.sbc）", "警告", InfoBarSeverity.Warning);
             BlueprintFileSize = $"蓝图大小：{currentBlueprintInfoViewData!.FileSize}";
             BlueprintPath = $"蓝图路径：{currentBlueprintInfoViewData!.FilePath}";
+            loadingService?.StopLoading<BlueprintDetailPage>();
             return;
         }
         if (currentBlueprint is not null)

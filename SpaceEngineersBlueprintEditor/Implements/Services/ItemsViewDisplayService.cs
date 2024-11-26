@@ -1,13 +1,12 @@
 ﻿using SpaceEngineersBlueprintEditor.Interface.Services;
-using SpaceEngineersBlueprintEditor.Model;
 using System.Collections.ObjectModel;
 using System.Diagnostics.CodeAnalysis;
 using Windows.Foundation;
 
 namespace SpaceEngineersBlueprintEditor.Implements.Services;
 
-/// <inheritdoc cref="IDefinitionPropertiesDisplayService{T}"/>
-internal class DefinitionPropertiesDisplayService<T> : IDefinitionPropertiesDisplayService<T> where T : DefinitionViewData
+/// <inheritdoc cref="IItemsViewDisplayService{T}"/>
+internal class ItemsViewDisplayService<T> : IItemsViewDisplayService<T> where T : class
 {
     private ItemsView? _itemsView;
     private Page? _page;
@@ -22,12 +21,9 @@ internal class DefinitionPropertiesDisplayService<T> : IDefinitionPropertiesDisp
         _itemsView.SelectionChanged += (sender, args) => SelectionChanged?.Invoke(sender, args);
     }
 
-    public void Select(T item)
+    public void Select(T? item)
     {
-        if (_itemsView is not null && _page is not null && _itemsView.ItemsSource is ObservableCollection<T> itemSource)
-            if (_page.IsLoaded)
-            {
-                _itemsView.Select(itemSource.IndexOf(item));
-            }
+        if (_itemsView is not null && _page is not null && _itemsView.ItemsSource is ObservableCollection<T> itemSource && _page.IsLoaded)
+            _itemsView.Select(item is not null ? itemSource.IndexOf(item) : 0);
     }
 }

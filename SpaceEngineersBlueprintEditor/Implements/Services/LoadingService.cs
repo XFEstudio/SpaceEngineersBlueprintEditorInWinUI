@@ -32,32 +32,63 @@ internal class LoadingService : GlobalServiceBase, ILoadingService
 
     public bool StartLoading<T>(string showText = "Loading...") where T : Page
     {
-        if (pageGridDictionary.TryGetValue(typeof(T), out var grid) && grid.FindName("loadingTextBlock") is TextBlock textBlock)
+        try
         {
-            _dispatcherQueue?.TryEnqueue(() => textBlock.Text = showText);
-            return true;
-        }
-        else
-        {
-            _dispatcherQueue?.TryEnqueue(() =>
+            if (pageGridDictionary.TryGetValue(typeof(T), out var grid) && grid.FindName("loadingTextBlock") is TextBlock textBlock)
+            {
+                textBlock.Text = showText;
+                return true;
+            }
+            else
             {
                 var newGrid = CreateLoadingGrid(showText);
-                pageGridDictionary.Add(typeof(T), newGrid);
                 _loadingGrid?.Children.Add(newGrid);
-            });
-            return false;
+                pageGridDictionary.Add(typeof(T), newGrid);
+                return false;
+            }
+        }
+        catch
+        {
+            if (pageGridDictionary.TryGetValue(typeof(T), out var grid) && grid.FindName("loadingTextBlock") is TextBlock textBlock)
+            {
+                _dispatcherQueue?.TryEnqueue(() => textBlock.Text = showText);
+                return true;
+            }
+            else
+            {
+                _dispatcherQueue?.TryEnqueue(() =>
+                {
+                    var newGrid = CreateLoadingGrid(showText);
+                    _loadingGrid?.Children.Add(newGrid);
+                    pageGridDictionary.Add(typeof(T), newGrid);
+                });
+                return false;
+            }
         }
     }
 
     public bool StopLoading<T>() where T : Page
     {
-        if (pageGridDictionary.TryGetValue(typeof(T), out var grid) && _loadingGrid is not null)
-            return _dispatcherQueue?.TryEnqueue(() =>
+        try
+        {
+            if (pageGridDictionary.TryGetValue(typeof(T), out var grid) && _loadingGrid is not null)
             {
-                _loadingGrid.Children.Remove(grid);
-                pageGridDictionary.Remove(typeof(T));
-            }) ?? false;
-        return false;
+                return _loadingGrid.Children.Remove(grid) && pageGridDictionary.Remove(typeof(T));
+            }
+            return false;
+        }
+        catch
+        {
+            if (pageGridDictionary.TryGetValue(typeof(T), out var grid) && _loadingGrid is not null)
+            {
+                return _dispatcherQueue?.TryEnqueue(() =>
+                {
+                    _loadingGrid.Children.Remove(grid);
+                    pageGridDictionary.Remove(typeof(T));
+                }) ?? false;
+            }
+            return false;
+        }
     }
 
     private static Grid CreateLoadingGrid(string loadingText)

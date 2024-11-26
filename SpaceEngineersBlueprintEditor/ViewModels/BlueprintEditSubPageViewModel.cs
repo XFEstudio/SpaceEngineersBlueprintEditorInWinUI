@@ -28,9 +28,12 @@ public partial class BlueprintEditSubPageViewModel : ViewModelBase
     [ObservableProperty]
     private string searchText = string.Empty;
     [ObservableProperty]
+    private string propertiesSearchText = string.Empty;
+    [ObservableProperty]
     private BlueprintPropertyViewData? selectedCubeBlock;
     [ObservableProperty]
     private TreeViewNode? selectedTreeViewNode;
+    private bool isLoaded;
     private BlueprintModel? currentBlueprintModel;
     private MyObjectBuilder_Definitions? currentDefinitions;
     private MyObjectBuilder_ShipBlueprintDefinition? currentShipBlueprint;
@@ -39,18 +42,30 @@ public partial class BlueprintEditSubPageViewModel : ViewModelBase
     private readonly INavigationViewService? navigationViewService = GlobalServiceManager.GetService<INavigationViewService>();
     private readonly ITabViewTitleService? tabViewTitleService = GlobalServiceManager.GetService<ITabViewTitleService>();
     public ObservableCollection<BlueprintGroupList> BlueprintCubeGridList { get; } = [];
-    public ObservableCollection<BlueprintPropertyViewData> CubeProperties { get; } = [];
     public IBackgroundImageService? BackgroundImageService { get; set; } = GlobalServiceManager.GetService<IBackgroundImageService>();
+    public IListViewDisplayService<BlueprintPropertyViewData> ListViewDisplayService { get; set; } = new ListViewDisplayService<BlueprintPropertyViewData>();
     public INavigationParameterService<BlueprintModel> NavigationParameterService { get; set; } = new NavigationParameterService<BlueprintModel>();
     public IFileDropService FileDropService { get; set; } = new BlueprintDropService();
-    public ITreeViewService TreeViewService { get; set; } = new TreeViewService();
+    public ITreeViewService BlueprintTreeViewService { get; set; } = new TreeViewService();
+    public ITreeViewService CubeBlockTreeViewService { get; set; } = new TreeViewService();
     public ISelectorBarService SelectorBarService { get; set; } = new SelectorBarService();
 
     public BlueprintEditSubPageViewModel()
     {
         NavigationParameterService.ParameterChange += NavigationParameterService_ParameterChange;
+        ListViewDisplayService.SelectionChanged += ListViewDisplayService_SelectionChanged;
         SelectorBarService.SelectionChanged += SelectorBarService_SelectionChanged;
         FileDropService.Drop += FileDropService_Drop;
+    }
+
+    private void ListViewDisplayService_SelectionChanged(object sender, SelectionChangedEventArgs e)
+    {
+        if (e.AddedItems.FirstOrDefault() is BlueprintPropertyViewData blueprintPropertyViewData)
+        {
+            SelectedCubeBlock?.Children.Clear();
+            SelectedCubeBlock = blueprintPropertyViewData;
+            LoadCubeProperties();
+        }
     }
 
     private async void FileDropService_Drop(object? sender, (string, DragEventArgs) e)
@@ -63,12 +78,12 @@ public partial class BlueprintEditSubPageViewModel : ViewModelBase
                 tabViewTitleService?.SetTabViewTitle(blueprintModel.ViewData.Name, blueprintModel);
             await SetDefinitions(blueprintModel.BlueprintDefinitions);
         }
-        loadingService?.StopLoading<BlueprintEditSubPage>();
+         loadingService?.StopLoading<BlueprintEditSubPage>();
     }
 
     partial void OnSearchTextChanged(string value) => SearchCubeGrids(value);
 
-    private async void SelectorBarService_SelectionChanged(SelectorBar sender, SelectorBarSelectionChangedEventArgs args) => await LoadByName(sender.SelectedItem.Text);
+    private async void SelectorBarService_SelectionChanged(SelectorBar sender, SelectorBarSelectionChangedEventArgs args) => await LoadByName(sender.SelectedItem.Tag as string ?? "Grids");
 
     private async Task SetDefinitions(MyObjectBuilder_Definitions? definitions)
     {
@@ -80,8 +95,9 @@ public partial class BlueprintEditSubPageViewModel : ViewModelBase
                 currentShipBlueprint = currentDefinitions.ShipBlueprints[0];
                 IsContentGridVisible = true;
                 IsInitialGridVisible = false;
-                await Task.Delay(200);
-                await LoadByName("Grids");
+                await Task.Delay(100);
+                if (!isLoaded)
+                    await LoadByName("Grids");
             }
             else
             {
@@ -117,6 +133,7 @@ public partial class BlueprintEditSubPageViewModel : ViewModelBase
     private async Task LoadByName(string caseName)
     {
         if (currentShipBlueprint is null) return;
+        isLoaded = true;
         loadingService?.StartLoading<BlueprintEditSubPage>("Loading definitions...");
         await Task.Delay(50);
         switch (caseName)
@@ -125,6 +142,11 @@ public partial class BlueprintEditSubPageViewModel : ViewModelBase
                 IsCubeGridListVisible = true;
                 IsShipBlueprintPropertyVisible = false;
                 LoadCubeGrids();
+                break;
+            case "Groups":
+                IsCubeGridListVisible = true;
+                IsShipBlueprintPropertyVisible = false;
+                LoadCubeGroups();
                 break;
             case "Properties":
                 IsCubeGridListVisible = false;
@@ -139,7 +161,7 @@ public partial class BlueprintEditSubPageViewModel : ViewModelBase
 
     private void LoadBlueprintPropertyDefinitions()
     {
-        TreeViewService.Clear();
+        BlueprintTreeViewService.Clear();
         var parent = new BlueprintPropertyViewData
         {
             Value = currentShipBlueprint,
@@ -149,7 +171,7 @@ public partial class BlueprintEditSubPageViewModel : ViewModelBase
         SpaceEngineersHelper.AnalyzeBlueprint(parent);
         foreach (var child in parent.Children)
         {
-            TreeViewService.Add(new TreeViewNode
+            BlueprintTreeViewService.Add(new()
             {
                 Content = child,
                 HasUnrealizedChildren = !child.IsBasicType
@@ -180,7 +202,7 @@ public partial class BlueprintEditSubPageViewModel : ViewModelBase
         }).Where(grid => grid is not null).ForEach(BlueprintCubeGridList.Add!);
     }
 
-    private void LoadCubeGrids()
+    private async void LoadCubeGrids()
     {
         BlueprintCubeGridList.Clear();
         currentShipBlueprint!.CubeGrids.Select(grid =>
@@ -198,6 +220,60 @@ public partial class BlueprintEditSubPageViewModel : ViewModelBase
                 GroupName = grid.DisplayName
             };
         }).ForEach(BlueprintCubeGridList.Add);
+        await Helper.Wait(() => ListViewDisplayService.IsPageLoaded);
+        ListViewDisplayService.Select(BlueprintCubeGridList.FirstOrDefault()?.FirstOrDefault());
+    }
+
+    private async void LoadCubeGroups()
+    {
+        BlueprintCubeGridList.Clear();
+        var blueprintCubeGridList = new List<BlueprintGroupList>();
+        currentShipBlueprint!.CubeGrids.ForEach(grid =>
+        grid.BlockGroups.ForEach(group =>
+        {
+            var type = grid.CubeBlocks.GetType();
+            var targetCubeBlocks = new List<MyObjectBuilder_CubeBlock>();
+            group.Blocks.ForEach(position => grid.CubeBlocks.ForEach(cube =>
+            {
+                if (cube.Min.X == position.X && cube.Min.Y == position.Y && cube.Min.Z == position.Z)
+                    targetCubeBlocks.Add(cube);
+            }));
+            var groupData = new BlueprintPropertyViewData
+            {
+                Name = type.Name,
+                Type = type,
+                Value = targetCubeBlocks
+            };
+            SpaceEngineersHelper.AnalyzeBlueprint(groupData);
+            if (blueprintCubeGridList.FirstOrDefault(g => g.GroupName == group.Name) is BlueprintGroupList blueprintGroupList)
+            {
+                blueprintGroupList.AddRange(groupData.Children);
+            }
+            else
+            {
+                blueprintCubeGridList.Add(new BlueprintGroupList(groupData.Children)
+                {
+                    GroupName = group.Name
+                });
+            }
+        }));
+        blueprintCubeGridList.ForEach(BlueprintCubeGridList.Add);
+        await Helper.Wait(() => ListViewDisplayService.IsPageLoaded);
+        ListViewDisplayService.Select(BlueprintCubeGridList.FirstOrDefault()?.FirstOrDefault());
+    }
+
+    private void LoadCubeProperties()
+    {
+        CubeBlockTreeViewService.Clear();
+        if (SelectedCubeBlock is not null)
+        {
+            SpaceEngineersHelper.AnalyzeBlueprint(SelectedCubeBlock);
+            SelectedCubeBlock.Children.ForEach(child => CubeBlockTreeViewService.Add(new()
+            {
+                Content = child,
+                HasUnrealizedChildren = !child.IsBasicType
+            }));
+        }
     }
 
     [RelayCommand]

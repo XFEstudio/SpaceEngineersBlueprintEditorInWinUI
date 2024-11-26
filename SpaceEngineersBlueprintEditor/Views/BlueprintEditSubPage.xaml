@@ -5,14 +5,12 @@
     xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
     xmlns:local="using:SpaceEngineersBlueprintEditor.Views"
     xmlns:model="using:SpaceEngineersBlueprintEditor.Model"
-    xmlns:converter="using:SpaceEngineersBlueprintEditor.Utilities.Converter"
     xmlns:selector="using:SpaceEngineersBlueprintEditor.Utilities.Selector"
     xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
     xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
     mc:Ignorable="d"
     Background="{ThemeResource ApplicationPageBackgroundThemeBrush}">
     <Page.Resources>
-        <converter:BaseTypeConverter x:Key="BaseTypeConverter"/>
         <CollectionViewSource x:Name="CubeGridViewSource" IsSourceGrouped="True" Source="{x:Bind ViewModel.BlueprintCubeGridList, Mode=OneWay}"/>
         <DataTemplate x:Key="TreeViewItemDataTemplate" x:DataType="TreeViewNode">
             <Grid Padding="0,0,15,0" Height="44">
@@ -22,9 +20,9 @@
                 </Grid.ColumnDefinitions>
                 <StackPanel Orientation="Horizontal" Spacing="20">
                     <FontIcon VerticalAlignment="Center" Glyph="&#xEA39;"/>
-                    <TextBlock VerticalAlignment="Center" Text="{x:Bind ((model:BlueprintPropertyViewData)Content).Name, Mode=OneWay}"/>
+                    <TextBlock ToolTipService.ToolTip="{x:Bind ((model:BlueprintPropertyViewData)Content).NameTypeString}" VerticalAlignment="Center" Text="{x:Bind ((model:BlueprintPropertyViewData)Content).Name}"/>
                 </StackPanel>
-                <TextBlock VerticalAlignment="Center" HorizontalAlignment="Right" TextTrimming="CharacterEllipsis" Text="{x:Bind ((model:BlueprintPropertyViewData)Content).ValueInString, Mode=OneWay}" Grid.Column="1" Foreground="{ThemeResource AccentTextFillColorPrimaryBrush}"/>
+                <TextBlock ToolTipService.ToolTip="{x:Bind ((model:BlueprintPropertyViewData)Content).ValueString}" VerticalAlignment="Center" HorizontalAlignment="Right" TextTrimming="CharacterEllipsis" Text="{x:Bind ((model:BlueprintPropertyViewData)Content).ValueString}" Grid.Column="1" Foreground="{ThemeResource AccentTextFillColorPrimaryBrush}"/>
             </Grid>
         </DataTemplate>
         <DataTemplate x:Key="EnumerableItemDataTemplate" x:DataType="TreeViewNode">
@@ -35,90 +33,34 @@
                 </Grid.ColumnDefinitions>
                 <StackPanel Orientation="Horizontal" Spacing="20">
                     <FontIcon VerticalAlignment="Center" Glyph="&#xE8FD;"/>
-                    <TextBlock VerticalAlignment="Center" Text="{x:Bind ((model:BlueprintPropertyViewData)Content).Name, Mode=OneWay}"/>
+                    <TextBlock ToolTipService.ToolTip="{x:Bind ((model:BlueprintPropertyViewData)Content).NameTypeString}" VerticalAlignment="Center" Text="{x:Bind ((model:BlueprintPropertyViewData)Content).Name}"/>
                 </StackPanel>
-                <TextBlock VerticalAlignment="Center" HorizontalAlignment="Right" Text="{x:Bind ((model:BlueprintPropertyViewData)Content).CustomData, Mode=OneWay}" Grid.Column="1" Foreground="{ThemeResource AccentTextFillColorPrimaryBrush}"/>
+                <TextBlock ToolTipService.ToolTip="{x:Bind ((model:BlueprintPropertyViewData)Content).CustomData}" VerticalAlignment="Center" TextTrimming="CharacterEllipsis" HorizontalAlignment="Right" Text="{x:Bind ((model:BlueprintPropertyViewData)Content).CustomData}" Grid.Column="1" Foreground="{ThemeResource AccentTextFillColorPrimaryBrush}"/>
             </Grid>
         </DataTemplate>
         <DataTemplate x:Key="GridItemDataTemplate" x:DataType="TreeViewNode">
             <StackPanel Padding="0,0,15,0" Orientation="Horizontal" Height="44" Spacing="20">
                 <FontIcon VerticalAlignment="Center" Glyph="&#xF0E2;"/>
-                <TextBlock VerticalAlignment="Center" Text="{x:Bind ((model:BlueprintPropertyViewData)Content).CustomData, Mode=OneWay}"/>
+                <TextBlock ToolTipService.ToolTip="{x:Bind ((model:BlueprintPropertyViewData)Content).CustomData}" TextTrimming="CharacterEllipsis" VerticalAlignment="Center" Text="{x:Bind ((model:BlueprintPropertyViewData)Content).CustomData}"/>
             </StackPanel>
         </DataTemplate>
         <DataTemplate x:Key="ObjectItemDataTemplate" x:DataType="TreeViewNode">
             <StackPanel Padding="0,0,15,0" Height="44" Orientation="Horizontal" Spacing="20">
                 <FontIcon VerticalAlignment="Center" Glyph="&#xF158;"/>
-                <TextBlock VerticalAlignment="Center" Text="{x:Bind ((model:BlueprintPropertyViewData)Content).Name, Mode=OneWay}"/>
+                <TextBlock ToolTipService.ToolTip="{x:Bind ((model:BlueprintPropertyViewData)Content).NameTypeString}" VerticalAlignment="Center" TextTrimming="CharacterEllipsis" Text="{x:Bind ((model:BlueprintPropertyViewData)Content).Name}"/>
             </StackPanel>
         </DataTemplate>
-        <DataTemplate x:Key="StringValueItemDataTemplate" x:DataType="TreeViewNode">
+        <DataTemplate x:Key="ValueItemDataTemplate" x:DataType="TreeViewNode">
             <Grid Padding="0,0,15,0" Height="44">
                 <Grid.ColumnDefinitions>
                     <ColumnDefinition/>
-                    <ColumnDefinition Width="120"/>
+                    <ColumnDefinition MaxWidth="120"/>
                 </Grid.ColumnDefinitions>
                 <StackPanel Orientation="Horizontal" Spacing="20">
                     <FontIcon VerticalAlignment="Center" Glyph="&#xE90F;"/>
-                    <TextBlock VerticalAlignment="Center" Text="{x:Bind ((model:BlueprintPropertyViewData)Content).Name, Mode=OneWay}"/>
+                    <TextBlock ToolTipService.ToolTip="{x:Bind ((model:BlueprintPropertyViewData)Content).NameTypeString}" TextTrimming="CharacterEllipsis" VerticalAlignment="Center" Text="{x:Bind ((model:BlueprintPropertyViewData)Content).Name}"/>
                 </StackPanel>
-                <TextBox VerticalAlignment="Center" HorizontalAlignment="Stretch" Text="{x:Bind ((model:BlueprintPropertyViewData)Content).Value, Converter={StaticResource BaseTypeConverter}, Mode=TwoWay}" Grid.Column="1"/>
-            </Grid>
-        </DataTemplate>
-        <DataTemplate x:Key="NumberValueItemDataTemplate" x:DataType="TreeViewNode">
-            <Grid Padding="0,0,15,0" Height="44">
-                <Grid.ColumnDefinitions>
-                    <ColumnDefinition/>
-                    <ColumnDefinition Width="120"/>
-                </Grid.ColumnDefinitions>
-                <StackPanel Orientation="Horizontal" Spacing="20">
-                    <FontIcon VerticalAlignment="Center" Glyph="&#xE90F;"/>
-                    <TextBlock VerticalAlignment="Center" Text="{x:Bind ((model:BlueprintPropertyViewData)Content).Name, Mode=OneWay}"/>
-                </StackPanel>
-                <NumberBox VerticalAlignment="Center" HorizontalAlignment="Stretch" DataContext="{x:Bind Content}" SpinButtonPlacementMode="Compact" Value="{x:Bind ((model:BlueprintPropertyViewData)Content).Value, Converter={StaticResource BaseTypeConverter}}" ValueChanged="NumberBox_ValueChanged" Grid.Column="1"/>
-            </Grid>
-        </DataTemplate>
-        <DataTemplate x:Key="EnumValueItemDataTemplate" x:DataType="TreeViewNode">
-            <Grid Padding="0,0,15,0" Height="44">
-                <Grid.ColumnDefinitions>
-                    <ColumnDefinition/>
-                    <ColumnDefinition Width="120"/>
-                </Grid.ColumnDefinitions>
-                <StackPanel Orientation="Horizontal" Spacing="20">
-                    <FontIcon VerticalAlignment="Center" Glyph="&#xE90F;"/>
-                    <TextBlock VerticalAlignment="Center" Text="{x:Bind ((model:BlueprintPropertyViewData)Content).Name, Mode=OneWay}"/>
-                </StackPanel>
-                <ComboBox VerticalAlignment="Center" HorizontalAlignment="Stretch" DataContext="{x:Bind Content}" SelectedItem="{x:Bind ((model:BlueprintPropertyViewData)Content).Value.ToString()}" SelectionChanged="ComboBox_SelectionChanged" ItemsSource="{x:Bind ((model:BlueprintPropertyViewData)Content).EnumValues, Mode=OneWay}" Grid.Column="1"/>
-            </Grid>
-        </DataTemplate>
-        <DataTemplate x:Key="MultiEnumValueItemDataTemplate" x:DataType="TreeViewNode">
-            <Grid Padding="0,0,15,0" Height="44">
-                <Grid.ColumnDefinitions>
-                    <ColumnDefinition/>
-                    <ColumnDefinition Width="120"/>
-                </Grid.ColumnDefinitions>
-                <StackPanel Orientation="Horizontal" Spacing="20">
-                    <FontIcon VerticalAlignment="Center" Glyph="&#xE90F;"/>
-                    <TextBlock VerticalAlignment="Center" Text="{x:Bind ((model:BlueprintPropertyViewData)Content).Name, Mode=OneWay}"/>
-                </StackPanel>
-                <SplitButton VerticalAlignment="Center" HorizontalAlignment="Stretch" Grid.Column="1" Content="{x:Bind ((model:BlueprintPropertyViewData)Content).Value.ToString(), Mode=OneWay}">
-                    <SplitButton.Flyout>
-                        <Flyout Content="{x:Bind (StackPanel)((model:BlueprintPropertyViewData)Content).CustomData, Mode=OneWay}" Closed="Flyout_Closed"/>
-                    </SplitButton.Flyout>
-                </SplitButton>
-            </Grid>
-        </DataTemplate>
-        <DataTemplate x:Key="BooleanValueItemDataTemplate" x:DataType="TreeViewNode">
-            <Grid Padding="0,0,15,0" Height="44">
-                <Grid.ColumnDefinitions>
-                    <ColumnDefinition/>
-                    <ColumnDefinition Width="120"/>
-                </Grid.ColumnDefinitions>
-                <StackPanel Orientation="Horizontal" Spacing="20">
-                    <FontIcon VerticalAlignment="Center" Glyph="&#xE90F;"/>
-                    <TextBlock VerticalAlignment="Center" Text="{x:Bind ((model:BlueprintPropertyViewData)Content).Name, Mode=OneWay}"/>
-                </StackPanel>
-                <ComboBox VerticalAlignment="Center" HorizontalAlignment="Stretch" DataContext="{x:Bind Content}" SelectedItem="{x:Bind ((model:BlueprintPropertyViewData)Content).Value.ToString()}" ItemsSource="{x:Bind ((model:BlueprintPropertyViewData)Content).EnumValues}" SelectionChanged="ComboBox_SelectionChanged" Grid.Column="1"/>
+                <ContentPresenter Grid.Column="1" VerticalAlignment="Center" HorizontalAlignment="Stretch" Content="{x:Bind ((model:BlueprintPropertyViewData)Content).BestControl}"/>
             </Grid>
         </DataTemplate>
         <DataTemplate x:Key="CubeItemDataTemplate" x:DataType="TreeViewNode">
@@ -129,12 +71,12 @@
                 </Grid.ColumnDefinitions>
                 <StackPanel Orientation="Horizontal" Spacing="20">
                     <Image Source="{x:Bind ((model:BlueprintPropertyViewData)Content).CubeImage}" Stretch="Uniform"/>
-                    <TextBlock VerticalAlignment="Center" Text="{x:Bind ((model:BlueprintPropertyViewData)Content).Name, Mode=OneWay}"/>
+                    <TextBlock ToolTipService.ToolTip="{x:Bind ((model:BlueprintPropertyViewData)Content).NameTypeString, Mode=OneWay}" VerticalAlignment="Center" Text="{x:Bind ((model:BlueprintPropertyViewData)Content).Name, Mode=OneWay}"/>
                 </StackPanel>
-                <TextBlock VerticalAlignment="Center" HorizontalAlignment="Right" TextTrimming="CharacterEllipsis" Text="{x:Bind ((model:BlueprintPropertyViewData)Content).CustomData, Mode=OneWay}" Grid.Column="1" Foreground="{ThemeResource AccentTextFillColorPrimaryBrush}"/>
+                <TextBlock ToolTipService.ToolTip="{x:Bind ((model:BlueprintPropertyViewData)Content).CustomData, Mode=OneWay}" VerticalAlignment="Center" HorizontalAlignment="Right" TextTrimming="CharacterEllipsis" Text="{x:Bind ((model:BlueprintPropertyViewData)Content).CustomData, Mode=OneWay}" Grid.Column="1" Foreground="{ThemeResource AccentTextFillColorPrimaryBrush}"/>
             </Grid>
         </DataTemplate>
-        <selector:ShipBlueprintItemTemplateSelector x:Key="ShipBlueprintItemTemplateSelector" DefaultTemplate="{StaticResource TreeViewItemDataTemplate}" CubeItemTemplate="{StaticResource CubeItemDataTemplate}" GridItemTemplate="{StaticResource GridItemDataTemplate}" ObjectItemTemplate="{StaticResource ObjectItemDataTemplate}" EnumerableTemplate="{StaticResource EnumerableItemDataTemplate}" StringValueItemTemplate="{StaticResource StringValueItemDataTemplate}" NumberValueItemTemplate="{StaticResource NumberValueItemDataTemplate}" EnumValueItemTemplate="{StaticResource EnumValueItemDataTemplate}" MultiEnumValueItemTemplate="{StaticResource MultiEnumValueItemDataTemplate}" BooleanValueItemTemplate="{StaticResource BooleanValueItemDataTemplate}"/>
+        <selector:ShipBlueprintItemTemplateSelector x:Key="ShipBlueprintItemTemplateSelector" DefaultTemplate="{StaticResource TreeViewItemDataTemplate}" CubeItemTemplate="{StaticResource CubeItemDataTemplate}" GridItemTemplate="{StaticResource GridItemDataTemplate}" ObjectItemTemplate="{StaticResource ObjectItemDataTemplate}" EnumerableTemplate="{StaticResource EnumerableItemDataTemplate}" ValueItemTemplate="{StaticResource ValueItemDataTemplate}"/>
     </Page.Resources>
 
     <Grid Background="{ThemeResource SolidBackgroundFillColorBaseBrush}">
@@ -173,8 +115,9 @@
                     <RowDefinition/>
                 </Grid.RowDefinitions>
                 <SelectorBar x:Name="selectorBar">
-                    <SelectorBarItem Text="Grids" IsSelected="True"/>
-                    <SelectorBarItem Text="Properties"/>
+                    <SelectorBarItem Text="Grids" Tag="Grids" IsSelected="True"/>
+                    <SelectorBarItem Text="Groups (Experimentation)" Tag="Groups"/>
+                    <SelectorBarItem Text="Properties" Tag="Properties"/>
                 </SelectorBar>
                 <Grid Grid.Row="1">
                     <Grid RowSpacing="10" Visibility="{x:Bind ViewModel.IsCubeGridListVisible, Mode=OneWay}">
@@ -187,7 +130,7 @@
                             <RowDefinition/>
                         </Grid.RowDefinitions>
                         <AutoSuggestBox Margin="5,0,0,0" Width="250" Text="{x:Bind ViewModel.SearchText, Mode=TwoWay}" PlaceholderText="Search cube blocks..." QueryIcon="Find" HorizontalAlignment="Left"/>
-                        <ListView Grid.Row="1" ItemsSource="{x:Bind CubeGridViewSource.View, Mode=OneWay}" SelectedItem="{x:Bind ViewModel.SelectedCubeBlock, Mode=TwoWay}">
+                        <ListView x:Name="cubeGridsListView" Grid.Row="1" ItemsSource="{x:Bind CubeGridViewSource.View, Mode=OneWay}" SelectedItem="{x:Bind ViewModel.SelectedCubeBlock, Mode=TwoWay}">
                             <ListView.ItemsPanel>
                                 <ItemsPanelTemplate>
                                     <ItemsStackPanel AreStickyGroupHeadersEnabled="True"/>
@@ -221,34 +164,27 @@
                                 </DataTemplate>
                             </ListView.ItemTemplate>
                         </ListView>
-                        <!--<Grid Grid.Column="1" Margin="0,0,0,24" Background="{ThemeResource CardBackgroundFillColorDefaultBrush}" BorderBrush="{ThemeResource CardStrokeColorDefaultBrush}" CornerRadius="8">
-                            <Grid RowDefinitions="Auto, Auto, *">
+                        <Grid Grid.Column="1" Grid.RowSpan="2" Margin="0,0,0,24" Background="{ThemeResource CardBackgroundFillColorDefaultBrush}" BorderBrush="{ThemeResource CardStrokeColorDefaultBrush}" CornerRadius="8">
+                            <Grid>
+                                <Grid.RowDefinitions>
+                                    <RowDefinition Height="Auto"/>
+                                    <RowDefinition/>
+                                </Grid.RowDefinitions>
                                 <StackPanel Padding="16" Spacing="20">
-                                    <TextBlock Text="{x:Bind ViewModel.SelectedDefinitionViewData.DefinitionBase.DisplayNameText, Mode=OneWay}" HorizontalAlignment="Left" Style="{ThemeResource SubtitleTextBlockStyle}"/>
-                                    <Image Source="{x:Bind ViewModel.SelectedDefinitionViewData.ImageSource, Mode=OneWay}" HorizontalAlignment="Left" Width="128" Height="128"/>
-                                    <TextBlock Text="{x:Bind ViewModel.SelectedDefinitionViewData.DefinitionBase.DescriptionText, Mode=OneWay}" HorizontalAlignment="Left" Style="{ThemeResource CaptionTextBlockStyle}"/>
+                                    <StackPanel HorizontalAlignment="Left" Orientation="Horizontal" Spacing="10">
+                                        <TextBlock Text="{x:Bind ViewModel.SelectedCubeBlock.Name, Mode=OneWay}" Style="{ThemeResource SubtitleTextBlockStyle}" VerticalAlignment="Center"/>
+                                        <TextBlock Text="{x:Bind ViewModel.SelectedCubeBlock.CustomData.ToString(), Mode=OneWay}" Style="{ThemeResource CaptionTextBlockStyle}" VerticalAlignment="Center" Foreground="{ThemeResource AccentTextFillColorPrimaryBrush}"/>
+                                    </StackPanel>
+                                    <Image Source="{x:Bind ViewModel.SelectedCubeBlock.CubeImage, Mode=OneWay}" HorizontalAlignment="Left" Width="128" Height="128"/>
                                 </StackPanel>
-                                <AutoSuggestBox Margin="5,10,5,0" Grid.Row="1" HorizontalAlignment="Stretch" PlaceholderText="Search properties..." QueryIcon="Find" Text="{x:Bind ViewModel.PropertiesSearchText, Mode=TwoWay}"/>
                                 <ScrollView Padding="5" Grid.Row="2">
-                                    <ListView ItemsSource="{x:Bind ViewModel.PropertiesInfo}">
-                                        <ListView.ItemTemplate>
-                                            <DataTemplate x:DataType="model:PropertyViewData">
-                                                <ListViewItem>
-                                                    <Grid ColumnDefinitions="*, *" ColumnSpacing="20">
-                                                        <TextBlock ToolTipService.ToolTip="{x:Bind Value}" Grid.Column="1" Text="{x:Bind Value}" Foreground="{ThemeResource AccentTextFillColorPrimaryBrush}" HorizontalAlignment="Right" Visibility="{x:Bind IsValueType}" TextTrimming="CharacterEllipsis"/>
-                                                        <TextBlock ToolTipService.ToolTip="{x:Bind Value}" Grid.Column="1" Text="{x:Bind Value}" HorizontalAlignment="Right" Visibility="{x:Bind IsNotValueType}" TextTrimming="CharacterEllipsis"/>
-                                                        <TextBlock ToolTipService.ToolTip="{x:Bind PropertyName}" Text="{x:Bind PropertyName}" HorizontalAlignment="Left" TextTrimming="CharacterEllipsis"/>
-                                                    </Grid>
-                                                </ListViewItem>
-                                            </DataTemplate>
-                                        </ListView.ItemTemplate>
-                                    </ListView>
+                                    <TreeView x:Name="cubePropertyTreeView" SelectedItem="{x:Bind ViewModel.SelectedTreeViewNode, Mode=TwoWay}" ItemTemplateSelector="{StaticResource ShipBlueprintItemTemplateSelector}" Expanding="TreeView_Expanding" Collapsed="TreeView_Collapsed" CanDrag="False" CanDragItems="False"/>
                                 </ScrollView>
                             </Grid>
-                        </Grid>-->
+                        </Grid>
                     </Grid>
                     <Grid Visibility="{x:Bind ViewModel.IsShipBlueprintPropertyVisible, Mode=OneWay}">
-                        <TreeView x:Name="propertyTreeView" SelectedItem="{x:Bind ViewModel.SelectedTreeViewNode, Mode=TwoWay}" ItemTemplateSelector="{StaticResource ShipBlueprintItemTemplateSelector}" Expanding="TreeView_Expanding" Collapsed="TreeView_Collapsed" CanDrag="False" CanDragItems="False"/>
+                        <TreeView x:Name="blueprintPropertyTreeView" SelectedItem="{x:Bind ViewModel.SelectedTreeViewNode, Mode=TwoWay}" ItemTemplateSelector="{StaticResource ShipBlueprintItemTemplateSelector}" Expanding="TreeView_Expanding" Collapsed="TreeView_Collapsed" CanDrag="False" CanDragItems="False"/>
                     </Grid>
                 </Grid>
             </Grid>

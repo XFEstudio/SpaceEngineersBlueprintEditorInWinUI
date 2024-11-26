@@ -30,12 +30,12 @@ public partial class GameDefinitionsViewPageViewModel : ViewModelBase
     public ObservableCollection<DefinitionViewData> Definitions { get; } = [];
     public ObservableCollection<PropertyViewData> PropertiesInfo { get; } = [];
     public INavigationParameterService<string> NavigationParameterService { get; } = new NavigationParameterService<string>();
-    public IDefinitionPropertiesDisplayService<DefinitionViewData> DefinitionPropertiesDisplayService { get; } = new DefinitionPropertiesDisplayService<DefinitionViewData>();
+    public IItemsViewDisplayService<DefinitionViewData> ItemsViewDisplayService { get; } = new ItemsViewDisplayService<DefinitionViewData>();
 
     public GameDefinitionsViewPageViewModel()
     {
         NavigationParameterService.ParameterChange += NavigationParameterService_ParameterChange;
-        DefinitionPropertiesDisplayService.SelectionChanged += DefinitionPropertiesDisplayService_SelectionChanged;
+        ItemsViewDisplayService.SelectionChanged += DefinitionPropertiesDisplayService_SelectionChanged;
     }
 
     private void DefinitionPropertiesDisplayService_SelectionChanged(ItemsView sender, ItemsViewSelectionChangedEventArgs args)
@@ -68,13 +68,13 @@ public partial class GameDefinitionsViewPageViewModel : ViewModelBase
     {
         if (e is null || NavigationParameterService.SameAsLast)
             return;
-        loadingService?.StartLoading<GameDefinitionsViewPage>("Loading blueprint...");
+        loadingService?.StartLoading<GameDefinitionsViewPage>($"Loading {e.ToLower()} definitions...");
         currentParameter = e;
-        await Helper.Wait(() => Initializer.IsDefinitionsLoadComplete && DefinitionPropertiesDisplayService.IsPageLoaded);
+        await Helper.Wait(() => Initializer.IsDefinitionsLoadComplete && ItemsViewDisplayService.IsPageLoaded);
         LoadDefinitions(GetCurrentDefinitions(currentParameter));
         IsUIVisible = true;
         loadingService?.StopLoading<GameDefinitionsViewPage>();
-        DefinitionPropertiesDisplayService.Select(Definitions.First());
+        ItemsViewDisplayService.Select(Definitions.First());
     }
 
     private void LoadDefinitions(IEnumerable<MyDefinitionBase> myDefinitions)

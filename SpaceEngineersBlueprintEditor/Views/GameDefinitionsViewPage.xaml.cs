@@ -16,7 +16,7 @@ public sealed partial class GameDefinitionsViewPage : Page
     {
         PageManager.AddOrUpdateCurrentPage(Current = this);
         this.InitializeComponent();
-        ViewModel.DefinitionPropertiesDisplayService.Initialize(this, definitionsItemView);
+        ViewModel.ItemsViewDisplayService.Initialize(this, definitionsItemView);
         ViewModel.NavigationParameterService.Initialize(this);
     }
 

@@ -222,12 +222,19 @@ public static class SpaceEngineersHelper
             }
             blueprintPropertyViewData.CustomData = stackPanel;
         }
-        else if (value is not null && value.GetType().IsAssignableTo(typeof(IEnumerable)))
+        else if (blueprintPropertyViewData.Type is not null && blueprintPropertyViewData.Type.IsAssignableTo(typeof(IEnumerable)))
         {
-            var count = 0;
-            foreach (var item in (IEnumerable)value)
-                count++;
-            blueprintPropertyViewData.CustomData = $"数量：{count}";
+            if (value is null)
+            {
+                blueprintPropertyViewData.CustomData = "空列表";
+            }
+            else
+            {
+                var count = 0;
+                foreach (var item in (IEnumerable)value)
+                    count++;
+                blueprintPropertyViewData.CustomData = $"数量：{count}";
+            }
         }
         else
         {

@@ -1,5 +1,6 @@
 ﻿using CommunityToolkit.Mvvm.ComponentModel;
 using CommunityToolkit.Mvvm.Input;
+using Newtonsoft.Json.Linq;
 using SpaceEngineersBlueprintEditor.Implements.Services;
 using SpaceEngineersBlueprintEditor.Interface.Services;
 using SpaceEngineersBlueprintEditor.Model;
@@ -7,6 +8,7 @@ using SpaceEngineersBlueprintEditor.Utilities;
 using SpaceEngineersBlueprintEditor.Views;
 using System.Collections.ObjectModel;
 using System.Diagnostics;
+using XFEExtension.NetCore.StringExtension;
 
 namespace SpaceEngineersBlueprintEditor.ViewModels;
 
@@ -57,7 +59,10 @@ public partial class BlueprintsViewPageViewModel : ViewModelBase
             currentParameter = stringParameter;
             await BlueprintsManager.LoadBlueprintsAsync();
             BlueprintInfoViewDataList.Clear();
-            LoadCurrentBlueprints();
+            if (SearchText.IsNullOrEmpty())
+                LoadCurrentBlueprints();
+            else
+                LoadBlueprints(SearchBlueprints(currentParameter, SearchText).ToList());
         }
         else if (e is BlueprintInfoViewData blueprintInfoViewData && Path.GetDirectoryName(blueprintInfoViewData.FilePath) is string path)
         {

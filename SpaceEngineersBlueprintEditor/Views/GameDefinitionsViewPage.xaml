@@ -8,7 +8,7 @@
     xmlns:model="using:SpaceEngineersBlueprintEditor.Model"
     mc:Ignorable="d">
 
-    <Grid ColumnDefinitions="8*, 3*" RowSpacing="20" Visibility="{x:Bind ViewModel.IsUIVisible, Mode=OneWay}">
+    <Grid ColumnDefinitions="8*, 3*" Visibility="{x:Bind ViewModel.IsUIVisible, Mode=OneWay}">
         <ItemsView x:Name="definitionsItemView" Canvas.ZIndex="0" Padding="4" ItemsSource="{x:Bind ViewModel.Definitions}" ItemTemplate="{StaticResource ComponentDataTemplate}">
             <ItemsView.Layout>
                 <UniformGridLayout Orientation="Horizontal" />
