@@ -217,6 +217,18 @@
     <value>Convert complete</value>
     <comment>转换完成</comment>
   </data>
+  <data name="RefreshComplete" xml:space="preserve">
+    <value>Refresh complete</value>
+    <comment>刷新完成</comment>
+  </data>
+  <data name="CopyToComplete" xml:space="preserve">
+    <value>Successful copy to</value>
+    <comment>已复制至</comment>
+  </data>
+  <data name="DeleteAtComplete" xml:space="preserve">
+    <value>Successful detele at</value>
+    <comment>已删除</comment>
+  </data>
   <data name="Complete" xml:space="preserve">
     <value>Complete</value>
     <comment>完成</comment>
@@ -588,6 +600,10 @@
   <data name="BlueprintViewPage_RefreshBlueprintsList.Text" xml:space="preserve">
     <value>Refresh list</value>
     <comment>刷新列表</comment>
+  </data>
+  <data name="BlueprintViewPage_EnsureToDelete" xml:space="preserve">
+    <value>Are you sure to delete</value>
+    <comment>你确定要删除</comment>
   </data>
   <data name="GameDefinitionsViewPage_AutoSuggestBox_Properties.PlaceholderText" xml:space="preserve">
     <value>Search properties...</value>

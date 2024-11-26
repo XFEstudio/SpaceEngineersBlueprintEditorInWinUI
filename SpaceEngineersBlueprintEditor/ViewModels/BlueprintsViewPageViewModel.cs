@@ -1,6 +1,5 @@
 ﻿using CommunityToolkit.Mvvm.ComponentModel;
 using CommunityToolkit.Mvvm.Input;
-using Newtonsoft.Json.Linq;
 using SpaceEngineersBlueprintEditor.Implements.Services;
 using SpaceEngineersBlueprintEditor.Interface.Services;
 using SpaceEngineersBlueprintEditor.Model;
@@ -67,7 +66,7 @@ public partial class BlueprintsViewPageViewModel : ViewModelBase
         else if (e is BlueprintInfoViewData blueprintInfoViewData && Path.GetDirectoryName(blueprintInfoViewData.FilePath) is string path)
         {
             currentBlueprintInfoViewData = blueprintInfoViewData;
-            DeleteEnsureText = $"Are you sure to delete {blueprintInfoViewData.Name}?";
+            DeleteEnsureText = $"{"BlueprintViewPage_EnsureToDelete".GetLocalized()} {blueprintInfoViewData.Name}?";
             CopyFolderText = Path.GetFileName(FileHelper.GetCopyDirectoryName(path)) ?? throw new NullReferenceException("Can't get the folder name");
         }
     }
@@ -80,7 +79,7 @@ public partial class BlueprintsViewPageViewModel : ViewModelBase
             LoadCurrentBlueprints();
         else
             OnSearchTextChanged(SearchText);
-        messageService?.ShowMessage("刷新成功", "完成", InfoBarSeverity.Success);
+        messageService?.ShowMessage("RefreshComplete".GetLocalized(), "Complete".GetLocalized(), InfoBarSeverity.Success);
     }
 
     [RelayCommand]
@@ -100,7 +99,7 @@ public partial class BlueprintsViewPageViewModel : ViewModelBase
         {
             var targetPath = $@"{Path.GetDirectoryName(path)}\{CopyFolderText}";
             FileHelper.CopyDirectory(path, targetPath);
-            messageService?.ShowMessage($"已复制至：{targetPath}", "完成", InfoBarSeverity.Success);
+            messageService?.ShowMessage($"{"CopyToComplete".GetLocalized()}: {targetPath}", "Complete".GetLocalized(), InfoBarSeverity.Success);
             BlueprintsViewPage.Current?.commandBarFlyout.Hide();
             await RefreshBlueprints();
         }
@@ -112,7 +111,7 @@ public partial class BlueprintsViewPageViewModel : ViewModelBase
         if (currentBlueprintInfoViewData is not null && Path.GetDirectoryName(currentBlueprintInfoViewData.FilePath) is string path)
         {
             Directory.Delete(path, true);
-            messageService?.ShowMessage($"已删除：{path}", "完成", InfoBarSeverity.Success);
+            messageService?.ShowMessage($"{"DeleteAtComplete".GetLocalized()}: {path}", "Complete".GetLocalized(), InfoBarSeverity.Success);
             BlueprintsViewPage.Current?.commandBarFlyout.Hide();
             await RefreshBlueprints();
         }
