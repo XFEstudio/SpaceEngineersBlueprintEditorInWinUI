@@ -30,7 +30,7 @@ public partial class SettingPageViewModel : ViewModelBase
         AppCachePath = AppPath.AppCache;
         if (System.Reflection.Assembly.GetEntryAssembly()?.GetName().Version is Version version)
         {
-            CurrentVersion = version.ToString();
+            CurrentVersion = version.ToString(3);
         }
         AppCacheSize = FileHelper.GetDirectorySize(new(AppPath.AppCache)).FileSize();
     }

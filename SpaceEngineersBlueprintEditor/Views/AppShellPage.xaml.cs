@@ -78,10 +78,10 @@ public sealed partial class AppShellPage : Page
 
     private async void Page_Loaded(object sender, RoutedEventArgs e)
     {
-        ViewModel.MessageService.ShowMessage("游戏定义集加载中...", "正在加载");
+        ViewModel.MessageService.ShowMessage("GameDefinitionsLoading".GetLocalized(), "Loading".GetLocalized());
         AppThemeHelper.ChangeTheme(SystemProfile.Theme);
         navigationView.PaneDisplayMode = SystemProfile.NavigationStyle;
-        SpaceEngineersHelper.LoadComplete += (sender, e) => ViewModel.MessageService?.ShowMessage("游戏集定义加载完成", "完成", InfoBarSeverity.Success); ;
+        SpaceEngineersHelper.LoadComplete += (sender, e) => ViewModel.MessageService?.ShowMessage("GameDefinitionsLoadingComplete".GetLocalized(), "Complete".GetLocalized(), InfoBarSeverity.Success); ;
         await SpaceEngineersHelper.LoadDefinitionViewDataListAsync();
     }
 

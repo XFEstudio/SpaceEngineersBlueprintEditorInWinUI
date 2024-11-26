@@ -33,7 +33,7 @@ public partial class App : Application
             }
             catch (Exception ex)
             {
-                GlobalServiceManager.GetService<IMessageService>()?.ShowMessage($"加载定义时发生错误：{ex.Message}", "未能加载定义", InfoBarSeverity.Error);
+                GlobalServiceManager.GetService<IMessageService>()?.ShowMessage($"{"Error_LoadingDefinitions".GetLocalized()}: {ex.Message}", "Error_LoadingDefinitions_Title".GetLocalized(), InfoBarSeverity.Error);
             }
         });
         UnhandledException += App_UnhandledException;
@@ -43,7 +43,7 @@ public partial class App : Application
     {
         if (GlobalServiceManager.GetService<IMessageService>() is IMessageService messageService)
         {
-            messageService.ShowMessage(e.Message, "错误", InfoBarSeverity.Error);
+            messageService.ShowMessage(e.Message, "Error".GetLocalized(), InfoBarSeverity.Error);
             e.Handled = true;
         }
     }

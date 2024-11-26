@@ -149,8 +149,64 @@
     <value>SpaceEngineersBlueprintEditor</value>
     <comment>太空工程师蓝图修改器</comment>
   </data>
+  <data name="GameDefinitionsLoading" xml:space="preserve">
+    <value>Loading game definitions...</value>
+    <comment>游戏定义集加载中...</comment>
+  </data>
+  <data name="GameDefinitionsLoadingComplete" xml:space="preserve">
+    <value>Game definitions load complete</value>
+    <comment>游戏定义集加载完成</comment>
+  </data>
+  <data name="LoadingBlueprint" xml:space="preserve">
+    <value>Loading blueprint</value>
+    <comment>加载蓝图中</comment>
+  </data>
+  <data name="CalculatingBlueprint" xml:space="preserve">
+    <value>Calculating blueprint</value>
+    <comment>计算蓝图中</comment>
+  </data>
+  <data name="BlueprintLoadComplete" xml:space="preserve">
+    <value>Blueprint load complete</value>
+    <comment>蓝图加载完成</comment>
+  </data>
+  <data name="Error_LoadingDefinitions" xml:space="preserve">
+    <value>An error occurred while loading the definitions</value>
+    <comment>加载定义时发生错误</comment>
+  </data>
+  <data name="Error_LoadingDefinitions_Title" xml:space="preserve">
+    <value>Can't load definitions</value>
+    <comment>未能加载定义</comment>
+  </data>
+  <data name="Error_CantLoadingBlueprint" xml:space="preserve">
+    <value>Can't load definitions</value>
+    <comment>未能加载蓝图</comment>
+  </data>
+  <data name="Warning_BlueprintContainsNoFile" xml:space="preserve">
+    <value>Blueprint doesn't have any file (bp.sbc)</value>
+    <comment>该蓝图不包含蓝图文件（bp.sbc）</comment>
+  </data>
+  <data name="Complete" xml:space="preserve">
+    <value>Complete</value>
+    <comment>完成</comment>
+  </data>
+  <data name="Warning" xml:space="preserve">
+    <value>Warning</value>
+    <comment>警告</comment>
+  </data>
+  <data name="Error" xml:space="preserve">
+    <value>Error</value>
+    <comment>错误</comment>
+  </data>
+  <data name="Loading" xml:space="preserve">
+    <value>Loading</value>
+    <comment>正在加载</comment>
+  </data>
+  <data name="None" xml:space="preserve">
+    <value>None</value>
+    <comment>无</comment>
+  </data>
   <data name="DragFileToEditorText" xml:space="preserve">
-    <value>Drag Blueprint Here</value>
+    <value>Drag blueprint here</value>
     <comment>拖动蓝图文件至此处</comment>
   </data>
   <data name="SettingPage_AppInfo_Author.Header" xml:space="preserve">
@@ -158,7 +214,7 @@
     <comment>作者</comment>
   </data>
   <data name="SettingPage_AppInfo_Contact.Header" xml:space="preserve">
-    <value>Contact Us</value>
+    <value>Contact us</value>
     <comment>联系我们</comment>
   </data>
   <data name="SettingPage_AppInfo_Expander.Description" xml:space="preserve">
@@ -166,11 +222,11 @@
     <comment>版权所有 © 2024 XFEstudio. All rights reserved.</comment>
   </data>
   <data name="SettingPage_AppInfo_Expander.Header" xml:space="preserve">
-    <value>SpaceEngineers Blueprint Editor</value>
+    <value>SpaceEngineers blueprint editor</value>
     <comment>太空工程师蓝图修改器</comment>
   </data>
   <data name="SettingPage_AppInfo_GithubProject.Header" xml:space="preserve">
-    <value>Github Repo</value>
+    <value>Github repo</value>
     <comment>Github仓库</comment>
   </data>
   <data name="SettingPage_AppInfo_Contact_Bilibili.Content" xml:space="preserve">
@@ -182,7 +238,7 @@
     <comment>Github</comment>
   </data>
   <data name="SettingPage_AppInfo_Contact_QQ.Content" xml:space="preserve">
-    <value>SpaceEnginners Group</value>
+    <value>SpaceEnginners group</value>
     <comment>太空工程师交流群</comment>
   </data>
   <data name="SettingPage_AppInfo_Contact_Twitter.Content" xml:space="preserve">
@@ -194,7 +250,7 @@
     <comment>油管</comment>
   </data>
   <data name="AppShell_AppTitle.Text" xml:space="preserve">
-    <value>SpaceEngineers Blueprint Editor</value>
+    <value>SpaceEngineers blueprint editor</value>
     <comment>太空工程师蓝图修改器</comment>
   </data>
   <data name="SettingPage_AppTheme.Header" xml:space="preserve">
@@ -322,8 +378,72 @@
     <comment>在编辑器中打开</comment>
   </data>
   <data name="BlueprintDetailPage_BlueprintBaseInfo.Text" xml:space="preserve">
-    <value>Blueprint's base info</value>
+    <value>Blueprint base info</value>
     <comment>蓝图基本信息</comment>
+  </data>
+  <data name="BlueprintDetailPage_BlueprintAuthor" xml:space="preserve">
+    <value>Author</value>
+    <comment>蓝图作者</comment>
+  </data>
+  <data name="BlueprintDetailPage_BlueprintSize" xml:space="preserve">
+    <value>File size</value>
+    <comment>蓝图大小</comment>
+  </data>
+  <data name="BlueprintDetailPage_BlueprintPath" xml:space="preserve">
+    <value>Blueprint path</value>
+    <comment>蓝图路径</comment>
+  </data>
+  <data name="BlueprintDetailPage_BlueprintDestructible" xml:space="preserve">
+    <value>Desturctible</value>
+    <comment>可被破坏</comment>
+  </data>
+  <data name="BlueprintDetailPage_BlueprintEditable" xml:space="preserve">
+    <value>Editable in game</value>
+    <comment>可在游戏内编辑</comment>
+  </data>
+  <data name="BlueprintDetailPage_BlueprintTotalGrids" xml:space="preserve">
+    <value>Total cube grids</value>
+    <comment>网格总数</comment>
+  </data>
+  <data name="BlueprintDetailPage_BlueprintTotalCubes" xml:space="preserve">
+    <value>Total cube blocks</value>
+    <comment>方块总数</comment>
+  </data>
+  <data name="BlueprintDetailPage_PartiallyDestructible" xml:space="preserve">
+    <value>Partially destructible</value>
+    <comment>部分可破坏</comment>
+  </data>
+  <data name="BlueprintDetailPage_OverallIndestructible" xml:space="preserve">
+    <value>Overall indestructible</value>
+    <comment>整体不可破坏</comment>
+  </data>
+  <data name="BlueprintDetailPage_Destructible" xml:space="preserve">
+    <value>Destructible</value>
+    <comment>可破坏</comment>
+  </data>
+  <data name="BlueprintDetailPage_PartiallyEditable" xml:space="preserve">
+    <value>Partially editable</value>
+    <comment>部分可编辑</comment>
+  </data>
+  <data name="BlueprintDetailPage_OverallNonEditable" xml:space="preserve">
+    <value>Overall non-editable</value>
+    <comment>整体不可编辑</comment>
+  </data>
+  <data name="BlueprintDetailPage_Editable" xml:space="preserve">
+    <value>Editable</value>
+    <comment>可编辑</comment>
+  </data>
+  <data name="BlueprintDetailPage_GridName" xml:space="preserve">
+    <value>Grid name</value>
+    <comment>网格名称</comment>
+  </data>
+  <data name="BlueprintDetailPage_CubeCount" xml:space="preserve">
+    <value>Cube counts</value>
+    <comment>方块数量</comment>
+  </data>
+  <data name="BlueprintDetailPage_CantFindGrid" xml:space="preserve">
+    <value>Can't find any grid</value>
+    <comment>未找到网格</comment>
   </data>
   <data name="BlueprintEditSubPage_File.Title" xml:space="preserve">
     <value>File</value>
