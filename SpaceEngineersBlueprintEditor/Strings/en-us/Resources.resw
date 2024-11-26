@@ -273,6 +273,30 @@
     <value>Definitions</value>
     <comment>定义集</comment>
   </data>
+  <data name="Confirm" xml:space="preserve">
+    <value>Confirm</value>
+    <comment>确认</comment>
+  </data>
+  <data name="Cancel" xml:space="preserve">
+    <value>Cancel</value>
+    <comment>取消</comment>
+  </data>
+  <data name="ChangePath_FromPath" xml:space="preserve">
+    <value>Change the path from</value>
+    <comment>将目录从</comment>
+  </data>
+  <data name="ChangePath_ToPath" xml:space="preserve">
+    <value>To</value>
+    <comment>更改为</comment>
+  </data>
+  <data name="ChangePath_Ensure" xml:space="preserve">
+    <value>Are you sure to change?</value>
+    <comment>是否更改？</comment>
+  </data>
+  <data name="ClearCache_Ensure" xml:space="preserve">
+    <value>Are you sure to clear all the cache files (Include loaded game definitions)?</value>
+    <comment>是否清除包括已加载的游戏定义集在内的缓存文件？</comment>
+  </data>
   <data name="DragFileToEditorText" xml:space="preserve">
     <value>Drag blueprint here</value>
     <comment>拖动蓝图文件至此处</comment>

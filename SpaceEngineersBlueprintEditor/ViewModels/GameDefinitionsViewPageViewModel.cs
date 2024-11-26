@@ -68,7 +68,7 @@ public partial class GameDefinitionsViewPageViewModel : ViewModelBase
     {
         if (e is null || NavigationParameterService.SameAsLast)
             return;
-        loadingService?.StartLoading<GameDefinitionsViewPage>($"{"Loading".GetLocalized()} {e.ToLower()} {"Definitions".GetLocalized()}...");
+        loadingService?.StartLoading<GameDefinitionsViewPage>($"{"Loading".GetLocalized()} {e.ToLower()} {"Definitions".GetLocalized().ToLower()}...");
         currentParameter = e;
         await Helper.Wait(() => Initializer.IsDefinitionsLoadComplete && ItemsViewDisplayService.IsPageLoaded);
         LoadDefinitions(GetCurrentDefinitions(currentParameter));

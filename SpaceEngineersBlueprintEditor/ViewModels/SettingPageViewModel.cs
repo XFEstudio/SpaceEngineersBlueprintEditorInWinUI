@@ -47,10 +47,10 @@ public partial class SettingPageViewModel : ViewModelBase
             {
                 DefaultButton = ContentDialogButton.Primary,
                 IsPrimaryButtonEnabled = true,
-                Content = $"将目录从：{originalPath}\n更改为：{folder.Path}\n\n是否更改？",
-                PrimaryButtonText = "确认",
+                Content = $"{"ChangePath_FromPath".GetLocalized()}: {originalPath}\n{"ChangePath_ToPath".GetLocalized()}: {folder.Path}\n\n{"ChangePath_Ensure".GetLocalized()}",
+                PrimaryButtonText = "Confirm".GetLocalized(),
                 IsSecondaryButtonEnabled = true,
-                SecondaryButtonText = "取消",
+                SecondaryButtonText = "Cancel".GetLocalized(),
                 XamlRoot = SettingPage.Current.Content.XamlRoot
             };
             return (contentDialog, folder);
@@ -73,10 +73,10 @@ public partial class SettingPageViewModel : ViewModelBase
             {
                 DefaultButton = ContentDialogButton.Primary,
                 IsPrimaryButtonEnabled = true,
-                Content = "是否清除包括已加载的游戏定义集在内的缓存文件？",
-                PrimaryButtonText = "确认",
+                Content = "ClearCache_Ensure".GetLocalized(),
+                PrimaryButtonText = "Confirm".GetLocalized(),
                 IsSecondaryButtonEnabled = true,
-                SecondaryButtonText = "取消",
+                SecondaryButtonText = "Cancel".GetLocalized(),
                 XamlRoot = SettingPage.Current.Content.XamlRoot
             };
             if (await contentDialog.ShowAsync() == ContentDialogResult.Primary)
