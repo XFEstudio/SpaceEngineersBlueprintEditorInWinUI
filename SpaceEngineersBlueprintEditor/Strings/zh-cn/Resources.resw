@@ -218,7 +218,7 @@
     <comment>该蓝图不包含蓝图文件（bp.sbc）</comment>
   </data>
   <data name="Warning_CantFindFile" xml:space="preserve">
-    <value>Can't find file</value>
+    <value>无法找到文件</value>
     <comment>无法找到文件</comment>
   </data>
   <data name="ConvertComplete" xml:space="preserve">
@@ -318,7 +318,7 @@
     <comment>是否清除包括已加载的游戏定义集在内的缓存文件？</comment>
   </data>
   <data name="DragFileToEditorText" xml:space="preserve">
-    <value>Drag blueprint here</value>
+    <value>拖动蓝图文件至此处</value>
     <comment>拖动蓝图文件至此处</comment>
   </data>
   <data name="SettingPage_AppInfo_Author.Header" xml:space="preserve">
