@@ -230,7 +230,7 @@ public partial class BlueprintPropertyViewData
         }
         catch (Exception ex)
         {
-            GlobalServiceManager.GetService<IMessageService>()?.ShowMessage($"无法设置属性{Name}({Type?.Name})的值为{targetValue}：{ex.Message}", "错误", InfoBarSeverity.Error);
+            GlobalServiceManager.GetService<IMessageService>()?.ShowMessage($"{"Error_CantSetValue_CantSetProperty".GetLocalized()}{Name}({Type?.Name}){"Error_CantSetValue_ValueTo".GetLocalized()}{targetValue}: {ex.Message}", "Error".GetLocalized(), InfoBarSeverity.Error);
         }
     }
 

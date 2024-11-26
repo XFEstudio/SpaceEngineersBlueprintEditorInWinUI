@@ -125,7 +125,7 @@ public static class SpaceEngineersHelper
                 blueprintPropertyViewData.Children.Add(new()
                 {
                     Type = type,
-                    Name = $"错误异常：{ex.Message}",
+                    Name = $"{"Error_Exception".GetLocalized()}: {ex.Message}",
                     Parent = blueprintPropertyViewData
                 });
             }
@@ -143,7 +143,7 @@ public static class SpaceEngineersHelper
         {
             blueprintPropertyViewData.Children.Add(new()
             {
-                Name = "空对象",
+                Name = "NullObject".GetLocalized(),
                 Parent = blueprintPropertyViewData
             });
             return true;
@@ -226,14 +226,14 @@ public static class SpaceEngineersHelper
         {
             if (value is null)
             {
-                blueprintPropertyViewData.CustomData = "空列表";
+                blueprintPropertyViewData.CustomData = "EmptyList".GetLocalized();
             }
             else
             {
                 var count = 0;
                 foreach (var item in (IEnumerable)value)
                     count++;
-                blueprintPropertyViewData.CustomData = $"数量：{count}";
+                blueprintPropertyViewData.CustomData = $"{"Amount".GetLocalized()}: {count}";
             }
         }
         else

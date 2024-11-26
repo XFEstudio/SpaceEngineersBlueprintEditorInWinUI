@@ -205,6 +205,14 @@
     <value>Can't load definitions</value>
     <comment>未能加载蓝图</comment>
   </data>
+  <data name="Error_CantSetValue_CantSetProperty" xml:space="preserve">
+    <value>Can't set property</value>
+    <comment>无法设置属性</comment>
+  </data>
+  <data name="Error_CantSetValue_ValueTo" xml:space="preserve">
+    <value>'s value to</value>
+    <comment>的值为</comment>
+  </data>
   <data name="Warning_BlueprintContainsNoFile" xml:space="preserve">
     <value>Blueprint doesn't have any file (bp.sbc)</value>
     <comment>该蓝图不包含蓝图文件（bp.sbc）</comment>
@@ -241,6 +249,10 @@
     <value>Error</value>
     <comment>错误</comment>
   </data>
+  <data name="Error_Exception" xml:space="preserve">
+    <value>Exception error</value>
+    <comment>错误异常</comment>
+  </data>
   <data name="Failed" xml:space="preserve">
     <value>Failed</value>
     <comment>失败</comment>
@@ -264,6 +276,14 @@
   <data name="EmptyValue" xml:space="preserve">
     <value>Empty value</value>
     <comment>空值</comment>
+  </data>
+  <data name="EmptyList" xml:space="preserve">
+    <value>Empty list</value>
+    <comment>空列表</comment>
+  </data>
+  <data name="Amount" xml:space="preserve">
+    <value>Amount</value>
+    <comment>数量</comment>
   </data>
   <data name="NullObject" xml:space="preserve">
     <value>Null</value>

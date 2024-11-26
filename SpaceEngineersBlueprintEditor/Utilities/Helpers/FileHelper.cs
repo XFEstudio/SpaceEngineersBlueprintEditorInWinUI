@@ -69,7 +69,7 @@ public static class FileHelper
     /// <exception cref="DirectoryNotFoundException"></exception>
     public static void CopyDirectory(string sourceDirectory, string targetDirectory, bool overwrite = false)
     {
-        if (!Directory.Exists(sourceDirectory)) throw new DirectoryNotFoundException($"源目录未找到: {sourceDirectory}");
+        if (!Directory.Exists(sourceDirectory)) throw new DirectoryNotFoundException($"Can't find original directory: {sourceDirectory}");
         if (!Directory.Exists(targetDirectory))
             Directory.CreateDirectory(targetDirectory);
         foreach (string file in Directory.GetFiles(sourceDirectory))
