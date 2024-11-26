@@ -67,7 +67,7 @@ public partial class BlueprintEditPageViewModel : ViewModelBase
         var frame = new Frame();
         var tabView = new TabViewItem
         {
-            Header = "新的蓝图编辑页",
+            Header = "BlueprintEditPage_NewBlueprintEditPage".GetLocalized(),
             Content = frame
         };
         TabViewItems.Add(tabView);

@@ -165,6 +165,22 @@
     <value>Calculating blueprint</value>
     <comment>计算蓝图中</comment>
   </data>
+  <data name="LoadingDefinitions" xml:space="preserve">
+    <value>Loading definitions</value>
+    <comment>加载定义中</comment>
+  </data>
+  <data name="SavingBlueprint" xml:space="preserve">
+    <value>Saving blueprint</value>
+    <comment>保存蓝图中</comment>
+  </data>
+  <data name="SavingSuccessful" xml:space="preserve">
+    <value>Saving successful</value>
+    <comment>保存成功</comment>
+  </data>
+  <data name="BlueprintFile" xml:space="preserve">
+    <value>Blueprint file</value>
+    <comment>蓝图文件</comment>
+  </data>
   <data name="BlueprintLoadComplete" xml:space="preserve">
     <value>Blueprint load complete</value>
     <comment>蓝图加载完成</comment>
@@ -177,6 +193,14 @@
     <value>Can't load definitions</value>
     <comment>未能加载定义</comment>
   </data>
+  <data name="Error_CantLoadingShipDefinitions" xml:space="preserve">
+    <value>Can't load ship blueprint definitions</value>
+    <comment>未能加载飞船蓝图定义</comment>
+  </data>
+  <data name="Error_CantFindShipDefinitions" xml:space="preserve">
+    <value>Can't find blueprint definitions</value>
+    <comment>未能找到蓝图定义</comment>
+  </data>
   <data name="Error_CantLoadingBlueprint" xml:space="preserve">
     <value>Can't load definitions</value>
     <comment>未能加载蓝图</comment>
@@ -184,6 +208,14 @@
   <data name="Warning_BlueprintContainsNoFile" xml:space="preserve">
     <value>Blueprint doesn't have any file (bp.sbc)</value>
     <comment>该蓝图不包含蓝图文件（bp.sbc）</comment>
+  </data>
+  <data name="Warning_CantFindFile" xml:space="preserve">
+    <value>Can't find file</value>
+    <comment>无法找到文件</comment>
+  </data>
+  <data name="ConvertComplete" xml:space="preserve">
+    <value>Convert complete</value>
+    <comment>转换完成</comment>
   </data>
   <data name="Complete" xml:space="preserve">
     <value>Complete</value>
@@ -196,6 +228,18 @@
   <data name="Error" xml:space="preserve">
     <value>Error</value>
     <comment>错误</comment>
+  </data>
+  <data name="Failed" xml:space="preserve">
+    <value>Failed</value>
+    <comment>失败</comment>
+  </data>
+  <data name="Failed_SaveFailed" xml:space="preserve">
+    <value>Save failed</value>
+    <comment>保存失败</comment>
+  </data>
+  <data name="UnknownReason" xml:space="preserve">
+    <value>Unknown reason</value>
+    <comment>保存失败</comment>
   </data>
   <data name="Loading" xml:space="preserve">
     <value>Loading</value>
@@ -444,6 +488,10 @@
   <data name="BlueprintDetailPage_CantFindGrid" xml:space="preserve">
     <value>Can't find any grid</value>
     <comment>未找到网格</comment>
+  </data>
+  <data name="BlueprintEditPage_NewBlueprintEditPage" xml:space="preserve">
+    <value>New blueprint edit page</value>
+    <comment>新的蓝图编辑页</comment>
   </data>
   <data name="BlueprintEditSubPage_File.Title" xml:space="preserve">
     <value>File</value>

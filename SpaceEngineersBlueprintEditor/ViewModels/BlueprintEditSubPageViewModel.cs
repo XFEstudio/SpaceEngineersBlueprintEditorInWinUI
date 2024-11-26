@@ -70,7 +70,7 @@ public partial class BlueprintEditSubPageViewModel : ViewModelBase
 
     private async void FileDropService_Drop(object? sender, (string, DragEventArgs) e)
     {
-        loadingService?.StartLoading<BlueprintEditSubPage>("Loading definitions...");
+        loadingService?.StartLoading<BlueprintEditSubPage>($"{"LoadingDefinitions".GetLocalized()}...");
         if (File.Exists(e.Item1) && await SpaceEngineersHelper.LoadBlueprintModel(e.Item1) is BlueprintModel blueprintModel)
         {
             NavigationParameterService.Parameter = blueprintModel;
@@ -101,12 +101,12 @@ public partial class BlueprintEditSubPageViewModel : ViewModelBase
             }
             else
             {
-                messageService?.ShowMessage("未能加载飞船蓝图定义", "错误", InfoBarSeverity.Error);
+                messageService?.ShowMessage("Error_CantLoadingShipDefinitions".GetLocalized(), "Error".GetLocalized(), InfoBarSeverity.Error);
             }
         }
         else
         {
-            messageService?.ShowMessage("未能找到蓝图定义", "错误", InfoBarSeverity.Error);
+            messageService?.ShowMessage("Error_CantFindShipDefinitions".GetLocalized(), "Error".GetLocalized(), InfoBarSeverity.Error);
         }
     }
 
@@ -134,7 +134,7 @@ public partial class BlueprintEditSubPageViewModel : ViewModelBase
     {
         if (currentShipBlueprint is null) return;
         isLoaded = true;
-        loadingService?.StartLoading<BlueprintEditSubPage>("Loading definitions...");
+        loadingService?.StartLoading<BlueprintEditSubPage>($"{"LoadingDefinitions".GetLocalized()}...");
         await Task.Delay(50);
         switch (caseName)
         {
@@ -165,7 +165,7 @@ public partial class BlueprintEditSubPageViewModel : ViewModelBase
         var parent = new BlueprintPropertyViewData
         {
             Value = currentShipBlueprint,
-            Name = "飞船蓝图",
+            Name = "Ship blueprint",
             Type = currentShipBlueprint!.GetType()
         };
         SpaceEngineersHelper.AnalyzeBlueprint(parent);
@@ -279,7 +279,7 @@ public partial class BlueprintEditSubPageViewModel : ViewModelBase
     [RelayCommand]
     async Task OpenBlueprint()
     {
-        loadingService?.StartLoading<BlueprintEditSubPage>("Loading definitions...");
+        loadingService?.StartLoading<BlueprintEditSubPage>($"{"LoadingDefinitions".GetLocalized()}...");
         var openPicker = new FileOpenPicker();
         InitializeWithWindow.Initialize(openPicker, WindowNative.GetWindowHandle(App.MainWindow));
         openPicker.ViewMode = PickerViewMode.List;
@@ -303,7 +303,7 @@ public partial class BlueprintEditSubPageViewModel : ViewModelBase
         if (currentBlueprintModel is not null && currentBlueprintModel.ViewData is not null)
             Process.Start("explorer.exe", Path.GetDirectoryName(currentBlueprintModel.ViewData.FilePath) ?? string.Empty);
         else
-            messageService?.ShowMessage("无法找到文件", "警告", InfoBarSeverity.Warning);
+            messageService?.ShowMessage("Warning_CantFindFile".GetLocalized(), "Warning".GetLocalized(), InfoBarSeverity.Warning);
     }
 
     [RelayCommand]
@@ -312,10 +312,10 @@ public partial class BlueprintEditSubPageViewModel : ViewModelBase
     [RelayCommand]
     async Task Save()
     {
-        loadingService?.StartLoading<BlueprintEditSubPage>("Saving blueprint...");
+        loadingService?.StartLoading<BlueprintEditSubPage>($"{"SavingBlueprint".GetLocalized()}...");
         var savePicker = new FileSavePicker();
         InitializeWithWindow.Initialize(savePicker, WindowNative.GetWindowHandle(App.MainWindow));
-        savePicker.FileTypeChoices.Add(new("Blueprint file", [".sbc"]));
+        savePicker.FileTypeChoices.Add(new("BlueprintFile".GetLocalized(), [".sbc"]));
         savePicker.SuggestedSaveFile = await StorageFile.GetFileFromPathAsync($"{NavigationParameterService.Parameter?.ViewData?.FilePath}");
         savePicker.SuggestedFileName = "bp.sbc";
         savePicker.DefaultFileExtension = ".sbc";
@@ -352,21 +352,21 @@ public partial class BlueprintEditSubPageViewModel : ViewModelBase
                             if (File.Exists(sbcPath))
                                 File.Delete(sbcPath);
                         }
-                        messageService?.ShowMessage("保存成功", "完成", InfoBarSeverity.Success);
+                        messageService?.ShowMessage("SavingSuccessful".GetLocalized(), "Complete".GetLocalized(), InfoBarSeverity.Success);
                     }
                     else if (result.StartsWith("Error:"))
                     {
-                        messageService?.ShowMessage(result.Replace("Error:", string.Empty), "失败", InfoBarSeverity.Error);
+                        messageService?.ShowMessage(result.Replace("Error:", string.Empty), "Failed".GetLocalized(), InfoBarSeverity.Error);
                     }
                 }
                 else
                 {
-                    messageService?.ShowMessage("保存失败：未知原因", "失败", InfoBarSeverity.Error);
+                    messageService?.ShowMessage($"{"Failed_SaveFailed".GetLocalized()}: {"UnknownReason".GetLocalized()}", "Failed".GetLocalized(), InfoBarSeverity.Error);
                 }
             }
             catch (Exception ex)
             {
-                messageService?.ShowMessage($"保存失败：{ex.Message}", "失败", InfoBarSeverity.Error);
+                messageService?.ShowMessage($"{"Failed_SaveFailed".GetLocalized()}: {ex.Message}", "Failed".GetLocalized(), InfoBarSeverity.Error);
             }
         }
         loadingService?.StopLoading<BlueprintEditSubPage>();
@@ -397,6 +397,6 @@ public partial class BlueprintEditSubPageViewModel : ViewModelBase
                 default:
                     break;
             }
-        messageService?.ShowMessage("转换完成", "完成", InfoBarSeverity.Success);
+        messageService?.ShowMessage("ConvertComplete".GetLocalized(), "Complete".GetLocalized(), InfoBarSeverity.Success);
     }
 }
