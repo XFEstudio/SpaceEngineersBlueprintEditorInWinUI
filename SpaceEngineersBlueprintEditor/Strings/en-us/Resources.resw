@@ -425,6 +425,10 @@
     <value>Search properties...</value>
     <comment>搜索属性...</comment>
   </data>
+  <data name="GameDefinitionsViewPage_AutoSuggestBox_Definitions.PlaceholderText" xml:space="preserve">
+    <value>Search properties...</value>
+    <comment>搜索属性...</comment>
+  </data>
   <data name="Button_Yes.Content" xml:space="preserve">
     <value>Yes</value>
     <comment>是</comment>

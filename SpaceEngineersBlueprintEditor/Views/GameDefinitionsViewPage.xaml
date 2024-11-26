@@ -40,7 +40,7 @@
             </Grid>
         </Grid>
         <Grid Margin="0,0,0,20" Width="250" Padding="5" CornerRadius="8" VerticalAlignment="Bottom" HorizontalAlignment="Center" Background="{ThemeResource AcrylicInAppFillColorDefaultBrush}">
-            <AutoSuggestBox PlaceholderText="Search definitions..." QueryIcon="Find" Text="{x:Bind ViewModel.SearchText, Mode=TwoWay}"/>
+            <AutoSuggestBox x:Uid="GameDefinitionsViewPage_AutoSuggestBox_Definitions" QueryIcon="Find" Text="{x:Bind ViewModel.SearchText, Mode=TwoWay}"/>
         </Grid>
     </Grid>
 </Page>
