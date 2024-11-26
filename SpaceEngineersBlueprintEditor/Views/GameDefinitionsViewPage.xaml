@@ -21,7 +21,7 @@
                     <Image Source="{x:Bind ViewModel.SelectedDefinitionViewData.ImageSource, Mode=OneWay}" HorizontalAlignment="Left" Width="128" Height="128"/>
                     <TextBlock Text="{x:Bind ViewModel.SelectedDefinitionViewData.DefinitionBase.DescriptionText, Mode=OneWay}" HorizontalAlignment="Left" Style="{ThemeResource CaptionTextBlockStyle}"/>
                 </StackPanel>
-                <AutoSuggestBox Margin="5,10,5,0" Grid.Row="1" HorizontalAlignment="Stretch" PlaceholderText="Search properties..." QueryIcon="Find" Text="{x:Bind ViewModel.PropertiesSearchText, Mode=TwoWay}"/>
+                <AutoSuggestBox x:Uid="GameDefinitionsViewPage_AutoSuggestBox_Properties" Margin="5,10,5,0" Grid.Row="1" HorizontalAlignment="Stretch" QueryIcon="Find" Text="{x:Bind ViewModel.PropertiesSearchText, Mode=TwoWay}"/>
                 <ScrollView Padding="5" Grid.Row="2">
                     <ListView ItemsSource="{x:Bind ViewModel.PropertiesInfo}">
                         <ListView.ItemTemplate>

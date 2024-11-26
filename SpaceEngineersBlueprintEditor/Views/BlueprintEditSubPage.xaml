@@ -86,27 +86,27 @@
                 <RowDefinition/>
             </Grid.RowDefinitions>
             <MenuBar>
-                <MenuBarItem Title="File">
-                    <MenuFlyoutItem Text="Open blueprint" Icon="OpenFile" Command="{x:Bind ViewModel.OpenBlueprintCommand}">
+                <MenuBarItem x:Uid="BlueprintEditSubPage_File">
+                    <MenuFlyoutItem x:Uid="BlueprintEditSubPage_OpenBlueprint" Icon="OpenFile" Command="{x:Bind ViewModel.OpenBlueprintCommand}">
                         <MenuFlyoutItem.KeyboardAccelerators>
                             <KeyboardAccelerator Modifiers="Control" Key="N"/>
                         </MenuFlyoutItem.KeyboardAccelerators>
                     </MenuFlyoutItem>
-                    <MenuFlyoutItem Text="Save" Icon="Save" Command="{x:Bind ViewModel.SaveCommand}">
+                    <MenuFlyoutItem x:Uid="BlueprintEditSubPage_Save" Icon="Save" Command="{x:Bind ViewModel.SaveCommand}">
                         <MenuFlyoutItem.KeyboardAccelerators>
                             <KeyboardAccelerator Modifiers="Control" Key="S"/>
                         </MenuFlyoutItem.KeyboardAccelerators>
                     </MenuFlyoutItem>
                 </MenuBarItem>
-                <MenuBarItem Title="Edit">
-                    <MenuFlyoutItem Icon="RepeatAll" Text="Convert to destructible" Command="{x:Bind ViewModel.ConvertBlueprintCommand}" CommandParameter="Destructible"/>
-                    <MenuFlyoutItem Icon="RepeatAll" Text="Convert to indestructible" Command="{x:Bind ViewModel.ConvertBlueprintCommand}" CommandParameter="Indestructible"/>
+                <MenuBarItem x:Uid="BlueprintEditSubPage_Edit">
+                    <MenuFlyoutItem Icon="RepeatAll" x:Uid="BlueprintEditSubPage_ConvertDestructible" Command="{x:Bind ViewModel.ConvertBlueprintCommand}" CommandParameter="Destructible"/>
+                    <MenuFlyoutItem Icon="RepeatAll" x:Uid="BlueprintEditSubPage_ConvertIndestructible" Command="{x:Bind ViewModel.ConvertBlueprintCommand}" CommandParameter="Indestructible"/>
                     <MenuFlyoutSeparator/>
-                    <MenuFlyoutItem Icon="RepeatAll" Text="Convert to editable" Command="{x:Bind ViewModel.ConvertBlueprintCommand}" CommandParameter="Editable"/>
-                    <MenuFlyoutItem Icon="RepeatAll" Text="Convert to non-editable" Command="{x:Bind ViewModel.ConvertBlueprintCommand}" CommandParameter="Non-Editable"/>
+                    <MenuFlyoutItem Icon="RepeatAll" x:Uid="BlueprintEditSubPage_ConvertEditable" Command="{x:Bind ViewModel.ConvertBlueprintCommand}" CommandParameter="Editable"/>
+                    <MenuFlyoutItem Icon="RepeatAll" x:Uid="BlueprintEditSubPage_ConvertNonEditable" Command="{x:Bind ViewModel.ConvertBlueprintCommand}" CommandParameter="Non-Editable"/>
                 </MenuBarItem>
-                <MenuBarItem Title="View">
-                    <MenuFlyoutItem Text="Open in folder" Icon="OpenLocal" Command="{x:Bind ViewModel.OpenInFolderCommand}"/>
+                <MenuBarItem x:Uid="BlueprintEditSubPage_View">
+                    <MenuFlyoutItem x:Uid="BlueprintEditSubPage_OpenInFolder" Icon="OpenLocal" Command="{x:Bind ViewModel.OpenInFolderCommand}"/>
                 </MenuBarItem>
             </MenuBar>
             <Grid Grid.Row="1" Visibility="{x:Bind ViewModel.IsContentGridVisible, Mode=OneWay}">
@@ -115,9 +115,9 @@
                     <RowDefinition/>
                 </Grid.RowDefinitions>
                 <SelectorBar x:Name="selectorBar">
-                    <SelectorBarItem Text="Grids" Tag="Grids" IsSelected="True"/>
-                    <SelectorBarItem Text="Groups (Experimentation)" Tag="Groups"/>
-                    <SelectorBarItem Text="Properties" Tag="Properties"/>
+                    <SelectorBarItem x:Uid="BlueprintEditSubPage_SelectorBar_Grids" Tag="Grids" IsSelected="True"/>
+                    <SelectorBarItem x:Uid="BlueprintEditSubPage_SelectorBar_Groups" Tag="Groups"/>
+                    <SelectorBarItem x:Uid="BlueprintEditSubPage_SelectorBar_Properties" Tag="Properties"/>
                 </SelectorBar>
                 <Grid Grid.Row="1">
                     <Grid RowSpacing="10" Visibility="{x:Bind ViewModel.IsCubeGridListVisible, Mode=OneWay}">
@@ -129,7 +129,7 @@
                             <RowDefinition Height="Auto"/>
                             <RowDefinition/>
                         </Grid.RowDefinitions>
-                        <AutoSuggestBox Margin="5,0,0,0" Width="250" Text="{x:Bind ViewModel.SearchText, Mode=TwoWay}" PlaceholderText="Search cube blocks..." QueryIcon="Find" HorizontalAlignment="Left"/>
+                        <AutoSuggestBox x:Uid="BlueprintEditSubPage_AutoSuggestBox_CubeBlocks" Margin="5,0,0,0" Width="250" Text="{x:Bind ViewModel.SearchText, Mode=TwoWay}" QueryIcon="Find" HorizontalAlignment="Left"/>
                         <ListView x:Name="cubeGridsListView" Grid.Row="1" ItemsSource="{x:Bind CubeGridViewSource.View, Mode=OneWay}" SelectedItem="{x:Bind ViewModel.SelectedCubeBlock, Mode=TwoWay}">
                             <ListView.ItemsPanel>
                                 <ItemsPanelTemplate>
@@ -202,7 +202,7 @@
                         </Rectangle>
                         <StackPanel Orientation="Vertical" VerticalAlignment="Center" HorizontalAlignment="Center" Spacing="10">
                             <FontIcon Glyph="&#xF8AA;" FontSize="80"/>
-                            <TextBlock Text="Drag blueprint here" Style="{ThemeResource SubtitleTextBlockStyle}"/>
+                            <TextBlock x:Uid="TextBlock_DragBlueprint" Style="{ThemeResource SubtitleTextBlockStyle}"/>
                         </StackPanel>
                     </Grid>
                     <Grid ColumnSpacing="10" Margin="0,20,0,0">
@@ -213,13 +213,13 @@
                         <Button x:Name="viewBlueprintsList" VerticalAlignment="Top" HorizontalAlignment="Right" Command="{x:Bind ViewModel.ViewBlueprintsListCommand}">
                             <StackPanel Orientation="Horizontal" Spacing="5">
                                 <FontIcon Glyph="&#xE890;"/>
-                                <TextBlock Text="查看蓝图列表"/>
+                                <TextBlock x:Uid="TextBlock_ViewBlueprintsList"/>
                             </StackPanel>
                         </Button>
                         <Button x:Name="openLocalFile" Grid.Column="1" VerticalAlignment="Top" HorizontalAlignment="Left" Command="{x:Bind ViewModel.OpenBlueprintCommand}">
                             <StackPanel Orientation="Horizontal" Spacing="5">
                                 <FontIcon Glyph="&#xE8DA;"/>
-                                <TextBlock Text="打开本地文件"/>
+                                <TextBlock x:Uid="TextBlock_OpenLocalFile"/>
                             </StackPanel>
                         </Button>
                     </Grid>

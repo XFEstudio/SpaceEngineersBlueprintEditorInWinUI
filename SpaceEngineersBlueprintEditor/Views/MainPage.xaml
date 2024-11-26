@@ -22,7 +22,7 @@
                 </Rectangle>
                 <StackPanel Orientation="Vertical" VerticalAlignment="Center" HorizontalAlignment="Center" Spacing="10">
                     <FontIcon Glyph="&#xF8AA;" FontSize="80"/>
-                    <TextBlock Text="Drag blueprint here" Style="{ThemeResource SubtitleTextBlockStyle}"/>
+                    <TextBlock x:Uid="TextBlock_DragBlueprint" Style="{ThemeResource SubtitleTextBlockStyle}"/>
                 </StackPanel>
             </Grid>
             <Grid ColumnSpacing="10" Margin="0,20,0,0">
@@ -33,13 +33,13 @@
                 <Button x:Name="viewBlueprintsList" VerticalAlignment="Top" HorizontalAlignment="Right" Command="{x:Bind ViewModel.ViewBlueprintsListCommand}">
                     <StackPanel Orientation="Horizontal" Spacing="5">
                         <FontIcon Glyph="&#xE890;"/>
-                        <TextBlock Text="查看蓝图列表"/>
+                        <TextBlock x:Uid="TextBlock_ViewBlueprintsList"/>
                     </StackPanel>
                 </Button>
                 <Button x:Name="openLocalFile" Grid.Column="1" VerticalAlignment="Top" HorizontalAlignment="Left" Command="{x:Bind ViewModel.OpenBlueprintInFolderCommand}">
                     <StackPanel Orientation="Horizontal" Spacing="5">
                         <FontIcon Glyph="&#xE8DA;"/>
-                        <TextBlock Text="打开本地文件"/>
+                        <TextBlock x:Uid="TextBlock_OpenLocalFile"/>
                     </StackPanel>
                 </Button>
             </Grid>

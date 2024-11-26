@@ -13,7 +13,7 @@
         <StackPanel Orientation="Vertical" Spacing="20">
             <Grid HorizontalAlignment="Stretch" VerticalAlignment="Top" Height="300" ColumnDefinitions="Auto, *, Auto" ColumnSpacing="20" RowDefinitions="*, *, *, *, *, *">
                 <Image x:Name="detailPreviewImage" Grid.RowSpan="6" Stretch="Uniform"/>
-                <TextBlock Grid.Column="1" Grid.Row="0" IsTextSelectionEnabled="True" TextWrapping="Wrap" Text="蓝图基本信息" Style="{ThemeResource BodyStrongTextBlockStyle}"/>
+                <TextBlock x:Uid="BlueprintDetailPage_BlueprintBaseInfo" Grid.Column="1" Grid.Row="0" IsTextSelectionEnabled="True" TextWrapping="Wrap" Style="{ThemeResource BodyStrongTextBlockStyle}"/>
                 <TextBlock Grid.Column="1" Grid.Row="1" IsTextSelectionEnabled="True" TextWrapping="Wrap" Text="{x:Bind ViewModel.AuthorName, Mode=OneWay}"/>
                 <TextBlock Grid.Column="1" Grid.Row="2" IsTextSelectionEnabled="True" TextWrapping="WrapWholeWords" Text="{x:Bind ViewModel.BlueprintFileSize, Mode=OneWay}"/>
                 <TextBlock Grid.Column="1" Grid.Row="3" IsTextSelectionEnabled="True" TextWrapping="WrapWholeWords" Text="{x:Bind ViewModel.BlueprintPath, Mode=OneWay}"/>
@@ -21,15 +21,15 @@
                 <TextBlock Grid.Column="1" Grid.Row="5" IsTextSelectionEnabled="True" TextWrapping="WrapWholeWords" Text="{x:Bind ViewModel.IsBlueprintEditable, Mode=OneWay}"/>
                 <Button Grid.Column="2" Grid.RowSpan="6" HorizontalAlignment="Right" VerticalAlignment="Top" Command="{x:Bind ViewModel.GoToEditorPageCommand}">
                     <StackPanel Orientation="Horizontal" Spacing="20">
-                        <TextBlock Text="Open in editor"/>
+                        <TextBlock x:Uid="BlueprintDetailPage_OpenInEditor"/>
                         <FontIcon Glyph="&#xE8A7;"/>
                     </StackPanel>
                 </Button>
             </Grid>
-            <Expander Header="所需DLC列表" HorizontalAlignment="Stretch" HorizontalContentAlignment="Stretch">
+            <Expander x:Uid="BlueprintDetailPage_RequiredDLC" HorizontalAlignment="Stretch" HorizontalContentAlignment="Stretch">
                 <ListView ItemsSource="{x:Bind ViewModel.DLCList, Mode=OneWay}" HorizontalAlignment="Stretch" HorizontalContentAlignment="Stretch"/>
             </Expander>
-            <Expander Header="所需材料" HorizontalAlignment="Stretch" HorizontalContentAlignment="Stretch">
+            <Expander x:Uid="BlueprintDetailPage_RequiredComponent" HorizontalAlignment="Stretch" HorizontalContentAlignment="Stretch">
                 <ItemsView ItemsSource="{x:Bind ViewModel.ComponentList, Mode=OneWay}" Padding="4" HorizontalAlignment="Stretch" HorizontalContentAlignment="Stretch" ItemTemplate="{StaticResource ComponentDataTemplate}">
                     <ItemsView.Layout>
                         <UniformGridLayout Orientation="Horizontal"/>
@@ -39,7 +39,7 @@
             <Expander HorizontalAlignment="Stretch" HorizontalContentAlignment="Stretch">
                 <Expander.Header>
                     <Grid ColumnDefinitions="*, Auto, Auto" ColumnSpacing="20">
-                        <TextBlock Text="蓝图网格" HorizontalAlignment="Left"/>
+                        <TextBlock x:Uid="BlueprintDetailPage_BlueprintGrids" HorizontalAlignment="Left"/>
                         <TextBlock Grid.Column="1" Text="{x:Bind ViewModel.TotalGridNumber, Mode=OneWay}"/>
                         <TextBlock Grid.Column="2" Text="{x:Bind ViewModel.TotalCubeNumber, Mode=OneWay}"/>
                     </Grid>
